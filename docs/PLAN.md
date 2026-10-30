@@ -138,6 +138,27 @@ All of it is pure functions over plain data, with no web framework inside.
 - **Simplifications:** the roster is the day's final one (sick calls are not played out as disruptions
   yet), and v2 swap-out is not built.
 
+### The app (step 4)
+
+- **API** (`valeo-serve`, FastAPI): `/api/meta`, `/api/day?date=&policy=` (pairs and their blocks, jobs,
+  decision log, KPIs and the validator's verdict), `/api/compare?date=` (both policies' KPIs) and optional
+  overrides for the auto-accept notice, quiet hours and office hours. Read-only. Replays are cached.
+  It also serves the built UI at `/`. The server honours `PORT`, which wins over `API_PORT` in `.env`.
+- **UI** (`web/`, React + Vite + TypeScript, no chart library): a controls row (day, policy), the stat
+  tiles with one hero figure, and two tabs.
+  - **Day view:** the timeline is plain SVG. Each visit takes its service category's colour; driving,
+    waiting, kit stops and lab drops are neutral. A top row marks orders that were not captured. There is
+    a hover crosshair and tooltips, keyboard focus on visits and markers, and a detail card for the
+    selected order.
+  - **Acceptance engine:** the rules (auto-accept notice, quiet hours, office hours) replay the day on
+    change; a stacked outcome bar per policy; and the decision log as a filterable table, which is also
+    the table view of the day.
+  - Light and dark themes; every status mark pairs an icon with its label.
+- **Colour.** Three categorical slots (sample, IV, injection) validated for all-pairs use in both modes.
+  Aqua is under 3:1 on the light surface, so visits carry labels where they fit, tooltips and the table.
+- **Checked** in the browser pane at 1400 px and 375 px, light and dark; the TypeScript build is the only
+  automated check on the UI so far.
+
 ## Stack
 
 - **Backend:** Python 3.9-compatible (the local machine's Python), FastAPI and pydantic-settings.
@@ -158,7 +179,7 @@ All of it is pure functions over plain data, with no web framework inside.
 | 1 | **Rework the generator for the field-visit model** (DATA.md): services, staff, availability, 35 days of orders with publish times and cancellations, events. Reuses the settings layer and the land-only point placement. **Done.** "Actual" km is derived later by the replay (step 3), not stored. | done |
 | 2 | **Engine core:** `distance`, `catalog`, `planner`, `validator`, with tests. One day planned end to end from a fixed acceptance. **Done** (`.venv/bin/valeo-plan --date 2026-11-04`). | done |
 | 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. **Done** (`.venv/bin/valeo-replay --days 7 --log`). | done |
-| 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. | 2 days |
+| 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. **Done** (`valeo-serve`, UI in `web/`). Not yet: the replay slider that steps through the day as orders arrive, and the add / cancel / unavailable actions. | done |
 | 5 | **Roster auto-allocation + Services tab.** | 1 day |
 | 6 | **Tier 2:** hub siting, capacity, metrics. | 2–3 days |
 | 7 | **v2 swap-out** behind its toggle. | 1 day |

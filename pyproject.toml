@@ -7,15 +7,16 @@ name = "valeo_routing"
 version = "0.1.0"
 description = "Fleet routing demo on synthetic data (Valeo Health case rebuild)"
 requires-python = ">=3.9"
-dependencies = ["pydantic-settings>=2,<3"]
+dependencies = ["pydantic-settings>=2,<3", "fastapi>=0.110", "uvicorn>=0.29"]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "httpx"]
 
 [project.scripts]
 valeo-gen = "valeo_routing.datagen.cli:main"
 valeo-plan = "valeo_routing.engine.cli:main"
 valeo-replay = "valeo_routing.engine.replay_cli:main"
+valeo-serve = "valeo_routing.api.app:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -27,9 +27,10 @@ See [docs/CONTEXT.md](docs/CONTEXT.md) for the measurement and its caveats.
 **This repo is synthetic.** It is not Valeo's code or data. Every number the app produces comes from
 seeded synthetic data and is labelled as such.
 
-Status: **acceptance and replay done** (PLAN steps 1–3): a month of synthetic field-visit data across
-Dubai and the northern emirates, a planner with an independent validator, and a day-by-day replay that
-compares the Excel-era acceptance with Logistics Valeo v1 and writes the decision log. The app is next.
+Status: **first app done** (PLAN steps 1–4): a month of synthetic field-visit data across Dubai and the
+northern emirates, a planner with an independent validator, a day-by-day replay that compares the
+Excel-era acceptance with Logistics Valeo v1, and a web app with the day view, the acceptance engine and
+the policy switch. Roster, services, hubs, capacity and metrics are next.
 
 - [docs/CONTEXT.md](docs/CONTEXT.md): the real project, the seven tabs, rollout, verified results, open questions
 - [docs/PLAN.md](docs/PLAN.md): screens, engine, stack, build order
@@ -39,10 +40,15 @@ compares the Excel-era acceptance with Logistics Valeo v1 and writes the decisio
 ## Run it
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -e . pytest
+python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
 cp .env.example .env
 .venv/bin/valeo-gen                          # generate the month
 .venv/bin/valeo-plan --date 2026-11-04        # plan one day and validate it
 .venv/bin/valeo-replay --days 7 --log         # replay a week under both policies, with the decision log
 .venv/bin/pytest -q
+
+# the web app
+(cd web && npm install && npm run build)       # once, and after UI changes
+.venv/bin/valeo-serve                          # API and UI on http://127.0.0.1:8000
+# while developing the UI: valeo-serve in one terminal, `npm run dev` in web/ (port 5173) in another
 ```
