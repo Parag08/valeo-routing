@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 export type Policy = "excel" | "lv1";
+export type RosterMode = "auto" | "simple";
 export type Category = "sample" | "iv" | "injection";
 export type Outcome = "accepted" | "declined" | "lost" | "cancelled_before_decision";
 
@@ -8,6 +9,7 @@ export interface Meta {
   synthetic: boolean;
   dates: { date: string; weekday: string; orders: number }[];
   policies: { id: Policy; label: string }[];
+  rosters: { id: RosterMode; label: string }[];
   window: { start: number; end: number };
   settings: {
     auto_accept_lead_h: number;
@@ -16,6 +18,11 @@ export interface Meta {
     arrival_tolerance_min: number;
     excel_response_min: [number, number];
     manual_response_min: [number, number];
+    plan_duration_position: number;
+    shift_hours: number;
+    roster_target_utilisation: number;
+    roster_travel_allowance_min: number;
+    roster_starts: [number, number];
   };
   office: { lat: number; lon: number; name: string };
   labs: { id: string; name: string; lat: number; lon: number }[];
@@ -95,12 +102,97 @@ export interface DayData {
   weekday: string;
   policy: Policy;
   policy_label: string;
+  roster: RosterMode;
+  roster_label: string;
+  unavailable: string[];
+  services_edited: string[];
   window: { start: number; end: number };
   pairs: PairDay[];
   jobs: Record<string, Job>;
   log: LogRow[];
   kpis: Kpis;
   violations: number;
+}
+
+export type StaffStatus = "available" | "rest" | "sick" | "leave" | "marked_sick";
+
+export interface StaffRow {
+  id: string;
+  name: string;
+  role: "nurse" | "driver";
+  iv_certified: boolean;
+  status: StaffStatus;
+  pair_id: string | null;
+  shift_start: number | null;
+  shift_end: number | null;
+}
+
+export interface PairSummary {
+  id: string;
+  nurse: string;
+  driver: string;
+  iv_certified: boolean;
+  shift_start: number;
+  shift_end: number;
+}
+
+export interface RosterData {
+  synthetic: boolean;
+  date: string;
+  weekday: string;
+  roster: RosterMode;
+  policy: Policy;
+  unavailable: string[];
+  staff: StaffRow[];
+  pairs: PairSummary[];
+  reserve: string[];
+  curve: {
+    hours: number[];
+    expected_orders: number[];
+    required_pairs: number[];
+    on_duty: Record<RosterMode, number[]>;
+    shortfall: Record<RosterMode, number>;
+  };
+  compare: Record<RosterMode, Kpis>;
+}
+
+export interface ServiceRow {
+  id: string;
+  name: string;
+  category: Category;
+  duration_lo: number;
+  duration_hi: number;
+  default_lo: number;
+  default_hi: number;
+  planned_min: number;
+  needs_lab: boolean;
+  sample_max_min: number | null;
+  default_sample_max_min: number | null;
+  keep_cold: boolean;
+  needs_office_supplies: boolean;
+  iv_certified_only: boolean;
+  mix_share: number;
+  edited: boolean;
+}
+
+export interface ServicesData {
+  plan_duration_position: number;
+  limits: { max_duration_min: number; max_sample_limit_min: number };
+  services: ServiceRow[];
+}
+
+/** A change to one service: minutes on site, and for lab services the time allowed to reach the lab. */
+export interface ServiceEdit {
+  lo: number;
+  hi: number;
+  limit: number | null;
+}
+
+export function serviceTokens(edits: Record<string, ServiceEdit>): string {
+  return Object.keys(edits)
+    .sort()
+    .map((id) => `${id}:${edits[id].lo}-${edits[id].hi}${edits[id].limit !== null ? `:${edits[id].limit}` : ""}`)
+    .join(",");
 }
 
 export interface Compare {

@@ -159,6 +159,35 @@ All of it is pure functions over plain data, with no web framework inside.
 - **Checked** in the browser pane at 1400 px and 375 px, light and dark; the TypeScript build is the only
   automated check on the UI so far.
 
+### Roster and services (step 5)
+
+- **Demand curve.** For a service day, expected orders per hour come from the *other* days of the month:
+  the mean count for that weekday, spread over the hours by when work fell (cancelled orders left out),
+  moved `ROSTER_LEAD_MIN` earlier because a pair has to be on the road before the slot. Each order is its
+  planned service time plus access time plus `ROSTER_TRAVEL_ALLOWANCE_MIN` of driving; dividing by
+  `ROSTER_TARGET_UTILISATION` gives the pairs needed. Any hour with at least `ROSTER_MIN_ORDERS_FOR_COVER`
+  expected orders keeps at least `ROSTER_MIN_PAIRS_WHEN_BOOKED` pair on duty.
+- **Allocation.** Every available nurse and driver is paired (the smaller group sets the count; the rest
+  are reserve). Each pair's shift start, on the `ROSTER_START_*` grid, is chosen greedily to minimise the
+  squared shortfall against the needed curve, so peaks are covered first. IV-certified nurses are then
+  spread across the starts. Staff marked sick drop out and the reserve steps in where there is one.
+- **What the first two attempts taught.** Covering the peaks alone left the early and late hours empty,
+  and a pair that has not started cannot serve a 06:00 slot, so the roster lost more orders at the edges
+  than it gained at the peaks. The minimum-cover rule and the lead-time shift fix that.
+- **Result on the synthetic month** (all 35 days, same people, same planner): the auto roster leaves
+  about 2 pair-hours of demand uncovered a day against about 11 for simple pairing, and captures 81.0%
+  against 80.0% of orders under Logistics Valeo v1 (66.7% against 65.8% in the Excel era), with fewer
+  declines (153 against 167) and less idle time. That is a modest gain of about 14 orders a month, not a
+  large one; one day (4 Nov) shows 84% against 76%.
+- **Services tab.** Edit on-site minutes (minimum and maximum) and, for lab services, the time allowed to
+  reach the lab. Edits travel in the query string (`services=SV-01:30-40,SV-03:10-20:120`) and flow into
+  the planned visit lengths, the lab deadlines, the roster's demand estimate and every figure. The kit
+  stop, certification and lab requirement are shown but fixed. Edits are not saved: they live in the page.
+- **Scenario.** `roster`, `unavailable` (staff marked sick) and `services` join the acceptance-rule
+  overrides in one scenario; the page shows a banner when any is active.
+- **Not modelled:** split shifts, keeping a nurse and driver together from day to day, `shift_pref`, and
+  sick calls played out in real time (marking someone sick changes the whole day's roster).
+
 ## Stack
 
 - **Backend:** Python 3.9-compatible (the local machine's Python), FastAPI and pydantic-settings.
@@ -180,7 +209,7 @@ All of it is pure functions over plain data, with no web framework inside.
 | 2 | **Engine core:** `distance`, `catalog`, `planner`, `validator`, with tests. One day planned end to end from a fixed acceptance. **Done** (`.venv/bin/valeo-plan --date 2026-11-04`). | done |
 | 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. **Done** (`.venv/bin/valeo-replay --days 7 --log`). | done |
 | 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. **Done** (`valeo-serve`, UI in `web/`). Not yet: the replay slider that steps through the day as orders arrive, and the add / cancel / unavailable actions. | done |
-| 5 | **Roster auto-allocation + Services tab.** | 1 day |
+| 5 | **Roster auto-allocation + Services tab.** **Done** (Roster and Services tabs; `engine/roster.py`). | done |
 | 6 | **Tier 2:** hub siting, capacity, metrics. | 2–3 days |
 | 7 | **v2 swap-out** behind its toggle. | 1 day |
 | 8 | **Polish:** About panel, recorded clip (20–30 s), portfolio card with the 路 seal, rewritten case study. | 1 day |

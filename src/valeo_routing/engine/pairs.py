@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import List, Sequence
+from typing import Collection, List, Sequence
 
 from .data import AvailabilityRow, StaffRow
 from .model import Pair
@@ -10,14 +10,14 @@ from .model import Pair
 
 def build_pairs(
     day: date, staff: Sequence[StaffRow], availability: Sequence[AvailabilityRow],
-    shift_starts_min: Sequence[int], shift_hours: float,
+    shift_starts_min: Sequence[int], shift_hours: float, unavailable: Collection[str] = (),
 ) -> List[Pair]:
     """Pair the i-th available nurse with the i-th available driver; shift starts cycle over the pairs.
 
-    Sick calls and rest days are respected (they are not 'available'). Late starts and car breakdowns
-    are not yet applied.
+    Sick calls and rest days are respected (they are not 'available'), as is anyone in `unavailable`.
+    Late starts and car breakdowns are not yet applied.
     """
-    on_duty = {a.staff_id for a in availability if a.date == day and a.status == "available"}
+    on_duty = {a.staff_id for a in availability if a.date == day and a.status == "available"} - set(unavailable)
     nurses = sorted((s for s in staff if s.role == "nurse" and s.staff_id in on_duty), key=lambda s: s.staff_id)
     drivers = sorted((s for s in staff if s.role == "driver" and s.staff_id in on_duty), key=lambda s: s.staff_id)
     length = int(round(shift_hours * 60))

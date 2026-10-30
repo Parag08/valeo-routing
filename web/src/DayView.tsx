@@ -17,7 +17,7 @@ export function DayView({ day, tolerance, selected, onSelect, onShowInLog, loadi
   return (
     <>
       <div className={`card${loading ? " loading" : ""}`}>
-        <h2>{day.weekday} {day.date} · {day.policy_label}</h2>
+        <h2>{day.weekday} {day.date} · {day.policy_label} · {day.roster_label} roster</h2>
         <p className="hint">
           One row per nurse and driver pair. Shaded bars are the shift; hover anything for details, click a visit to inspect the order.
         </p>
