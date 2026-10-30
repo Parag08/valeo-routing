@@ -15,8 +15,7 @@ from valeo_routing.settings import Settings
 
 from .conftest import ROOT, make_settings, read_csv
 
-DUBAI_LAT = (24.75, 25.40)
-DUBAI_LON = (54.90, 55.60)
+SERVED = {"Dubai", "Sharjah", "Ajman", "Umm Al Quwain", "Ras Al Khaimah", "Fujairah"}
 
 
 def ts(value: str) -> datetime:
@@ -96,12 +95,46 @@ def test_sample_lab_is_nearest(written):
         assert r["lab_id"] == min(dist, key=lambda k: (dist[k], k))
 
 
-def test_points_inside_dubai(written):
-    points = [(c["lat"], c["lon"]) for c in read_csv(written / "clients.csv")]
-    points += [(s["home_lat"], s["home_lon"]) for s in read_csv(written / "staff.csv")]
-    for lat, lon in points:
-        assert DUBAI_LAT[0] <= float(lat) <= DUBAI_LAT[1]
-        assert DUBAI_LON[0] <= float(lon) <= DUBAI_LON[1]
+def _service_area():
+    from valeo_routing.service_area import ServiceArea
+
+    return ServiceArea(ROOT / "data" / "reference" / "service_area.geojson")
+
+
+def test_service_area_covers_exactly_the_served_emirates():
+    assert set(_service_area().emirates) == SERVED
+
+
+def test_service_area_known_places():
+    area = _service_area()
+    assert area.emirate_at(25.1972, 55.2744) == "Dubai"  # Burj Khalifa
+    assert area.emirate_at(25.3250, 55.3850) == "Sharjah"  # Al Majaz
+    assert area.emirate_at(25.4110, 55.4400) == "Ajman"
+    assert area.emirate_at(25.1200, 56.3300) == "Fujairah"
+    assert area.emirate_at(24.4500, 54.3800) is None  # Abu Dhabi city: not served
+    assert area.emirate_at(24.2100, 55.7400) is None  # Al Ain: not served
+    assert area.emirate_at(25.2800, 56.3200) is None  # Madha: Oman
+    assert area.emirate_at(25.2100, 55.2200) is None  # sea off Jumeirah
+    assert area.emirate_at(25.1180, 55.1280) is None  # water between the Palm's fronds
+
+
+def test_area_centroids_on_land_in_their_emirate():
+    area = _service_area()
+    for row in read_csv(ROOT / "data" / "reference" / "areas.csv"):
+        assert row["emirate"] in SERVED, row["area_id"]
+        assert area.emirate_at(float(row["lat"]), float(row["lon"])) == row["emirate"], row["area_id"]
+    for name in ("depot.csv", "labs.csv"):
+        for row in read_csv(ROOT / "data" / "reference" / name):
+            assert area.contains(float(row["lat"]), float(row["lon"])), row
+
+
+def test_generated_points_on_land_in_their_area_emirate(written):
+    area = _service_area()
+    emirate_of = {r["area_id"]: r["emirate"] for r in read_csv(ROOT / "data" / "reference" / "areas.csv")}
+    points = [(c["area_id"], c["lat"], c["lon"]) for c in read_csv(written / "clients.csv")]
+    points += [(s["home_area_id"], s["home_lat"], s["home_lon"]) for s in read_csv(written / "staff.csv")]
+    for area_id, lat, lon in points:
+        assert area.emirate_at(float(lat), float(lon)) == emirate_of[area_id], (area_id, lat, lon)
 
 
 def test_cancelled_before_start(written):

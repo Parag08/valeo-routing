@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Tuple
 
 from .draw import pick, pick_many_without_replacement, pick_weighted
-from .geo import jitter
+from .geo import place_in_area
 from .reference import Area, Reference
 from .schema import ROLES, TIME_FMT, VERTICALS, WEEKDAYS
 
@@ -92,7 +92,7 @@ def make_staff(rng: random.Random, ref: Reference, counts: Dict[str, int], names
     for role, prefix, vertical in ROLES:
         for i in range(1, counts[role] + 1):
             area = _area_by_weight(rng, ref.areas, "staff_home")
-            lat, lon = jitter(rng, area.lat, area.lon, area.jitter_m)
+            lat, lon = place_in_area(rng, area, ref.service_area, ref.profile["geo"]["max_resample"])
             off = set(pick_many_without_replacement(rng, cfg["rest_day_weights"], rest_days))
             staff.append(
                 Staff(
@@ -120,7 +120,7 @@ def make_clients(rng: random.Random, ref: Reference, total: int) -> List[Client]
         if rng.random() < cfg["second_service_prob"]:
             services.add(rng.choice([v for v in VERTICALS if v != primary]))
         area = _area_by_weight(rng, ref.areas, primary)
-        lat, lon = jitter(rng, area.lat, area.lon, area.jitter_m)
+        lat, lon = place_in_area(rng, area, ref.service_area, ref.profile["geo"]["max_resample"])
         villa_share = cfg["villa_share_by_area"].get(area.area_id, cfg["villa_share_default"])
         building = "villa" if rng.random() < villa_share else "apartment"
         clients.append(

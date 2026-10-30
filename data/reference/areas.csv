@@ -13,11 +13,11 @@ AR-11,Mirdif,Dubai,25.221000,55.420000,1200,2.5,3.0,2.5,0.5
 AR-12,Damac Hills,Dubai,25.024000,55.249000,1200,1.5,2.5,1.5,0.1
 AR-13,Al Furjan,Dubai,25.027000,55.145000,1000,1.5,2.5,1.5,0.3
 AR-14,Jumeirah Park,Dubai,25.046000,55.156000,800,1.5,2.5,1.0,0.0
-AR-15,Dubai Marina,Dubai,25.077000,55.140000,400,1.5,1.5,3.0,0.3
+AR-15,Dubai Marina,Dubai,25.077000,55.145000,400,1.5,1.5,3.0,0.3
 AR-16,Jumeirah Lake Towers (JLT),Dubai,25.070000,55.143000,500,1.0,1.0,2.5,0.5
 AR-17,Jumeirah Beach Residence (JBR),Dubai,25.077500,55.134000,250,1.0,1.0,1.5,0.1
 AR-18,Downtown Dubai,Dubai,25.193500,55.279500,700,1.5,1.0,2.5,0.1
-AR-19,Business Bay,Dubai,25.187000,55.266000,600,1.0,1.0,2.5,0.4
+AR-19,Business Bay,Dubai,25.187000,55.266000,350,1.0,1.0,2.5,0.4
 AR-20,Jumeirah Village Circle (JVC),Dubai,25.060000,55.210000,1200,1.5,2.0,3.0,1.5
 AR-21,Dubai Silicon Oasis,Dubai,25.120000,55.380000,1200,1.0,1.5,2.0,1.5
 AR-22,Motor City,Dubai,25.045000,55.235000,800,1.0,1.5,1.5,0.3
@@ -31,3 +31,19 @@ AR-29,International City,Dubai,25.165000,55.410000,1200,0.5,0.3,1.5,4.0
 AR-30,Al Satwa,Dubai,25.228000,55.274000,700,0.8,0.3,1.5,3.0
 AR-31,Al Quoz,Dubai,25.142000,55.232000,1200,0.5,0.5,1.0,2.0
 AR-32,Oud Metha (Dubai Healthcare City),Dubai,25.230000,55.322000,700,1.5,0.5,1.5,1.0
+AR-33,Al Majaz,Sharjah,25.322000,55.388000,600,1.0,0.8,1.6,2.0
+AR-34,Al Qasimia,Sharjah,25.343000,55.395000,700,0.8,0.5,1.4,3.0
+AR-35,Al Khan,Sharjah,25.310000,55.372000,500,0.8,0.6,1.2,2.0
+AR-36,Al Nahda (Sharjah),Sharjah,25.306000,55.384000,400,0.8,0.5,1.5,3.5
+AR-37,Muwaileh,Sharjah,25.298000,55.458000,1000,0.8,0.6,1.4,3.0
+AR-38,Al Gharb (Rolla),Sharjah,25.357000,55.392000,500,0.6,0.3,1.0,2.5
+AR-39,Muwailih (University City side),Sharjah,25.290000,55.485000,1200,0.5,0.4,0.8,1.0
+AR-40,Mushairef,Ajman,25.390000,55.455000,700,0.6,0.4,0.9,2.5
+AR-41,Al Rumailah,Ajman,25.405000,55.438000,500,0.5,0.3,0.7,2.0
+AR-42,Al Jerf,Ajman,25.415000,55.505000,1000,0.4,0.3,0.6,1.5
+AR-43,Al Salamah (Umm Al Quwain),Umm Al Quwain,25.515000,55.615000,700,0.2,0.1,0.3,0.5
+AR-44,Suhaim (Ras Al Khaimah),Ras Al Khaimah,25.783000,55.978000,600,0.3,0.2,0.4,0.3
+AR-45,Al Qusaidat,Ras Al Khaimah,25.745000,55.985000,900,0.2,0.2,0.3,0.2
+AR-46,Al Jazirah Al Hamra,Ras Al Khaimah,25.684000,55.797000,400,0.1,0.2,0.2,0.0
+AR-47,Fujairah City Centre,Fujairah,25.125000,56.335000,800,0.2,0.1,0.3,0.2
+AR-48,Dibba Al Fujairah,Fujairah,25.595000,56.265000,700,0.1,0.1,0.1,0.1
