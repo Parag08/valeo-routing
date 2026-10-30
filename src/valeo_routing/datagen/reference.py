@@ -7,11 +7,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List
 
+from valeo_routing.service_area import ServiceArea
+
 
 @dataclass(frozen=True)
 class Area:
     area_id: str
     area_name: str
+    emirate: str
     lat: float
     lon: float
     jitter_m: int
@@ -40,6 +43,7 @@ class Reference:
     fleet: List[Car]
     names: List[str]
     profile: dict
+    service_area: ServiceArea
 
 
 def _rows(path: Path) -> List[Dict[str, str]]:
@@ -48,11 +52,12 @@ def _rows(path: Path) -> List[Dict[str, str]]:
 
 
 def load_reference(reference_dir: Path, profile_path: Path) -> Reference:
-    """Read areas, labs, fleet and names CSVs plus the demand profile JSON."""
+    """Read areas, labs, fleet and names CSVs, the service area and the demand profile JSON."""
     areas = [
         Area(
             area_id=r["area_id"],
             area_name=r["area_name"],
+            emirate=r["emirate"],
             lat=float(r["lat"]),
             lon=float(r["lon"]),
             jitter_m=int(r["jitter_m"]),
@@ -82,4 +87,5 @@ def load_reference(reference_dir: Path, profile_path: Path) -> Reference:
         fleet=sorted(fleet, key=lambda c: c.car_id),
         names=sorted(set(names)),
         profile=profile,
+        service_area=ServiceArea(reference_dir / "service_area.geojson"),
     )

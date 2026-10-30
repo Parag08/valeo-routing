@@ -2,12 +2,12 @@ appt_id,service_date,vertical,client_id,staff_id,start,end,service_min,needs_dro
 AP-20261102-0001,2026-11-02,nursing,CL-0170,NUR-003,2026-11-02T07:00,2026-11-02T15:00,480,true,true,,,,,routine,2026-10-26T19:27,whatsapp,corporate,confirmed,,
 AP-20261102-0002,2026-11-02,nursing,CL-0199,NUR-006,2026-11-02T07:00,2026-11-02T19:00,720,true,false,,,,,routine,2026-10-30T20:49,b2b,insurance,confirmed,,
 AP-20261102-0003,2026-11-02,sample,CL-0010,PHL-002,2026-11-02T07:00,2026-11-02T08:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-01T21:37,b2b,insurance,confirmed,,Call on arrival
-AP-20261102-0004,2026-11-02,sample,CL-0018,PHL-003,2026-11-02T07:00,2026-11-02T08:00,11,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-01T13:20,call_centre,insurance,confirmed,,"Child patient, parent present"
-AP-20261102-0005,2026-11-02,sample,CL-0031,PHL-004,2026-11-02T07:00,2026-11-02T08:00,13,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-01T17:32,b2b,self_pay,confirmed,,
+AP-20261102-0004,2026-11-02,sample,CL-0018,PHL-003,2026-11-02T07:00,2026-11-02T08:00,11,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-01T13:20,call_centre,insurance,confirmed,,"Child patient, parent present"
+AP-20261102-0005,2026-11-02,sample,CL-0031,PHL-004,2026-11-02T07:00,2026-11-02T08:00,13,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-01T17:32,b2b,self_pay,confirmed,,
 AP-20261102-0006,2026-11-02,sample,CL-0074,PHL-002,2026-11-02T07:00,2026-11-02T08:00,12,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-01T19:34,b2b,corporate,confirmed,,
-AP-20261102-0007,2026-11-02,sample,CL-0130,PHL-003,2026-11-02T07:00,2026-11-02T08:00,17,false,false,PCR,false,1440,LAB-01,routine,2026-10-31T14:01,app,insurance,confirmed,,Call on arrival
-AP-20261102-0008,2026-11-02,sample,CL-0154,PHL-005,2026-11-02T07:00,2026-11-02T08:00,16,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-01T10:53,app,insurance,confirmed,,
-AP-20261102-0009,2026-11-02,sample,CL-0213,PHL-005,2026-11-02T07:00,2026-11-02T08:00,13,false,false,CBC,false,480,LAB-03,routine,2026-11-01T09:24,app,corporate,confirmed,,
+AP-20261102-0007,2026-11-02,sample,CL-0130,PHL-003,2026-11-02T07:00,2026-11-02T08:00,17,false,false,PCR,false,1440,LAB-03,routine,2026-10-31T14:01,app,insurance,confirmed,,Call on arrival
+AP-20261102-0008,2026-11-02,sample,CL-0154,PHL-005,2026-11-02T07:00,2026-11-02T08:00,16,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-01T10:53,app,insurance,confirmed,,
+AP-20261102-0009,2026-11-02,sample,CL-0213,PHL-005,2026-11-02T07:00,2026-11-02T08:00,13,false,false,CBC,false,480,LAB-01,routine,2026-11-01T09:24,app,corporate,confirmed,,
 AP-20261102-0010,2026-11-02,nursing,CL-0004,NUR-007,2026-11-02T07:30,2026-11-02T19:30,720,true,true,,,,,routine,2026-10-26T09:15,call_centre,insurance,cancelled,2026-11-01T19:26,
 AP-20261102-0011,2026-11-02,nursing,CL-0087,NUR-011,2026-11-02T08:00,2026-11-02T20:00,720,true,true,,,,,routine,2026-10-19T17:00,whatsapp,corporate,confirmed,,
 AP-20261102-0012,2026-11-02,nursing,CL-0094,NUR-014,2026-11-02T08:00,2026-11-03T08:00,1440,true,false,,,,,routine,2026-10-31T18:38,whatsapp,insurance,confirmed,,Live-in
@@ -15,49 +15,49 @@ AP-20261102-0013,2026-11-02,nursing,CL-0118,NUR-009,2026-11-02T08:00,2026-11-03T
 AP-20261102-0014,2026-11-02,babysitting,CL-0004,BBS-011,2026-11-02T08:00,2026-11-02T14:00,360,true,true,,,,,routine,2026-10-31T19:10,app,self_pay,confirmed,,Nut allergy in the house
 AP-20261102-0015,2026-11-02,babysitting,CL-0122,BBS-004,2026-11-02T08:00,2026-11-02T12:00,240,true,true,,,,,routine,2026-10-28T21:39,whatsapp,self_pay,confirmed,,"Two kids, 4y and 7y"
 AP-20261102-0016,2026-11-02,sample,CL-0012,PHL-005,2026-11-02T08:00,2026-11-02T09:00,10,false,false,glucose_fasting,true,120,LAB-02,routine,2026-10-31T18:49,call_centre,self_pay,confirmed,,
-AP-20261102-0017,2026-11-02,sample,CL-0040,PHL-002,2026-11-02T08:00,2026-11-02T09:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-01T11:27,b2b,self_pay,confirmed,,Call on arrival
-AP-20261102-0018,2026-11-02,sample,CL-0045,PHL-001,2026-11-02T08:00,2026-11-02T09:00,11,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-01T11:46,whatsapp,insurance,confirmed,,
-AP-20261102-0019,2026-11-02,sample,CL-0046,PHL-002,2026-11-02T08:00,2026-11-02T09:00,10,false,false,PCR,false,1440,LAB-03,routine,2026-10-31T14:49,call_centre,insurance,confirmed,,
-AP-20261102-0020,2026-11-02,sample,CL-0047,PHL-003,2026-11-02T08:00,2026-11-02T09:00,10,false,false,glucose_fasting,true,120,LAB-02,routine,2026-10-28T10:54,app,insurance,confirmed,,"Child patient, parent present"
-AP-20261102-0021,2026-11-02,sample,CL-0077,PHL-005,2026-11-02T08:00,2026-11-02T09:00,12,false,false,lipid_fasting,true,240,LAB-02,routine,2026-10-28T15:20,app,self_pay,confirmed,,
-AP-20261102-0022,2026-11-02,sample,CL-0119,PHL-001,2026-11-02T08:00,2026-11-02T09:00,17,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-01T13:28,b2b,corporate,confirmed,,Call on arrival
+AP-20261102-0017,2026-11-02,sample,CL-0040,PHL-002,2026-11-02T08:00,2026-11-02T09:00,10,false,false,CBC,false,480,LAB-03,routine,2026-11-01T11:27,b2b,self_pay,confirmed,,Call on arrival
+AP-20261102-0018,2026-11-02,sample,CL-0045,PHL-001,2026-11-02T08:00,2026-11-02T09:00,11,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-01T11:46,whatsapp,insurance,confirmed,,
+AP-20261102-0019,2026-11-02,sample,CL-0046,PHL-002,2026-11-02T08:00,2026-11-02T09:00,10,false,false,PCR,false,1440,LAB-01,routine,2026-10-31T14:49,call_centre,insurance,confirmed,,
+AP-20261102-0020,2026-11-02,sample,CL-0047,PHL-003,2026-11-02T08:00,2026-11-02T09:00,10,false,false,glucose_fasting,true,120,LAB-03,routine,2026-10-28T10:54,app,insurance,confirmed,,"Child patient, parent present"
+AP-20261102-0021,2026-11-02,sample,CL-0077,PHL-005,2026-11-02T08:00,2026-11-02T09:00,12,false,false,lipid_fasting,true,240,LAB-03,routine,2026-10-28T15:20,app,self_pay,confirmed,,
+AP-20261102-0022,2026-11-02,sample,CL-0119,PHL-001,2026-11-02T08:00,2026-11-02T09:00,17,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-01T13:28,b2b,corporate,confirmed,,Call on arrival
 AP-20261102-0023,2026-11-02,sample,CL-0127,PHL-004,2026-11-02T08:00,2026-11-02T09:00,19,false,false,glucose_fasting,true,120,LAB-01,routine,2026-10-28T18:13,app,insurance,confirmed,,
 AP-20261102-0024,2026-11-02,sample,CL-0156,PHL-004,2026-11-02T08:00,2026-11-02T09:00,14,false,false,CBC,false,480,LAB-02,routine,2026-10-31T20:46,whatsapp,corporate,confirmed,,"Elderly patient, ground floor"
-AP-20261102-0025,2026-11-02,sample,CL-0200,PHL-003,2026-11-02T08:00,2026-11-02T09:00,17,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-01T08:39,call_centre,insurance,confirmed,,"Child patient, parent present"
+AP-20261102-0025,2026-11-02,sample,CL-0200,PHL-003,2026-11-02T08:00,2026-11-02T09:00,17,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-01T08:39,call_centre,insurance,confirmed,,"Child patient, parent present"
 AP-20261102-0026,2026-11-02,nursing,CL-0186,NUR-016,2026-11-02T09:00,2026-11-03T09:00,1440,true,false,,,,,routine,2026-10-28T21:37,app,self_pay,confirmed,,Live-in
 AP-20261102-0027,2026-11-02,babysitting,CL-0021,BBS-013,2026-11-02T09:00,2026-11-02T15:00,360,true,true,,,,,routine,2026-10-30T09:18,app,self_pay,confirmed,,
 AP-20261102-0028,2026-11-02,babysitting,CL-0138,BBS-001,2026-11-02T09:00,2026-11-02T13:00,240,true,true,,,,,routine,2026-10-28T12:00,whatsapp,corporate,confirmed,,Call on arrival
-AP-20261102-0029,2026-11-02,sample,CL-0009,PHL-001,2026-11-02T09:00,2026-11-02T10:00,10,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-01T20:53,app,insurance,confirmed,,
-AP-20261102-0030,2026-11-02,sample,CL-0050,PHL-005,2026-11-02T09:00,2026-11-02T10:00,13,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-01T14:13,call_centre,insurance,confirmed,,
+AP-20261102-0029,2026-11-02,sample,CL-0009,PHL-001,2026-11-02T09:00,2026-11-02T10:00,10,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-01T20:53,app,insurance,confirmed,,
+AP-20261102-0030,2026-11-02,sample,CL-0050,PHL-005,2026-11-02T09:00,2026-11-02T10:00,13,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-01T14:13,call_centre,insurance,confirmed,,
 AP-20261102-0031,2026-11-02,sample,CL-0066,PHL-002,2026-11-02T09:00,2026-11-02T10:00,20,false,false,lipid_fasting,true,240,LAB-02,routine,2026-10-31T11:52,call_centre,insurance,confirmed,,
 AP-20261102-0032,2026-11-02,sample,CL-0101,PHL-004,2026-11-02T09:00,2026-11-02T10:00,15,false,false,CBC,false,480,LAB-02,routine,2026-10-28T16:12,whatsapp,corporate,confirmed,,
 AP-20261102-0033,2026-11-02,sample,CL-0105,PHL-003,2026-11-02T09:00,2026-11-02T10:00,15,false,false,CBC,false,480,LAB-01,routine,2026-11-01T14:25,whatsapp,self_pay,confirmed,,
-AP-20261102-0034,2026-11-02,sample,CL-0150,PHL-004,2026-11-02T09:00,2026-11-02T10:00,15,false,false,CBC,false,480,LAB-01,routine,2026-11-01T16:39,app,insurance,confirmed,,
-AP-20261102-0035,2026-11-02,sample,CL-0161,PHL-001,2026-11-02T09:00,2026-11-02T10:00,13,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-01T20:09,app,insurance,confirmed,,
-AP-20261102-0036,2026-11-02,sample,CL-0168,PHL-005,2026-11-02T09:00,2026-11-02T10:00,10,false,false,CBC,false,480,LAB-01,routine,2026-10-31T13:22,app,self_pay,confirmed,,
-AP-20261102-0037,2026-11-02,sample,CL-0171,PHL-003,2026-11-02T09:00,2026-11-02T10:00,18,false,false,glucose_fasting,true,120,LAB-02,routine,2026-10-31T16:54,b2b,insurance,confirmed,,
+AP-20261102-0034,2026-11-02,sample,CL-0150,PHL-004,2026-11-02T09:00,2026-11-02T10:00,15,false,false,CBC,false,480,LAB-03,routine,2026-11-01T16:39,app,insurance,confirmed,,
+AP-20261102-0035,2026-11-02,sample,CL-0161,PHL-001,2026-11-02T09:00,2026-11-02T10:00,13,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-01T20:09,app,insurance,confirmed,,
+AP-20261102-0036,2026-11-02,sample,CL-0168,PHL-005,2026-11-02T09:00,2026-11-02T10:00,10,false,false,CBC,false,480,LAB-03,routine,2026-10-31T13:22,app,self_pay,confirmed,,
+AP-20261102-0037,2026-11-02,sample,CL-0171,PHL-003,2026-11-02T09:00,2026-11-02T10:00,18,false,false,glucose_fasting,true,120,LAB-01,routine,2026-10-31T16:54,b2b,insurance,confirmed,,
 AP-20261102-0038,2026-11-02,sample,CL-0190,PHL-002,2026-11-02T09:00,2026-11-02T10:00,11,false,false,PCR,false,1440,LAB-01,routine,2026-10-30T17:06,app,corporate,no_show,,Call on arrival
-AP-20261102-0039,2026-11-02,sample,CL-0078,PHL-002,2026-11-02T10:00,2026-11-02T11:00,11,false,false,CBC,false,480,LAB-02,routine,2026-10-31T11:03,whatsapp,corporate,confirmed,,
-AP-20261102-0040,2026-11-02,sample,CL-0180,PHL-002,2026-11-02T10:00,2026-11-02T11:00,15,false,false,CBC,false,480,LAB-02,routine,2026-10-31T17:49,call_centre,self_pay,confirmed,,
+AP-20261102-0039,2026-11-02,sample,CL-0078,PHL-002,2026-11-02T10:00,2026-11-02T11:00,11,false,false,CBC,false,480,LAB-01,routine,2026-10-31T11:03,whatsapp,corporate,confirmed,,
+AP-20261102-0040,2026-11-02,sample,CL-0180,PHL-002,2026-11-02T10:00,2026-11-02T11:00,15,false,false,CBC,false,480,LAB-01,routine,2026-10-31T17:49,call_centre,self_pay,confirmed,,
 AP-20261102-0041,2026-11-02,sample,CL-0202,PHL-005,2026-11-02T10:00,2026-11-02T11:00,17,false,false,CBC,false,480,LAB-01,routine,2026-11-01T14:12,app,corporate,confirmed,,Call on arrival
 AP-20261102-0042,2026-11-02,sample,CL-0079,PHL-003,2026-11-02T12:00,2026-11-02T13:00,10,false,false,CBC,false,480,LAB-01,routine,2026-10-31T09:16,call_centre,insurance,confirmed,,
 AP-20261102-0043,2026-11-02,sample,CL-0151,PHL-005,2026-11-02T12:00,2026-11-02T13:00,20,false,false,CBC,false,480,LAB-03,routine,2026-10-31T11:58,call_centre,insurance,confirmed,,
-AP-20261102-0044,2026-11-02,sample,CL-0210,PHL-005,2026-11-02T13:00,2026-11-02T14:00,19,false,false,urine,false,120,LAB-01,routine,2026-11-01T15:30,app,insurance,confirmed,,Call on arrival
+AP-20261102-0044,2026-11-02,sample,CL-0210,PHL-005,2026-11-02T13:00,2026-11-02T14:00,19,false,false,urine,false,120,LAB-03,routine,2026-11-01T15:30,app,insurance,confirmed,,Call on arrival
 AP-20261102-0045,2026-11-02,sample,CL-0144,PHL-004,2026-11-02T14:30,2026-11-02T15:30,14,false,false,CBC,false,480,LAB-01,fast_track,2026-11-02T12:32,app,insurance,confirmed,,
 AP-20261102-0046,2026-11-02,babysitting,CL-0090,BBS-001,2026-11-02T16:00,2026-11-03T00:00,480,true,true,,,,,routine,2026-11-01T09:56,app,self_pay,confirmed,,
-AP-20261102-0047,2026-11-02,sample,CL-0081,PHL-004,2026-11-02T16:00,2026-11-02T17:00,13,false,false,lipid_fasting,true,240,LAB-02,fast_track,2026-11-02T15:00,whatsapp,corporate,confirmed,,
+AP-20261102-0047,2026-11-02,sample,CL-0081,PHL-004,2026-11-02T16:00,2026-11-02T17:00,13,false,false,lipid_fasting,true,240,LAB-01,fast_track,2026-11-02T15:00,whatsapp,corporate,confirmed,,
 AP-20261102-0048,2026-11-02,sample,CL-0053,PHL-002,2026-11-02T17:00,2026-11-02T18:00,14,false,false,CBC,false,480,LAB-01,routine,2026-10-31T13:27,call_centre,insurance,confirmed,,
-AP-20261102-0049,2026-11-02,sample,CL-0153,PHL-005,2026-11-02T18:00,2026-11-02T19:00,20,false,false,CBC,false,480,LAB-02,routine,2026-10-30T09:53,b2b,self_pay,confirmed,,
-AP-20261102-0050,2026-11-02,sample,CL-0191,PHL-005,2026-11-02T18:00,2026-11-02T19:00,20,false,false,urine,false,120,LAB-02,routine,2026-11-01T18:53,whatsapp,insurance,confirmed,,
+AP-20261102-0049,2026-11-02,sample,CL-0153,PHL-005,2026-11-02T18:00,2026-11-02T19:00,20,false,false,CBC,false,480,LAB-01,routine,2026-10-30T09:53,b2b,self_pay,confirmed,,
+AP-20261102-0050,2026-11-02,sample,CL-0191,PHL-005,2026-11-02T18:00,2026-11-02T19:00,20,false,false,urine,false,120,LAB-01,routine,2026-11-01T18:53,whatsapp,insurance,confirmed,,
 AP-20261103-0001,2026-11-03,nursing,CL-0055,NUR-004,2026-11-03T07:00,2026-11-03T19:00,720,true,true,,,,,routine,2026-10-29T17:39,b2b,insurance,confirmed,,
 AP-20261103-0002,2026-11-03,sample,CL-0056,PHL-004,2026-11-03T07:00,2026-11-03T08:00,18,false,false,PCR,false,1440,LAB-02,routine,2026-11-01T13:04,app,insurance,confirmed,,
 AP-20261103-0003,2026-11-03,sample,CL-0066,PHL-001,2026-11-03T07:00,2026-11-03T08:00,14,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-02T18:54,b2b,insurance,confirmed,,Call on arrival
-AP-20261103-0004,2026-11-03,sample,CL-0070,PHL-002,2026-11-03T07:00,2026-11-03T08:00,13,false,false,PCR,false,1440,LAB-03,routine,2026-11-02T13:47,call_centre,insurance,confirmed,,Call on arrival
-AP-20261103-0005,2026-11-03,sample,CL-0092,PHL-004,2026-11-03T07:00,2026-11-03T08:00,20,false,false,urine,false,120,LAB-03,routine,2026-10-31T18:59,b2b,insurance,confirmed,,
+AP-20261103-0004,2026-11-03,sample,CL-0070,PHL-002,2026-11-03T07:00,2026-11-03T08:00,13,false,false,PCR,false,1440,LAB-01,routine,2026-11-02T13:47,call_centre,insurance,confirmed,,Call on arrival
+AP-20261103-0005,2026-11-03,sample,CL-0092,PHL-004,2026-11-03T07:00,2026-11-03T08:00,20,false,false,urine,false,120,LAB-01,routine,2026-10-31T18:59,b2b,insurance,confirmed,,
 AP-20261103-0006,2026-11-03,sample,CL-0099,PHL-001,2026-11-03T07:00,2026-11-03T08:00,14,false,false,urine,false,120,LAB-02,routine,2026-11-02T14:12,b2b,insurance,confirmed,,Difficult veins
-AP-20261103-0007,2026-11-03,sample,CL-0106,PHL-002,2026-11-03T07:00,2026-11-03T08:00,13,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-01T21:22,app,insurance,confirmed,,
-AP-20261103-0008,2026-11-03,sample,CL-0172,PHL-005,2026-11-03T07:00,2026-11-03T08:00,17,false,false,glucose_fasting,true,120,LAB-02,routine,2026-10-29T13:53,app,insurance,confirmed,,Call on arrival
-AP-20261103-0009,2026-11-03,sample,CL-0210,PHL-005,2026-11-03T07:00,2026-11-03T08:00,14,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-01T21:04,call_centre,corporate,confirmed,,
+AP-20261103-0007,2026-11-03,sample,CL-0106,PHL-002,2026-11-03T07:00,2026-11-03T08:00,13,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-01T21:22,app,insurance,confirmed,,
+AP-20261103-0008,2026-11-03,sample,CL-0172,PHL-005,2026-11-03T07:00,2026-11-03T08:00,17,false,false,glucose_fasting,true,120,LAB-03,routine,2026-10-29T13:53,app,insurance,confirmed,,Call on arrival
+AP-20261103-0009,2026-11-03,sample,CL-0210,PHL-005,2026-11-03T07:00,2026-11-03T08:00,14,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-01T21:04,call_centre,corporate,confirmed,,
 AP-20261103-0010,2026-11-03,nursing,CL-0169,NUR-001,2026-11-03T07:30,2026-11-03T15:30,480,true,true,,,,,routine,2026-11-01T12:10,b2b,self_pay,confirmed,,
 AP-20261103-0011,2026-11-03,nursing,CL-0027,NUR-013,2026-11-03T08:00,2026-11-04T08:00,1440,true,false,,,,,routine,2026-10-20T16:05,app,insurance,confirmed,,Live-in
 AP-20261103-0012,2026-11-03,nursing,CL-0087,NUR-012,2026-11-03T08:00,2026-11-03T20:00,720,true,true,,,,,routine,2026-11-01T21:58,call_centre,self_pay,confirmed,,
@@ -69,42 +69,42 @@ AP-20261103-0017,2026-11-03,nursing,CL-0198,NUR-010,2026-11-03T08:00,2026-11-03T
 AP-20261103-0018,2026-11-03,babysitting,CL-0015,BBS-010,2026-11-03T08:00,2026-11-03T14:00,360,true,false,,,,,routine,2026-10-27T15:34,app,self_pay,confirmed,,
 AP-20261103-0019,2026-11-03,babysitting,CL-0021,BBS-013,2026-11-03T08:00,2026-11-03T16:00,480,true,true,,,,,routine,2026-10-31T11:24,call_centre,self_pay,confirmed,,Call on arrival
 AP-20261103-0020,2026-11-03,babysitting,CL-0107,BBS-011,2026-11-03T08:00,2026-11-03T12:00,240,true,true,,,,,routine,2026-10-29T08:28,app,self_pay,confirmed,,
-AP-20261103-0021,2026-11-03,sample,CL-0067,PHL-003,2026-11-03T08:00,2026-11-03T09:00,11,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-02T21:31,app,insurance,confirmed,,
+AP-20261103-0021,2026-11-03,sample,CL-0067,PHL-003,2026-11-03T08:00,2026-11-03T09:00,11,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-02T21:31,app,insurance,confirmed,,
 AP-20261103-0022,2026-11-03,sample,CL-0105,PHL-005,2026-11-03T08:00,2026-11-03T09:00,13,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-01T10:35,call_centre,corporate,confirmed,,
-AP-20261103-0023,2026-11-03,sample,CL-0110,PHL-005,2026-11-03T08:00,2026-11-03T09:00,17,false,false,urine,false,120,LAB-02,routine,2026-10-29T09:30,app,insurance,confirmed,,"Elderly patient, ground floor"
+AP-20261103-0023,2026-11-03,sample,CL-0110,PHL-005,2026-11-03T08:00,2026-11-03T09:00,17,false,false,urine,false,120,LAB-01,routine,2026-10-29T09:30,app,insurance,confirmed,,"Elderly patient, ground floor"
 AP-20261103-0024,2026-11-03,sample,CL-0134,PHL-001,2026-11-03T08:00,2026-11-03T09:00,11,false,false,CBC,false,480,LAB-02,routine,2026-11-01T18:56,b2b,self_pay,confirmed,,Call on arrival
-AP-20261103-0025,2026-11-03,sample,CL-0139,PHL-002,2026-11-03T08:00,2026-11-03T09:00,15,false,false,CBC,false,480,LAB-01,routine,2026-11-02T17:33,app,insurance,confirmed,,
+AP-20261103-0025,2026-11-03,sample,CL-0139,PHL-002,2026-11-03T08:00,2026-11-03T09:00,15,false,false,CBC,false,480,LAB-03,routine,2026-11-02T17:33,app,insurance,confirmed,,
 AP-20261103-0026,2026-11-03,sample,CL-0144,PHL-002,2026-11-03T08:00,2026-11-03T09:00,15,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-02T10:52,whatsapp,self_pay,confirmed,,Difficult veins
-AP-20261103-0027,2026-11-03,sample,CL-0159,PHL-004,2026-11-03T08:00,2026-11-03T09:00,13,false,false,CBC,false,480,LAB-03,routine,2026-11-01T21:50,app,self_pay,confirmed,,
-AP-20261103-0028,2026-11-03,sample,CL-0167,PHL-004,2026-11-03T08:00,2026-11-03T09:00,16,false,false,CBC,false,480,LAB-01,routine,2026-11-01T18:18,b2b,self_pay,confirmed,,"Elderly patient, ground floor"
-AP-20261103-0029,2026-11-03,sample,CL-0189,PHL-001,2026-11-03T08:00,2026-11-03T09:00,14,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-02T10:23,call_centre,insurance,confirmed,,
-AP-20261103-0030,2026-11-03,sample,CL-0096,PHL-003,2026-11-03T08:15,2026-11-03T09:15,15,false,false,glucose_fasting,true,120,LAB-01,fast_track,2026-11-03T07:18,call_centre,insurance,confirmed,,
+AP-20261103-0027,2026-11-03,sample,CL-0159,PHL-004,2026-11-03T08:00,2026-11-03T09:00,13,false,false,CBC,false,480,LAB-01,routine,2026-11-01T21:50,app,self_pay,confirmed,,
+AP-20261103-0028,2026-11-03,sample,CL-0167,PHL-004,2026-11-03T08:00,2026-11-03T09:00,16,false,false,CBC,false,480,LAB-03,routine,2026-11-01T18:18,b2b,self_pay,confirmed,,"Elderly patient, ground floor"
+AP-20261103-0029,2026-11-03,sample,CL-0189,PHL-001,2026-11-03T08:00,2026-11-03T09:00,14,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-02T10:23,call_centre,insurance,confirmed,,
+AP-20261103-0030,2026-11-03,sample,CL-0096,PHL-003,2026-11-03T08:15,2026-11-03T09:15,15,false,false,glucose_fasting,true,120,LAB-03,fast_track,2026-11-03T07:18,call_centre,insurance,confirmed,,
 AP-20261103-0031,2026-11-03,nursing,CL-0152,NUR-003,2026-11-03T09:00,2026-11-04T09:00,1440,true,false,,,,,routine,2026-11-01T08:24,app,corporate,confirmed,,Live-in
 AP-20261103-0032,2026-11-03,babysitting,CL-0145,BBS-002,2026-11-03T09:00,2026-11-03T16:00,420,true,true,,,,,routine,2026-10-31T09:50,app,self_pay,confirmed,,Call on arrival
 AP-20261103-0033,2026-11-03,sample,CL-0012,PHL-005,2026-11-03T09:00,2026-11-03T10:00,16,false,false,glucose_fasting,true,120,LAB-02,routine,2026-10-31T08:50,b2b,corporate,confirmed,,
-AP-20261103-0034,2026-11-03,sample,CL-0085,PHL-001,2026-11-03T09:00,2026-11-03T10:00,10,false,false,CBC,false,480,LAB-01,routine,2026-10-31T16:06,call_centre,insurance,confirmed,,
-AP-20261103-0035,2026-11-03,sample,CL-0197,PHL-001,2026-11-03T09:00,2026-11-03T10:00,19,false,false,lipid_fasting,true,240,LAB-02,routine,2026-10-31T08:41,b2b,corporate,confirmed,,
-AP-20261103-0036,2026-11-03,sample,CL-0200,PHL-004,2026-11-03T09:00,2026-11-03T10:00,12,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-02T18:58,whatsapp,self_pay,confirmed,,
+AP-20261103-0034,2026-11-03,sample,CL-0085,PHL-001,2026-11-03T09:00,2026-11-03T10:00,10,false,false,CBC,false,480,LAB-02,routine,2026-10-31T16:06,call_centre,insurance,confirmed,,
+AP-20261103-0035,2026-11-03,sample,CL-0197,PHL-001,2026-11-03T09:00,2026-11-03T10:00,19,false,false,lipid_fasting,true,240,LAB-01,routine,2026-10-31T08:41,b2b,corporate,confirmed,,
+AP-20261103-0036,2026-11-03,sample,CL-0200,PHL-004,2026-11-03T09:00,2026-11-03T10:00,12,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-02T18:58,whatsapp,self_pay,confirmed,,
 AP-20261103-0037,2026-11-03,sample,CL-0010,PHL-002,2026-11-03T10:00,2026-11-03T11:00,20,false,false,CBC,false,480,LAB-02,routine,2026-11-02T11:01,b2b,corporate,confirmed,,
-AP-20261103-0038,2026-11-03,sample,CL-0030,PHL-002,2026-11-03T10:00,2026-11-03T11:00,10,false,false,CBC,false,480,LAB-02,routine,2026-11-02T14:14,call_centre,self_pay,confirmed,,
-AP-20261103-0039,2026-11-03,sample,CL-0031,PHL-001,2026-11-03T10:00,2026-11-03T11:00,16,false,false,CBC,false,480,LAB-03,routine,2026-11-02T21:49,call_centre,insurance,confirmed,,
-AP-20261103-0040,2026-11-03,sample,CL-0062,PHL-004,2026-11-03T10:00,2026-11-03T11:00,11,false,false,PCR,false,1440,LAB-02,routine,2026-11-02T12:01,call_centre,corporate,confirmed,,Call on arrival
-AP-20261103-0041,2026-11-03,sample,CL-0153,PHL-005,2026-11-03T10:00,2026-11-03T11:00,19,false,false,CBC,false,480,LAB-02,routine,2026-11-02T20:02,app,insurance,confirmed,,
+AP-20261103-0038,2026-11-03,sample,CL-0030,PHL-002,2026-11-03T10:00,2026-11-03T11:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-02T14:14,call_centre,self_pay,confirmed,,
+AP-20261103-0039,2026-11-03,sample,CL-0031,PHL-001,2026-11-03T10:00,2026-11-03T11:00,16,false,false,CBC,false,480,LAB-01,routine,2026-11-02T21:49,call_centre,insurance,confirmed,,
+AP-20261103-0040,2026-11-03,sample,CL-0062,PHL-004,2026-11-03T10:00,2026-11-03T11:00,11,false,false,PCR,false,1440,LAB-03,routine,2026-11-02T12:01,call_centre,corporate,confirmed,,Call on arrival
+AP-20261103-0041,2026-11-03,sample,CL-0153,PHL-005,2026-11-03T10:00,2026-11-03T11:00,19,false,false,CBC,false,480,LAB-01,routine,2026-11-02T20:02,app,insurance,confirmed,,
 AP-20261103-0042,2026-11-03,sample,CL-0195,PHL-001,2026-11-03T10:00,2026-11-03T11:00,20,false,false,CBC,false,480,LAB-02,routine,2026-11-02T17:47,app,self_pay,confirmed,,
 AP-20261103-0043,2026-11-03,sample,CL-0211,PHL-004,2026-11-03T10:00,2026-11-03T11:00,19,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-01T08:15,call_centre,insurance,confirmed,,
 AP-20261103-0044,2026-11-03,babysitting,CL-0205,BBS-012,2026-11-03T10:30,2026-11-03T14:30,240,true,true,,,,,routine,2026-11-02T12:50,whatsapp,self_pay,cancelled,2026-11-02T16:15,"Two kids, 4y and 7y"
 AP-20261103-0045,2026-11-03,sample,CL-0083,PHL-003,2026-11-03T10:30,2026-11-03T11:30,18,false,false,lipid_fasting,true,240,LAB-01,fast_track,2026-11-03T09:51,b2b,corporate,confirmed,,
 AP-20261103-0046,2026-11-03,sample,CL-0113,PHL-005,2026-11-03T10:30,2026-11-03T11:30,17,false,false,glucose_fasting,true,120,LAB-02,fast_track,2026-11-03T08:32,b2b,insurance,confirmed,,"Elderly patient, ground floor"
 AP-20261103-0047,2026-11-03,sample,CL-0011,PHL-001,2026-11-03T11:00,2026-11-03T12:00,19,false,false,CBC,false,480,LAB-02,routine,2026-11-02T14:33,call_centre,corporate,confirmed,,
-AP-20261103-0048,2026-11-03,sample,CL-0187,PHL-001,2026-11-03T11:00,2026-11-03T12:00,10,false,false,CBC,false,480,LAB-02,routine,2026-11-02T11:03,app,self_pay,no_show,,
+AP-20261103-0048,2026-11-03,sample,CL-0187,PHL-001,2026-11-03T11:00,2026-11-03T12:00,10,false,false,CBC,false,480,LAB-03,routine,2026-11-02T11:03,app,self_pay,no_show,,
 AP-20261103-0049,2026-11-03,sample,CL-0022,PHL-004,2026-11-03T11:15,2026-11-03T12:15,19,false,false,urine,false,120,LAB-02,fast_track,2026-11-03T09:59,app,insurance,confirmed,,
-AP-20261103-0050,2026-11-03,sample,CL-0077,PHL-005,2026-11-03T11:30,2026-11-03T12:30,14,false,false,glucose_fasting,true,120,LAB-02,fast_track,2026-11-03T09:42,whatsapp,corporate,confirmed,,
+AP-20261103-0050,2026-11-03,sample,CL-0077,PHL-005,2026-11-03T11:30,2026-11-03T12:30,14,false,false,glucose_fasting,true,120,LAB-03,fast_track,2026-11-03T09:42,whatsapp,corporate,confirmed,,
 AP-20261103-0051,2026-11-03,babysitting,CL-0220,BBS-003,2026-11-03T12:00,2026-11-03T16:00,240,true,true,,,,,routine,2026-11-02T08:12,app,self_pay,confirmed,,"Infant, 8 months"
-AP-20261103-0052,2026-11-03,sample,CL-0130,PHL-005,2026-11-03T12:00,2026-11-03T13:00,11,false,false,urine,false,120,LAB-01,routine,2026-11-01T15:42,b2b,self_pay,confirmed,,
-AP-20261103-0053,2026-11-03,sample,CL-0161,PHL-001,2026-11-03T13:30,2026-11-03T14:30,17,false,false,glucose_fasting,true,120,LAB-02,fast_track,2026-11-03T12:02,whatsapp,self_pay,confirmed,,
-AP-20261103-0054,2026-11-03,sample,CL-0091,PHL-002,2026-11-03T14:00,2026-11-03T15:00,13,false,false,CBC,false,480,LAB-01,routine,2026-10-29T19:21,call_centre,self_pay,confirmed,,
+AP-20261103-0052,2026-11-03,sample,CL-0130,PHL-005,2026-11-03T12:00,2026-11-03T13:00,11,false,false,urine,false,120,LAB-03,routine,2026-11-01T15:42,b2b,self_pay,confirmed,,
+AP-20261103-0053,2026-11-03,sample,CL-0161,PHL-001,2026-11-03T13:30,2026-11-03T14:30,17,false,false,glucose_fasting,true,120,LAB-03,fast_track,2026-11-03T12:02,whatsapp,self_pay,confirmed,,
+AP-20261103-0054,2026-11-03,sample,CL-0091,PHL-002,2026-11-03T14:00,2026-11-03T15:00,13,false,false,CBC,false,480,LAB-03,routine,2026-10-29T19:21,call_centre,self_pay,confirmed,,
 AP-20261103-0055,2026-11-03,sample,CL-0068,PHL-004,2026-11-03T15:00,2026-11-03T16:00,17,false,false,CBC,false,480,LAB-02,routine,2026-11-02T18:40,call_centre,insurance,confirmed,,
-AP-20261103-0056,2026-11-03,sample,CL-0216,PHL-005,2026-11-03T15:15,2026-11-03T16:15,19,false,false,glucose_fasting,true,120,LAB-02,fast_track,2026-11-03T14:06,call_centre,insurance,confirmed,,"Child patient, parent present"
+AP-20261103-0056,2026-11-03,sample,CL-0216,PHL-005,2026-11-03T15:15,2026-11-03T16:15,19,false,false,glucose_fasting,true,120,LAB-01,fast_track,2026-11-03T14:06,call_centre,insurance,confirmed,,"Child patient, parent present"
 AP-20261103-0057,2026-11-03,babysitting,CL-0059,BBS-011,2026-11-03T16:00,2026-11-04T00:00,480,true,true,,,,,routine,2026-11-02T09:42,whatsapp,self_pay,confirmed,,Call on arrival
 AP-20261103-0058,2026-11-03,babysitting,CL-0090,BBS-001,2026-11-03T16:00,2026-11-04T00:00,480,true,true,,,,,routine,2026-11-01T20:50,app,self_pay,confirmed,,
 AP-20261103-0059,2026-11-03,sample,CL-0002,PHL-002,2026-11-03T16:00,2026-11-03T17:00,20,false,false,PCR,false,1440,LAB-02,routine,2026-11-02T19:05,call_centre,self_pay,confirmed,,"Child patient, parent present"
@@ -112,34 +112,34 @@ AP-20261103-0060,2026-11-03,babysitting,CL-0185,BBS-006,2026-11-03T16:30,2026-11
 AP-20261103-0061,2026-11-03,babysitting,CL-0005,BBS-004,2026-11-03T17:00,2026-11-03T22:00,300,true,true,,,,,routine,2026-11-01T15:36,app,self_pay,confirmed,,"Two kids, 4y and 7y"
 AP-20261103-0062,2026-11-03,sample,CL-0064,PHL-001,2026-11-03T17:00,2026-11-03T18:00,20,false,false,CBC,false,480,LAB-02,routine,2026-11-01T14:55,app,insurance,confirmed,,
 AP-20261103-0063,2026-11-03,sample,CL-0217,PHL-001,2026-11-03T17:00,2026-11-03T18:00,11,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-10-31T20:15,b2b,insurance,confirmed,,
-AP-20261103-0064,2026-11-03,sample,CL-0017,PHL-001,2026-11-03T18:30,2026-11-03T19:30,11,false,false,lipid_fasting,true,240,LAB-03,fast_track,2026-11-03T16:49,b2b,insurance,confirmed,,Difficult veins
+AP-20261103-0064,2026-11-03,sample,CL-0017,PHL-001,2026-11-03T18:30,2026-11-03T19:30,11,false,false,lipid_fasting,true,240,LAB-01,fast_track,2026-11-03T16:49,b2b,insurance,confirmed,,Difficult veins
 AP-20261103-0065,2026-11-03,nursing,CL-0121,NUR-016,2026-11-03T19:00,2026-11-04T07:00,720,true,true,,,,,routine,2026-11-02T12:52,call_centre,self_pay,confirmed,,Post-op wound care
 AP-20261104-0001,2026-11-04,nursing,CL-0007,NUR-015,2026-11-04T07:00,2026-11-04T15:00,480,false,false,,,,,routine,2026-11-02T14:09,b2b,insurance,confirmed,,
 AP-20261104-0002,2026-11-04,nursing,CL-0055,NUR-004,2026-11-04T07:00,2026-11-04T15:00,480,true,false,,,,,routine,2026-10-28T09:35,call_centre,insurance,confirmed,,
 AP-20261104-0003,2026-11-04,nursing,CL-0069,NUR-007,2026-11-04T07:00,2026-11-04T19:00,720,true,true,,,,,routine,2026-11-02T16:53,call_centre,corporate,confirmed,,
 AP-20261104-0004,2026-11-04,sample,CL-0126,PHL-002,2026-11-04T07:00,2026-11-04T08:00,19,false,false,PCR,false,1440,LAB-02,routine,2026-11-03T13:43,app,self_pay,confirmed,,
-AP-20261104-0005,2026-11-04,sample,CL-0175,PHL-003,2026-11-04T07:00,2026-11-04T08:00,18,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-03T15:45,call_centre,self_pay,cancelled,2026-11-03T22:16,Call on arrival
-AP-20261104-0006,2026-11-04,sample,CL-0180,PHL-002,2026-11-04T07:00,2026-11-04T08:00,11,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-03T10:03,call_centre,insurance,cancelled,2026-11-03T11:46,
+AP-20261104-0005,2026-11-04,sample,CL-0175,PHL-003,2026-11-04T07:00,2026-11-04T08:00,18,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-03T15:45,call_centre,self_pay,cancelled,2026-11-03T22:16,Call on arrival
+AP-20261104-0006,2026-11-04,sample,CL-0180,PHL-002,2026-11-04T07:00,2026-11-04T08:00,11,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-03T10:03,call_centre,insurance,cancelled,2026-11-03T11:46,
 AP-20261104-0007,2026-11-04,sample,CL-0204,PHL-001,2026-11-04T07:00,2026-11-04T08:00,17,false,false,CBC,false,480,LAB-02,routine,2026-11-03T09:49,app,self_pay,confirmed,,
 AP-20261104-0008,2026-11-04,nursing,CL-0038,NUR-006,2026-11-04T08:00,2026-11-04T16:00,480,true,true,,,,,routine,2026-11-02T13:21,whatsapp,self_pay,confirmed,,Post-op wound care
 AP-20261104-0009,2026-11-04,nursing,CL-0118,NUR-009,2026-11-04T08:00,2026-11-05T08:00,1440,true,false,,,,,routine,2026-11-02T21:04,call_centre,insurance,confirmed,,Live-in
 AP-20261104-0010,2026-11-04,babysitting,CL-0015,BBS-008,2026-11-04T08:00,2026-11-04T17:00,540,true,true,,,,,routine,2026-11-03T19:02,whatsapp,corporate,confirmed,,
 AP-20261104-0011,2026-11-04,babysitting,CL-0201,BBS-003,2026-11-04T08:00,2026-11-04T13:00,300,true,true,,,,,routine,2026-10-30T15:25,call_centre,self_pay,confirmed,,
-AP-20261104-0012,2026-11-04,sample,CL-0024,PHL-004,2026-11-04T08:00,2026-11-04T09:00,18,false,false,CBC,false,480,LAB-01,routine,2026-11-03T21:44,b2b,insurance,confirmed,,Call on arrival
-AP-20261104-0013,2026-11-04,sample,CL-0030,PHL-002,2026-11-04T08:00,2026-11-04T09:00,11,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-03T21:19,whatsapp,corporate,confirmed,,
-AP-20261104-0014,2026-11-04,sample,CL-0031,PHL-004,2026-11-04T08:00,2026-11-04T09:00,17,false,false,lipid_fasting,true,240,LAB-03,routine,2026-10-30T12:22,app,insurance,confirmed,,Call on arrival
+AP-20261104-0012,2026-11-04,sample,CL-0024,PHL-004,2026-11-04T08:00,2026-11-04T09:00,18,false,false,CBC,false,480,LAB-03,routine,2026-11-03T21:44,b2b,insurance,confirmed,,Call on arrival
+AP-20261104-0013,2026-11-04,sample,CL-0030,PHL-002,2026-11-04T08:00,2026-11-04T09:00,11,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-03T21:19,whatsapp,corporate,confirmed,,
+AP-20261104-0014,2026-11-04,sample,CL-0031,PHL-004,2026-11-04T08:00,2026-11-04T09:00,17,false,false,lipid_fasting,true,240,LAB-01,routine,2026-10-30T12:22,app,insurance,confirmed,,Call on arrival
 AP-20261104-0015,2026-11-04,sample,CL-0083,PHL-003,2026-11-04T08:00,2026-11-04T09:00,16,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-03T15:12,b2b,insurance,confirmed,,
-AP-20261104-0016,2026-11-04,sample,CL-0122,PHL-003,2026-11-04T08:00,2026-11-04T09:00,16,false,false,PCR,false,1440,LAB-02,routine,2026-11-03T14:03,app,self_pay,confirmed,,Call on arrival
-AP-20261104-0017,2026-11-04,sample,CL-0139,PHL-002,2026-11-04T08:00,2026-11-04T09:00,19,false,false,PCR,false,1440,LAB-01,routine,2026-11-02T17:11,whatsapp,corporate,confirmed,,
+AP-20261104-0016,2026-11-04,sample,CL-0122,PHL-003,2026-11-04T08:00,2026-11-04T09:00,16,false,false,PCR,false,1440,LAB-03,routine,2026-11-03T14:03,app,self_pay,confirmed,,Call on arrival
+AP-20261104-0017,2026-11-04,sample,CL-0139,PHL-002,2026-11-04T08:00,2026-11-04T09:00,19,false,false,PCR,false,1440,LAB-03,routine,2026-11-02T17:11,whatsapp,corporate,confirmed,,
 AP-20261104-0018,2026-11-04,nursing,CL-0047,NUR-014,2026-11-04T08:30,2026-11-04T16:30,480,true,true,,,,,routine,2026-11-01T19:52,call_centre,insurance,confirmed,,Call on arrival
 AP-20261104-0019,2026-11-04,sample,CL-0033,PHL-005,2026-11-04T08:30,2026-11-04T09:30,18,false,false,lipid_fasting,true,240,LAB-01,fast_track,2026-11-04T06:41,app,insurance,confirmed,,"Elderly patient, ground floor"
 AP-20261104-0020,2026-11-04,nursing,CL-0028,NUR-008,2026-11-04T09:00,2026-11-05T09:00,1440,true,false,,,,,routine,2026-11-02T21:06,call_centre,insurance,cancelled,2026-11-04T08:38,Live-in
-AP-20261104-0021,2026-11-04,sample,CL-0003,PHL-003,2026-11-04T09:00,2026-11-04T10:00,11,false,false,urine,false,120,LAB-01,routine,2026-11-01T12:17,app,self_pay,confirmed,,"Elderly patient, ground floor"
-AP-20261104-0022,2026-11-04,sample,CL-0013,PHL-001,2026-11-04T09:00,2026-11-04T10:00,19,false,false,urine,false,120,LAB-02,routine,2026-11-03T15:54,b2b,insurance,no_show,,
+AP-20261104-0021,2026-11-04,sample,CL-0003,PHL-003,2026-11-04T09:00,2026-11-04T10:00,11,false,false,urine,false,120,LAB-02,routine,2026-11-01T12:17,app,self_pay,confirmed,,"Elderly patient, ground floor"
+AP-20261104-0022,2026-11-04,sample,CL-0013,PHL-001,2026-11-04T09:00,2026-11-04T10:00,19,false,false,urine,false,120,LAB-01,routine,2026-11-03T15:54,b2b,insurance,no_show,,
 AP-20261104-0023,2026-11-04,sample,CL-0049,PHL-003,2026-11-04T09:00,2026-11-04T10:00,12,false,false,CBC,false,480,LAB-01,routine,2026-11-03T14:58,call_centre,insurance,confirmed,,Difficult veins
-AP-20261104-0024,2026-11-04,sample,CL-0098,PHL-004,2026-11-04T09:00,2026-11-04T10:00,14,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-03T20:02,whatsapp,insurance,confirmed,,Difficult veins
-AP-20261104-0025,2026-11-04,sample,CL-0167,PHL-004,2026-11-04T09:00,2026-11-04T10:00,20,false,false,glucose_fasting,true,120,LAB-01,fast_track,2026-11-04T07:10,app,insurance,confirmed,,
-AP-20261104-0026,2026-11-04,sample,CL-0197,PHL-001,2026-11-04T09:00,2026-11-04T10:00,16,false,false,urine,false,120,LAB-02,routine,2026-11-02T20:06,app,self_pay,confirmed,,
+AP-20261104-0024,2026-11-04,sample,CL-0098,PHL-004,2026-11-04T09:00,2026-11-04T10:00,14,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-03T20:02,whatsapp,insurance,confirmed,,Difficult veins
+AP-20261104-0025,2026-11-04,sample,CL-0167,PHL-004,2026-11-04T09:00,2026-11-04T10:00,20,false,false,glucose_fasting,true,120,LAB-03,fast_track,2026-11-04T07:10,app,insurance,confirmed,,
+AP-20261104-0026,2026-11-04,sample,CL-0197,PHL-001,2026-11-04T09:00,2026-11-04T10:00,16,false,false,urine,false,120,LAB-01,routine,2026-11-02T20:06,app,self_pay,confirmed,,
 AP-20261104-0027,2026-11-04,babysitting,CL-0131,BBS-004,2026-11-04T10:00,2026-11-04T14:00,240,true,true,,,,,routine,2026-11-02T17:44,app,self_pay,confirmed,,
 AP-20261104-0028,2026-11-04,sample,CL-0010,PHL-002,2026-11-04T10:00,2026-11-04T11:00,12,false,false,CBC,false,480,LAB-02,routine,2026-11-03T19:54,whatsapp,insurance,confirmed,,
 AP-20261104-0029,2026-11-04,sample,CL-0061,PHL-004,2026-11-04T10:00,2026-11-04T11:00,10,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-03T20:03,b2b,self_pay,confirmed,,
@@ -147,11 +147,11 @@ AP-20261104-0030,2026-11-04,babysitting,CL-0101,BBS-006,2026-11-04T10:30,2026-11
 AP-20261104-0031,2026-11-04,babysitting,CL-0005,BBS-002,2026-11-04T11:00,2026-11-04T17:00,360,true,true,,,,,routine,2026-11-03T21:59,app,self_pay,confirmed,,
 AP-20261104-0032,2026-11-04,sample,CL-0001,PHL-004,2026-11-04T11:00,2026-11-04T12:00,11,false,false,PCR,false,1440,LAB-02,routine,2026-11-02T20:28,b2b,self_pay,confirmed,,Call on arrival
 AP-20261104-0033,2026-11-04,babysitting,CL-0185,BBS-012,2026-11-04T12:00,2026-11-04T19:00,420,true,true,,,,,routine,2026-11-02T12:06,app,self_pay,confirmed,,
-AP-20261104-0034,2026-11-04,sample,CL-0062,PHL-004,2026-11-04T12:00,2026-11-04T13:00,20,false,false,PCR,false,1440,LAB-02,routine,2026-11-02T11:23,app,corporate,confirmed,,
-AP-20261104-0035,2026-11-04,sample,CL-0096,PHL-003,2026-11-04T12:00,2026-11-04T13:00,18,false,false,urine,false,120,LAB-01,routine,2026-11-02T18:50,whatsapp,self_pay,confirmed,,Call on arrival
-AP-20261104-0036,2026-11-04,sample,CL-0150,PHL-004,2026-11-04T12:00,2026-11-04T13:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-03T16:29,b2b,insurance,confirmed,,"Child patient, parent present"
+AP-20261104-0034,2026-11-04,sample,CL-0062,PHL-004,2026-11-04T12:00,2026-11-04T13:00,20,false,false,PCR,false,1440,LAB-03,routine,2026-11-02T11:23,app,corporate,confirmed,,
+AP-20261104-0035,2026-11-04,sample,CL-0096,PHL-003,2026-11-04T12:00,2026-11-04T13:00,18,false,false,urine,false,120,LAB-03,routine,2026-11-02T18:50,whatsapp,self_pay,confirmed,,Call on arrival
+AP-20261104-0036,2026-11-04,sample,CL-0150,PHL-004,2026-11-04T12:00,2026-11-04T13:00,10,false,false,CBC,false,480,LAB-03,routine,2026-11-03T16:29,b2b,insurance,confirmed,,"Child patient, parent present"
 AP-20261104-0037,2026-11-04,sample,CL-0195,PHL-001,2026-11-04T13:15,2026-11-04T14:15,13,false,false,lipid_fasting,true,240,LAB-02,fast_track,2026-11-04T12:33,app,insurance,confirmed,,Call on arrival
-AP-20261104-0038,2026-11-04,sample,CL-0050,PHL-002,2026-11-04T13:30,2026-11-04T14:30,10,false,false,urine,false,120,LAB-01,fast_track,2026-11-04T11:43,b2b,insurance,confirmed,,
+AP-20261104-0038,2026-11-04,sample,CL-0050,PHL-002,2026-11-04T13:30,2026-11-04T14:30,10,false,false,urine,false,120,LAB-02,fast_track,2026-11-04T11:43,b2b,insurance,confirmed,,
 AP-20261104-0039,2026-11-04,babysitting,CL-0124,BBS-010,2026-11-04T14:00,2026-11-04T21:00,420,true,true,,,,,routine,2026-11-02T13:15,app,self_pay,confirmed,,
 AP-20261104-0040,2026-11-04,sample,CL-0011,PHL-001,2026-11-04T14:00,2026-11-04T15:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-03T20:24,app,self_pay,confirmed,,
 AP-20261104-0041,2026-11-04,sample,CL-0093,PHL-003,2026-11-04T14:00,2026-11-04T15:00,14,false,false,CBC,false,480,LAB-01,routine,2026-11-03T12:01,whatsapp,self_pay,confirmed,,
@@ -159,17 +159,17 @@ AP-20261104-0042,2026-11-04,sample,CL-0113,PHL-002,2026-11-04T15:00,2026-11-04T1
 AP-20261104-0043,2026-11-04,sample,CL-0123,PHL-003,2026-11-04T15:00,2026-11-04T16:00,12,false,false,CBC,false,480,LAB-01,routine,2026-11-02T19:33,call_centre,insurance,confirmed,,
 AP-20261104-0044,2026-11-04,babysitting,CL-0014,BBS-014,2026-11-04T16:00,2026-11-05T00:00,480,true,true,,,,,routine,2026-11-03T16:30,app,self_pay,confirmed,,
 AP-20261104-0045,2026-11-04,babysitting,CL-0177,BBS-007,2026-11-04T16:00,2026-11-04T20:00,240,true,true,,,,,routine,2026-11-03T08:02,app,corporate,confirmed,,
-AP-20261104-0046,2026-11-04,sample,CL-0047,PHL-003,2026-11-04T17:45,2026-11-04T18:45,16,false,false,CBC,false,480,LAB-02,fast_track,2026-11-04T16:24,app,insurance,confirmed,,Call on arrival
+AP-20261104-0046,2026-11-04,sample,CL-0047,PHL-003,2026-11-04T17:45,2026-11-04T18:45,16,false,false,CBC,false,480,LAB-03,fast_track,2026-11-04T16:24,app,insurance,confirmed,,Call on arrival
 AP-20261104-0047,2026-11-04,sample,CL-0099,PHL-001,2026-11-04T18:00,2026-11-04T19:00,10,false,false,CBC,false,480,LAB-02,routine,2026-11-01T20:37,app,self_pay,confirmed,,Call on arrival
 AP-20261105-0001,2026-11-05,nursing,CL-0206,NUR-011,2026-11-05T07:00,2026-11-05T15:00,480,true,false,,,,,routine,2026-11-03T20:07,call_centre,insurance,confirmed,,Patient wheelchair user
 AP-20261105-0002,2026-11-05,sample,CL-0034,PHL-002,2026-11-05T07:00,2026-11-05T08:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-04T20:38,app,insurance,confirmed,,
-AP-20261105-0003,2026-11-05,sample,CL-0045,PHL-001,2026-11-05T07:00,2026-11-05T08:00,11,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-04T18:27,b2b,insurance,confirmed,,
-AP-20261105-0004,2026-11-05,sample,CL-0062,PHL-003,2026-11-05T07:00,2026-11-05T08:00,13,false,false,urine,false,120,LAB-02,routine,2026-11-03T21:56,app,self_pay,confirmed,,Difficult veins
-AP-20261105-0005,2026-11-05,sample,CL-0070,PHL-005,2026-11-05T07:00,2026-11-05T08:00,14,false,false,CBC,false,480,LAB-03,routine,2026-11-04T08:00,app,corporate,confirmed,,
-AP-20261105-0006,2026-11-05,sample,CL-0076,PHL-004,2026-11-05T07:00,2026-11-05T08:00,17,false,false,urine,false,120,LAB-03,routine,2026-11-03T08:48,app,self_pay,confirmed,,
-AP-20261105-0007,2026-11-05,sample,CL-0147,PHL-004,2026-11-05T07:00,2026-11-05T08:00,18,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-03T08:29,app,insurance,cancelled,2026-11-03T14:20,Difficult veins
+AP-20261105-0003,2026-11-05,sample,CL-0045,PHL-001,2026-11-05T07:00,2026-11-05T08:00,11,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T18:27,b2b,insurance,confirmed,,
+AP-20261105-0004,2026-11-05,sample,CL-0062,PHL-003,2026-11-05T07:00,2026-11-05T08:00,13,false,false,urine,false,120,LAB-03,routine,2026-11-03T21:56,app,self_pay,confirmed,,Difficult veins
+AP-20261105-0005,2026-11-05,sample,CL-0070,PHL-005,2026-11-05T07:00,2026-11-05T08:00,14,false,false,CBC,false,480,LAB-01,routine,2026-11-04T08:00,app,corporate,confirmed,,
+AP-20261105-0006,2026-11-05,sample,CL-0076,PHL-004,2026-11-05T07:00,2026-11-05T08:00,17,false,false,urine,false,120,LAB-01,routine,2026-11-03T08:48,app,self_pay,confirmed,,
+AP-20261105-0007,2026-11-05,sample,CL-0147,PHL-004,2026-11-05T07:00,2026-11-05T08:00,18,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-03T08:29,app,insurance,cancelled,2026-11-03T14:20,Difficult veins
 AP-20261105-0008,2026-11-05,sample,CL-0157,PHL-003,2026-11-05T07:00,2026-11-05T08:00,11,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T09:20,b2b,self_pay,confirmed,,
-AP-20261105-0009,2026-11-05,sample,CL-0210,PHL-005,2026-11-05T07:00,2026-11-05T08:00,11,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-02T19:50,whatsapp,insurance,confirmed,,
+AP-20261105-0009,2026-11-05,sample,CL-0210,PHL-005,2026-11-05T07:00,2026-11-05T08:00,11,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-02T19:50,whatsapp,insurance,confirmed,,
 AP-20261105-0010,2026-11-05,sample,CL-0217,PHL-001,2026-11-05T07:00,2026-11-05T08:00,15,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-04T20:29,whatsapp,insurance,confirmed,,
 AP-20261105-0011,2026-11-05,nursing,CL-0048,NUR-006,2026-11-05T07:30,2026-11-05T15:30,480,true,true,,,,,routine,2026-10-29T17:27,call_centre,self_pay,confirmed,,"Diabetic, check glucose log"
 AP-20261105-0012,2026-11-05,nursing,CL-0211,NUR-016,2026-11-05T07:30,2026-11-05T15:30,480,true,true,,,,,routine,2026-11-04T20:00,app,insurance,confirmed,,
@@ -177,63 +177,63 @@ AP-20261105-0013,2026-11-05,nursing,CL-0035,NUR-004,2026-11-05T08:00,2026-11-06T
 AP-20261105-0014,2026-11-05,nursing,CL-0118,NUR-002,2026-11-05T08:00,2026-11-05T16:00,480,true,false,,,,,routine,2026-10-22T10:15,call_centre,self_pay,confirmed,,"Diabetic, check glucose log"
 AP-20261105-0015,2026-11-05,babysitting,CL-0104,BBS-013,2026-11-05T08:00,2026-11-05T14:00,360,true,true,,,,,routine,2026-11-04T12:29,app,self_pay,confirmed,,
 AP-20261105-0016,2026-11-05,sample,CL-0008,PHL-004,2026-11-05T08:00,2026-11-05T09:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-03T10:48,whatsapp,insurance,confirmed,,"Child patient, parent present"
-AP-20261105-0017,2026-11-05,sample,CL-0037,PHL-002,2026-11-05T08:00,2026-11-05T09:00,12,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T19:44,b2b,insurance,confirmed,,
-AP-20261105-0018,2026-11-05,sample,CL-0040,PHL-002,2026-11-05T08:00,2026-11-05T09:00,15,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-04T19:37,app,insurance,confirmed,,
-AP-20261105-0019,2026-11-05,sample,CL-0052,PHL-005,2026-11-05T08:00,2026-11-05T09:00,17,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-03T17:20,whatsapp,corporate,confirmed,,"Child patient, parent present"
-AP-20261105-0020,2026-11-05,sample,CL-0100,PHL-003,2026-11-05T08:00,2026-11-05T09:00,14,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-04T13:04,whatsapp,corporate,confirmed,,Call on arrival
-AP-20261105-0021,2026-11-05,sample,CL-0117,PHL-001,2026-11-05T08:00,2026-11-05T09:00,20,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-03T08:15,call_centre,insurance,confirmed,,Difficult veins
-AP-20261105-0022,2026-11-05,sample,CL-0119,PHL-001,2026-11-05T08:00,2026-11-05T09:00,16,false,false,PCR,false,1440,LAB-01,routine,2026-11-02T16:19,app,insurance,cancelled,2026-11-03T18:46,
-AP-20261105-0023,2026-11-05,sample,CL-0168,PHL-005,2026-11-05T08:00,2026-11-05T09:00,16,false,false,urine,false,120,LAB-01,routine,2026-11-03T16:07,app,self_pay,confirmed,,"Elderly patient, ground floor"
-AP-20261105-0024,2026-11-05,sample,CL-0197,PHL-004,2026-11-05T08:00,2026-11-05T09:00,14,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-04T14:24,b2b,self_pay,confirmed,,
-AP-20261105-0025,2026-11-05,sample,CL-0208,PHL-003,2026-11-05T08:00,2026-11-05T09:00,10,false,false,urine,false,120,LAB-01,routine,2026-11-04T18:37,whatsapp,self_pay,confirmed,,
+AP-20261105-0017,2026-11-05,sample,CL-0037,PHL-002,2026-11-05T08:00,2026-11-05T09:00,12,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-04T19:44,b2b,insurance,confirmed,,
+AP-20261105-0018,2026-11-05,sample,CL-0040,PHL-002,2026-11-05T08:00,2026-11-05T09:00,15,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-04T19:37,app,insurance,confirmed,,
+AP-20261105-0019,2026-11-05,sample,CL-0052,PHL-005,2026-11-05T08:00,2026-11-05T09:00,17,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-03T17:20,whatsapp,corporate,confirmed,,"Child patient, parent present"
+AP-20261105-0020,2026-11-05,sample,CL-0100,PHL-003,2026-11-05T08:00,2026-11-05T09:00,14,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-04T13:04,whatsapp,corporate,confirmed,,Call on arrival
+AP-20261105-0021,2026-11-05,sample,CL-0117,PHL-001,2026-11-05T08:00,2026-11-05T09:00,20,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-03T08:15,call_centre,insurance,confirmed,,Difficult veins
+AP-20261105-0022,2026-11-05,sample,CL-0119,PHL-001,2026-11-05T08:00,2026-11-05T09:00,16,false,false,PCR,false,1440,LAB-02,routine,2026-11-02T16:19,app,insurance,cancelled,2026-11-03T18:46,
+AP-20261105-0023,2026-11-05,sample,CL-0168,PHL-005,2026-11-05T08:00,2026-11-05T09:00,16,false,false,urine,false,120,LAB-03,routine,2026-11-03T16:07,app,self_pay,confirmed,,"Elderly patient, ground floor"
+AP-20261105-0024,2026-11-05,sample,CL-0197,PHL-004,2026-11-05T08:00,2026-11-05T09:00,14,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-04T14:24,b2b,self_pay,confirmed,,
+AP-20261105-0025,2026-11-05,sample,CL-0208,PHL-003,2026-11-05T08:00,2026-11-05T09:00,10,false,false,urine,false,120,LAB-02,routine,2026-11-04T18:37,whatsapp,self_pay,confirmed,,
 AP-20261105-0026,2026-11-05,nursing,CL-0152,NUR-007,2026-11-05T08:30,2026-11-05T20:30,720,true,true,,,,,routine,2026-11-03T19:16,call_centre,self_pay,confirmed,,"Bedridden, two-person transfer"
 AP-20261105-0027,2026-11-05,nursing,CL-0025,NUR-013,2026-11-05T09:00,2026-11-05T17:00,480,false,false,,,,,routine,2026-11-03T11:32,b2b,insurance,confirmed,,
 AP-20261105-0028,2026-11-05,nursing,CL-0027,NUR-010,2026-11-05T09:00,2026-11-05T21:00,720,true,true,,,,,routine,2026-11-04T16:38,call_centre,corporate,confirmed,,"Bedridden, two-person transfer"
 AP-20261105-0029,2026-11-05,nursing,CL-0170,NUR-003,2026-11-05T09:00,2026-11-06T09:00,1440,true,false,,,,,routine,2026-10-22T20:45,call_centre,self_pay,confirmed,,Live-in
 AP-20261105-0030,2026-11-05,babysitting,CL-0071,BBS-008,2026-11-05T09:00,2026-11-05T15:00,360,true,true,,,,,routine,2026-11-02T17:24,app,corporate,confirmed,,
 AP-20261105-0031,2026-11-05,babysitting,CL-0201,BBS-003,2026-11-05T09:00,2026-11-05T13:00,240,true,true,,,,,routine,2026-11-02T09:11,app,self_pay,confirmed,,
-AP-20261105-0032,2026-11-05,sample,CL-0018,PHL-003,2026-11-05T09:00,2026-11-05T10:00,20,false,false,CBC,false,480,LAB-02,routine,2026-11-03T18:30,app,self_pay,confirmed,,
-AP-20261105-0033,2026-11-05,sample,CL-0019,PHL-003,2026-11-05T09:00,2026-11-05T10:00,12,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-04T14:00,app,insurance,confirmed,,Difficult veins
+AP-20261105-0032,2026-11-05,sample,CL-0018,PHL-003,2026-11-05T09:00,2026-11-05T10:00,20,false,false,CBC,false,480,LAB-03,routine,2026-11-03T18:30,app,self_pay,confirmed,,
+AP-20261105-0033,2026-11-05,sample,CL-0019,PHL-003,2026-11-05T09:00,2026-11-05T10:00,12,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-04T14:00,app,insurance,confirmed,,Difficult veins
 AP-20261105-0034,2026-11-05,sample,CL-0053,PHL-005,2026-11-05T09:00,2026-11-05T10:00,16,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-03T10:36,app,self_pay,confirmed,,Difficult veins
 AP-20261105-0035,2026-11-05,sample,CL-0061,PHL-004,2026-11-05T09:00,2026-11-05T10:00,18,false,false,PCR,false,1440,LAB-02,routine,2026-11-03T09:44,call_centre,corporate,confirmed,,"Elderly patient, ground floor"
-AP-20261105-0036,2026-11-05,sample,CL-0085,PHL-001,2026-11-05T09:00,2026-11-05T10:00,19,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-04T18:07,call_centre,insurance,confirmed,,"Elderly patient, ground floor"
-AP-20261105-0037,2026-11-05,sample,CL-0098,PHL-002,2026-11-05T09:00,2026-11-05T10:00,10,false,false,urine,false,120,LAB-01,routine,2026-11-04T21:11,whatsapp,corporate,confirmed,,
-AP-20261105-0038,2026-11-05,sample,CL-0182,PHL-005,2026-11-05T09:00,2026-11-05T10:00,12,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-04T18:07,whatsapp,insurance,confirmed,,Difficult veins
-AP-20261105-0039,2026-11-05,sample,CL-0191,PHL-004,2026-11-05T09:00,2026-11-05T10:00,10,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-04T20:08,app,insurance,confirmed,,
+AP-20261105-0036,2026-11-05,sample,CL-0085,PHL-001,2026-11-05T09:00,2026-11-05T10:00,19,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-04T18:07,call_centre,insurance,confirmed,,"Elderly patient, ground floor"
+AP-20261105-0037,2026-11-05,sample,CL-0098,PHL-002,2026-11-05T09:00,2026-11-05T10:00,10,false,false,urine,false,120,LAB-03,routine,2026-11-04T21:11,whatsapp,corporate,confirmed,,
+AP-20261105-0038,2026-11-05,sample,CL-0182,PHL-005,2026-11-05T09:00,2026-11-05T10:00,12,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-04T18:07,whatsapp,insurance,confirmed,,Difficult veins
+AP-20261105-0039,2026-11-05,sample,CL-0191,PHL-004,2026-11-05T09:00,2026-11-05T10:00,10,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T20:08,app,insurance,confirmed,,
 AP-20261105-0040,2026-11-05,sample,CL-0214,PHL-001,2026-11-05T09:00,2026-11-05T10:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-04T16:20,b2b,self_pay,no_show,,
 AP-20261105-0041,2026-11-05,babysitting,CL-0220,BBS-012,2026-11-05T09:30,2026-11-05T17:30,480,true,true,,,,,routine,2026-11-03T13:49,whatsapp,corporate,confirmed,,
 AP-20261105-0042,2026-11-05,babysitting,CL-0073,BBS-005,2026-11-05T10:00,2026-11-05T14:00,240,true,true,,,,,routine,2026-11-02T14:00,app,self_pay,confirmed,,
-AP-20261105-0043,2026-11-05,sample,CL-0135,PHL-005,2026-11-05T10:00,2026-11-05T11:00,14,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-04T11:59,app,corporate,cancelled,2026-11-04T19:41,Call on arrival
+AP-20261105-0043,2026-11-05,sample,CL-0135,PHL-005,2026-11-05T10:00,2026-11-05T11:00,14,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-04T11:59,app,corporate,cancelled,2026-11-04T19:41,Call on arrival
 AP-20261105-0044,2026-11-05,sample,CL-0156,PHL-004,2026-11-05T10:00,2026-11-05T11:00,19,false,false,CBC,false,480,LAB-02,routine,2026-11-04T13:35,call_centre,corporate,confirmed,,
-AP-20261105-0045,2026-11-05,sample,CL-0172,PHL-005,2026-11-05T10:00,2026-11-05T11:00,18,false,false,CBC,false,480,LAB-02,routine,2026-10-31T11:25,call_centre,insurance,confirmed,,
-AP-20261105-0046,2026-11-05,sample,CL-0187,PHL-001,2026-11-05T10:00,2026-11-05T11:00,12,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-04T13:09,b2b,self_pay,confirmed,,
+AP-20261105-0045,2026-11-05,sample,CL-0172,PHL-005,2026-11-05T10:00,2026-11-05T11:00,18,false,false,CBC,false,480,LAB-03,routine,2026-10-31T11:25,call_centre,insurance,confirmed,,
+AP-20261105-0046,2026-11-05,sample,CL-0187,PHL-001,2026-11-05T10:00,2026-11-05T11:00,12,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-04T13:09,b2b,self_pay,confirmed,,
 AP-20261105-0047,2026-11-05,babysitting,CL-0177,BBS-007,2026-11-05T10:30,2026-11-05T14:30,240,false,true,,,,,routine,2026-11-04T15:14,app,self_pay,confirmed,,
 AP-20261105-0048,2026-11-05,babysitting,CL-0114,BBS-009,2026-11-05T11:00,2026-11-05T19:00,480,true,true,,,,,routine,2026-11-03T11:24,whatsapp,corporate,confirmed,,
 AP-20261105-0049,2026-11-05,sample,CL-0064,PHL-001,2026-11-05T11:00,2026-11-05T12:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-03T20:20,call_centre,self_pay,confirmed,,"Child patient, parent present"
-AP-20261105-0050,2026-11-05,sample,CL-0128,PHL-003,2026-11-05T12:00,2026-11-05T13:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-04T15:57,b2b,self_pay,confirmed,,
+AP-20261105-0050,2026-11-05,sample,CL-0128,PHL-003,2026-11-05T12:00,2026-11-05T13:00,14,false,false,CBC,false,480,LAB-01,routine,2026-11-04T15:57,b2b,self_pay,confirmed,,
 AP-20261105-0051,2026-11-05,sample,CL-0134,PHL-001,2026-11-05T12:00,2026-11-05T13:00,20,false,false,CBC,false,480,LAB-02,routine,2026-10-31T13:53,call_centre,self_pay,confirmed,,Difficult veins
 AP-20261105-0052,2026-11-05,sample,CL-0068,PHL-003,2026-11-05T13:00,2026-11-05T14:00,12,false,false,CBC,false,480,LAB-02,routine,2026-11-04T21:43,b2b,corporate,confirmed,,
-AP-20261105-0053,2026-11-05,sample,CL-0091,PHL-004,2026-11-05T13:00,2026-11-05T14:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-03T10:40,b2b,corporate,confirmed,,
-AP-20261105-0054,2026-11-05,sample,CL-0181,PHL-005,2026-11-05T13:00,2026-11-05T14:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-04T08:51,app,insurance,confirmed,,"Elderly patient, ground floor"
+AP-20261105-0053,2026-11-05,sample,CL-0091,PHL-004,2026-11-05T13:00,2026-11-05T14:00,10,false,false,CBC,false,480,LAB-03,routine,2026-11-03T10:40,b2b,corporate,confirmed,,
+AP-20261105-0054,2026-11-05,sample,CL-0181,PHL-005,2026-11-05T13:00,2026-11-05T14:00,14,false,false,CBC,false,480,LAB-03,routine,2026-11-04T08:51,app,insurance,confirmed,,"Elderly patient, ground floor"
 AP-20261105-0055,2026-11-05,sample,CL-0203,PHL-004,2026-11-05T13:00,2026-11-05T14:00,15,false,false,PCR,false,1440,LAB-03,routine,2026-11-04T18:07,call_centre,self_pay,confirmed,,
 AP-20261105-0056,2026-11-05,babysitting,CL-0115,BBS-010,2026-11-05T15:00,2026-11-05T22:00,420,true,false,,,,,routine,2026-10-29T17:14,whatsapp,corporate,confirmed,,
-AP-20261105-0057,2026-11-05,sample,CL-0174,PHL-003,2026-11-05T15:00,2026-11-05T16:00,11,false,false,CBC,false,480,LAB-01,routine,2026-11-02T08:48,b2b,corporate,confirmed,,
+AP-20261105-0057,2026-11-05,sample,CL-0174,PHL-003,2026-11-05T15:00,2026-11-05T16:00,11,false,false,CBC,false,480,LAB-03,routine,2026-11-02T08:48,b2b,corporate,confirmed,,
 AP-20261105-0058,2026-11-05,sample,CL-0211,PHL-004,2026-11-05T15:00,2026-11-05T16:00,13,false,false,urine,false,120,LAB-02,routine,2026-11-04T15:04,app,corporate,confirmed,,Difficult veins
 AP-20261105-0059,2026-11-05,babysitting,CL-0089,BBS-007,2026-11-05T16:00,2026-11-05T21:00,300,true,true,,,,,routine,2026-11-03T17:48,app,self_pay,confirmed,,"Two kids, 4y and 7y"
-AP-20261105-0060,2026-11-05,sample,CL-0149,PHL-005,2026-11-05T16:00,2026-11-05T17:00,19,false,false,CBC,false,480,LAB-01,fast_track,2026-11-05T15:17,whatsapp,insurance,cancelled,2026-11-05T15:31,
-AP-20261105-0061,2026-11-05,sample,CL-0155,PHL-004,2026-11-05T16:00,2026-11-05T17:00,15,false,false,urine,false,120,LAB-01,routine,2026-11-04T18:55,app,self_pay,confirmed,,
-AP-20261105-0062,2026-11-05,sample,CL-0047,PHL-003,2026-11-05T17:00,2026-11-05T18:00,14,false,false,PCR,false,1440,LAB-02,routine,2026-11-02T18:49,whatsapp,corporate,confirmed,,
-AP-20261105-0063,2026-11-05,sample,CL-0050,PHL-005,2026-11-05T17:00,2026-11-05T18:00,19,false,false,urine,false,120,LAB-01,routine,2026-11-03T18:43,b2b,insurance,confirmed,,Call on arrival
-AP-20261105-0064,2026-11-05,sample,CL-0092,PHL-004,2026-11-05T17:00,2026-11-05T18:00,11,false,false,CBC,false,480,LAB-03,routine,2026-11-04T09:48,whatsapp,self_pay,confirmed,,
-AP-20261105-0065,2026-11-05,sample,CL-0140,PHL-005,2026-11-05T18:00,2026-11-05T19:00,11,false,false,urine,false,120,LAB-01,routine,2026-11-04T18:55,call_centre,insurance,confirmed,,Difficult veins
+AP-20261105-0060,2026-11-05,sample,CL-0149,PHL-005,2026-11-05T16:00,2026-11-05T17:00,19,false,false,CBC,false,480,LAB-03,fast_track,2026-11-05T15:17,whatsapp,insurance,cancelled,2026-11-05T15:31,
+AP-20261105-0061,2026-11-05,sample,CL-0155,PHL-004,2026-11-05T16:00,2026-11-05T17:00,15,false,false,urine,false,120,LAB-03,routine,2026-11-04T18:55,app,self_pay,confirmed,,
+AP-20261105-0062,2026-11-05,sample,CL-0047,PHL-003,2026-11-05T17:00,2026-11-05T18:00,14,false,false,PCR,false,1440,LAB-03,routine,2026-11-02T18:49,whatsapp,corporate,confirmed,,
+AP-20261105-0063,2026-11-05,sample,CL-0050,PHL-005,2026-11-05T17:00,2026-11-05T18:00,19,false,false,urine,false,120,LAB-02,routine,2026-11-03T18:43,b2b,insurance,confirmed,,Call on arrival
+AP-20261105-0064,2026-11-05,sample,CL-0092,PHL-004,2026-11-05T17:00,2026-11-05T18:00,11,false,false,CBC,false,480,LAB-01,routine,2026-11-04T09:48,whatsapp,self_pay,confirmed,,
+AP-20261105-0065,2026-11-05,sample,CL-0140,PHL-005,2026-11-05T18:00,2026-11-05T19:00,11,false,false,urine,false,120,LAB-02,routine,2026-11-04T18:55,call_centre,insurance,confirmed,,Difficult veins
 AP-20261105-0066,2026-11-05,nursing,CL-0090,NUR-015,2026-11-05T19:00,2026-11-06T07:00,720,true,true,,,,,routine,2026-11-04T16:51,whatsapp,self_pay,confirmed,,
 AP-20261106-0001,2026-11-06,nursing,CL-0173,NUR-001,2026-11-06T07:00,2026-11-06T15:00,480,true,false,,,,,routine,2026-11-04T17:06,b2b,corporate,confirmed,,
-AP-20261106-0002,2026-11-06,sample,CL-0024,PHL-004,2026-11-06T07:00,2026-11-06T08:00,12,false,false,PCR,false,1440,LAB-01,routine,2026-11-05T21:13,whatsapp,insurance,confirmed,,
+AP-20261106-0002,2026-11-06,sample,CL-0024,PHL-004,2026-11-06T07:00,2026-11-06T08:00,12,false,false,PCR,false,1440,LAB-03,routine,2026-11-05T21:13,whatsapp,insurance,confirmed,,
 AP-20261106-0003,2026-11-06,sample,CL-0032,PHL-002,2026-11-06T07:00,2026-11-06T08:00,15,false,false,urine,false,120,LAB-02,routine,2026-11-01T15:28,app,insurance,confirmed,,
 AP-20261106-0004,2026-11-06,sample,CL-0068,PHL-004,2026-11-06T07:00,2026-11-06T08:00,16,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T17:17,b2b,insurance,confirmed,,Call on arrival
-AP-20261106-0005,2026-11-06,sample,CL-0142,PHL-001,2026-11-06T07:00,2026-11-06T08:00,18,false,false,CBC,false,480,LAB-02,routine,2026-11-05T13:36,b2b,self_pay,confirmed,,Difficult veins
-AP-20261106-0006,2026-11-06,sample,CL-0168,PHL-005,2026-11-06T07:00,2026-11-06T08:00,20,false,false,CBC,false,480,LAB-01,routine,2026-11-05T12:50,b2b,corporate,confirmed,,
-AP-20261106-0007,2026-11-06,sample,CL-0182,PHL-005,2026-11-06T07:00,2026-11-06T08:00,15,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T12:37,call_centre,insurance,confirmed,,
+AP-20261106-0005,2026-11-06,sample,CL-0142,PHL-001,2026-11-06T07:00,2026-11-06T08:00,18,false,false,CBC,false,480,LAB-03,routine,2026-11-05T13:36,b2b,self_pay,confirmed,,Difficult veins
+AP-20261106-0006,2026-11-06,sample,CL-0168,PHL-005,2026-11-06T07:00,2026-11-06T08:00,20,false,false,CBC,false,480,LAB-03,routine,2026-11-05T12:50,b2b,corporate,confirmed,,
+AP-20261106-0007,2026-11-06,sample,CL-0182,PHL-005,2026-11-06T07:00,2026-11-06T08:00,15,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-05T12:37,call_centre,insurance,confirmed,,
 AP-20261106-0008,2026-11-06,nursing,CL-0069,NUR-007,2026-11-06T08:00,2026-11-06T20:00,720,true,false,,,,,routine,2026-11-01T12:17,b2b,self_pay,confirmed,,"Bedridden, two-person transfer"
 AP-20261106-0009,2026-11-06,nursing,CL-0087,NUR-011,2026-11-06T08:00,2026-11-07T08:00,1440,true,false,,,,,routine,2026-10-30T10:28,call_centre,self_pay,confirmed,,Live-in
 AP-20261106-0010,2026-11-06,nursing,CL-0103,NUR-014,2026-11-06T08:00,2026-11-06T20:00,720,true,false,,,,,routine,2026-11-03T17:45,call_centre,self_pay,confirmed,,Patient wheelchair user
@@ -242,18 +242,18 @@ AP-20261106-0012,2026-11-06,babysitting,CL-0073,BBS-005,2026-11-06T08:00,2026-11
 AP-20261106-0013,2026-11-06,babysitting,CL-0115,BBS-010,2026-11-06T08:00,2026-11-06T18:00,600,true,true,,,,,routine,2026-10-30T11:10,app,corporate,confirmed,,"Two kids, 4y and 7y"
 AP-20261106-0014,2026-11-06,babysitting,CL-0122,BBS-004,2026-11-06T08:00,2026-11-06T13:00,300,true,true,,,,,routine,2026-11-03T16:17,whatsapp,corporate,cancelled,2026-11-06T05:24,Nut allergy in the house
 AP-20261106-0015,2026-11-06,babysitting,CL-0161,BBS-008,2026-11-06T08:00,2026-11-06T16:00,480,true,true,,,,,routine,2026-10-30T21:48,app,self_pay,confirmed,,
-AP-20261106-0016,2026-11-06,sample,CL-0077,PHL-005,2026-11-06T08:00,2026-11-06T09:00,10,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-03T19:11,b2b,self_pay,confirmed,,
-AP-20261106-0017,2026-11-06,sample,CL-0091,PHL-002,2026-11-06T08:00,2026-11-06T09:00,15,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-05T09:29,b2b,corporate,confirmed,,Difficult veins
-AP-20261106-0018,2026-11-06,sample,CL-0110,PHL-001,2026-11-06T08:00,2026-11-06T09:00,19,false,false,CBC,false,480,LAB-02,routine,2026-11-05T13:25,b2b,self_pay,confirmed,,"Child patient, parent present"
+AP-20261106-0016,2026-11-06,sample,CL-0077,PHL-005,2026-11-06T08:00,2026-11-06T09:00,10,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-03T19:11,b2b,self_pay,confirmed,,
+AP-20261106-0017,2026-11-06,sample,CL-0091,PHL-002,2026-11-06T08:00,2026-11-06T09:00,15,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-05T09:29,b2b,corporate,confirmed,,Difficult veins
+AP-20261106-0018,2026-11-06,sample,CL-0110,PHL-001,2026-11-06T08:00,2026-11-06T09:00,19,false,false,CBC,false,480,LAB-01,routine,2026-11-05T13:25,b2b,self_pay,confirmed,,"Child patient, parent present"
 AP-20261106-0019,2026-11-06,sample,CL-0126,PHL-002,2026-11-06T08:00,2026-11-06T09:00,12,false,false,CBC,false,480,LAB-02,routine,2026-11-04T08:17,whatsapp,self_pay,confirmed,,
-AP-20261106-0020,2026-11-06,sample,CL-0129,PHL-003,2026-11-06T08:00,2026-11-06T09:00,18,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T14:29,app,insurance,confirmed,,Call on arrival
+AP-20261106-0020,2026-11-06,sample,CL-0129,PHL-003,2026-11-06T08:00,2026-11-06T09:00,18,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-05T14:29,app,insurance,confirmed,,Call on arrival
 AP-20261106-0021,2026-11-06,sample,CL-0134,PHL-001,2026-11-06T08:00,2026-11-06T09:00,18,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T09:42,call_centre,corporate,confirmed,,
 AP-20261106-0022,2026-11-06,sample,CL-0151,PHL-005,2026-11-06T08:00,2026-11-06T09:00,10,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-04T11:37,whatsapp,insurance,confirmed,,
-AP-20261106-0023,2026-11-06,sample,CL-0155,PHL-004,2026-11-06T08:00,2026-11-06T09:00,10,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-05T17:25,app,insurance,confirmed,,Call on arrival
+AP-20261106-0023,2026-11-06,sample,CL-0155,PHL-004,2026-11-06T08:00,2026-11-06T09:00,10,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-05T17:25,app,insurance,confirmed,,Call on arrival
 AP-20261106-0024,2026-11-06,nursing,CL-0162,NUR-005,2026-11-06T09:00,2026-11-07T09:00,1440,true,false,,,,,routine,2026-11-04T14:41,call_centre,self_pay,confirmed,,Live-in
 AP-20261106-0025,2026-11-06,sample,CL-0034,PHL-002,2026-11-06T09:00,2026-11-06T10:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-01T17:57,app,self_pay,confirmed,,Call on arrival
 AP-20261106-0026,2026-11-06,sample,CL-0056,PHL-004,2026-11-06T09:00,2026-11-06T10:00,19,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-04T12:55,app,insurance,confirmed,,"Child patient, parent present"
-AP-20261106-0027,2026-11-06,sample,CL-0208,PHL-003,2026-11-06T09:00,2026-11-06T10:00,18,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T08:36,app,self_pay,confirmed,,
+AP-20261106-0027,2026-11-06,sample,CL-0208,PHL-003,2026-11-06T09:00,2026-11-06T10:00,18,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-04T08:36,app,self_pay,confirmed,,
 AP-20261106-0028,2026-11-06,nursing,CL-0027,NUR-013,2026-11-06T09:30,2026-11-06T21:30,720,true,true,,,,,routine,2026-10-30T15:01,call_centre,insurance,confirmed,,
 AP-20261106-0029,2026-11-06,nursing,CL-0041,NUR-010,2026-11-06T09:30,2026-11-06T17:30,480,true,false,,,,,routine,2026-11-04T10:03,whatsapp,insurance,confirmed,,
 AP-20261106-0030,2026-11-06,babysitting,CL-0192,BBS-001,2026-11-06T09:30,2026-11-06T14:30,300,true,true,,,,,routine,2026-11-05T19:53,whatsapp,self_pay,confirmed,,"Two kids, 4y and 7y"
@@ -261,122 +261,122 @@ AP-20261106-0031,2026-11-06,babysitting,CL-0201,BBS-003,2026-11-06T10:00,2026-11
 AP-20261106-0032,2026-11-06,sample,CL-0010,PHL-002,2026-11-06T10:00,2026-11-06T11:00,10,false,false,CBC,false,480,LAB-02,routine,2026-11-03T20:35,call_centre,insurance,confirmed,,
 AP-20261106-0033,2026-11-06,sample,CL-0059,PHL-001,2026-11-06T10:00,2026-11-06T11:00,20,false,false,PCR,false,1440,LAB-02,routine,2026-11-05T08:30,whatsapp,corporate,confirmed,,Difficult veins
 AP-20261106-0034,2026-11-06,sample,CL-0061,PHL-004,2026-11-06T10:00,2026-11-06T11:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-05T16:23,whatsapp,insurance,confirmed,,Call on arrival
-AP-20261106-0035,2026-11-06,sample,CL-0078,PHL-002,2026-11-06T10:00,2026-11-06T11:00,20,false,false,urine,false,120,LAB-02,routine,2026-11-01T12:11,whatsapp,self_pay,confirmed,,Call on arrival
+AP-20261106-0035,2026-11-06,sample,CL-0078,PHL-002,2026-11-06T10:00,2026-11-06T11:00,20,false,false,urine,false,120,LAB-01,routine,2026-11-01T12:11,whatsapp,self_pay,confirmed,,Call on arrival
 AP-20261106-0036,2026-11-06,sample,CL-0166,PHL-005,2026-11-06T10:00,2026-11-06T11:00,12,false,false,CBC,false,480,LAB-02,routine,2026-11-04T18:54,app,self_pay,cancelled,2026-11-05T07:24,
-AP-20261106-0037,2026-11-06,sample,CL-0200,PHL-003,2026-11-06T10:00,2026-11-06T11:00,12,false,false,urine,false,120,LAB-01,routine,2026-11-05T19:40,b2b,self_pay,confirmed,,Call on arrival
-AP-20261106-0038,2026-11-06,sample,CL-0153,PHL-005,2026-11-06T11:00,2026-11-06T12:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-05T16:47,b2b,self_pay,confirmed,,
-AP-20261106-0039,2026-11-06,sample,CL-0197,PHL-001,2026-11-06T11:00,2026-11-06T12:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-05T09:23,call_centre,self_pay,confirmed,,
-AP-20261106-0040,2026-11-06,sample,CL-0147,PHL-004,2026-11-06T12:00,2026-11-06T13:00,15,false,false,CBC,false,480,LAB-03,routine,2026-11-04T08:53,b2b,insurance,confirmed,,"Child patient, parent present"
-AP-20261106-0041,2026-11-06,sample,CL-0176,PHL-001,2026-11-06T12:00,2026-11-06T13:00,15,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-05T12:50,b2b,insurance,confirmed,,
-AP-20261106-0042,2026-11-06,sample,CL-0219,PHL-002,2026-11-06T12:30,2026-11-06T13:30,10,false,false,coag_PT_INR,false,480,LAB-01,fast_track,2026-11-06T10:37,whatsapp,insurance,confirmed,,
-AP-20261106-0043,2026-11-06,sample,CL-0031,PHL-004,2026-11-06T13:00,2026-11-06T14:00,16,false,false,CBC,false,480,LAB-03,routine,2026-11-01T11:17,app,self_pay,confirmed,,
-AP-20261106-0044,2026-11-06,sample,CL-0017,PHL-001,2026-11-06T14:00,2026-11-06T15:00,11,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-04T21:06,b2b,insurance,no_show,,
-AP-20261106-0045,2026-11-06,sample,CL-0062,PHL-004,2026-11-06T14:00,2026-11-06T15:00,18,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-04T09:23,app,insurance,confirmed,,
+AP-20261106-0037,2026-11-06,sample,CL-0200,PHL-003,2026-11-06T10:00,2026-11-06T11:00,12,false,false,urine,false,120,LAB-03,routine,2026-11-05T19:40,b2b,self_pay,confirmed,,Call on arrival
+AP-20261106-0038,2026-11-06,sample,CL-0153,PHL-005,2026-11-06T11:00,2026-11-06T12:00,16,false,false,CBC,false,480,LAB-01,routine,2026-11-05T16:47,b2b,self_pay,confirmed,,
+AP-20261106-0039,2026-11-06,sample,CL-0197,PHL-001,2026-11-06T11:00,2026-11-06T12:00,16,false,false,CBC,false,480,LAB-01,routine,2026-11-05T09:23,call_centre,self_pay,confirmed,,
+AP-20261106-0040,2026-11-06,sample,CL-0147,PHL-004,2026-11-06T12:00,2026-11-06T13:00,15,false,false,CBC,false,480,LAB-01,routine,2026-11-04T08:53,b2b,insurance,confirmed,,"Child patient, parent present"
+AP-20261106-0041,2026-11-06,sample,CL-0176,PHL-001,2026-11-06T12:00,2026-11-06T13:00,15,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-05T12:50,b2b,insurance,confirmed,,
+AP-20261106-0042,2026-11-06,sample,CL-0219,PHL-002,2026-11-06T12:30,2026-11-06T13:30,10,false,false,coag_PT_INR,false,480,LAB-02,fast_track,2026-11-06T10:37,whatsapp,insurance,confirmed,,
+AP-20261106-0043,2026-11-06,sample,CL-0031,PHL-004,2026-11-06T13:00,2026-11-06T14:00,16,false,false,CBC,false,480,LAB-01,routine,2026-11-01T11:17,app,self_pay,confirmed,,
+AP-20261106-0044,2026-11-06,sample,CL-0017,PHL-001,2026-11-06T14:00,2026-11-06T15:00,11,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-04T21:06,b2b,insurance,no_show,,
+AP-20261106-0045,2026-11-06,sample,CL-0062,PHL-004,2026-11-06T14:00,2026-11-06T15:00,18,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-04T09:23,app,insurance,confirmed,,
 AP-20261106-0046,2026-11-06,sample,CL-0002,PHL-002,2026-11-06T15:00,2026-11-06T16:00,17,false,false,PCR,false,1440,LAB-02,fast_track,2026-11-06T13:58,b2b,insurance,cancelled,2026-11-06T14:22,Call on arrival
-AP-20261106-0047,2026-11-06,sample,CL-0167,PHL-004,2026-11-06T15:00,2026-11-06T16:00,13,false,false,PCR,false,1440,LAB-01,routine,2026-11-04T17:49,call_centre,corporate,cancelled,2026-11-05T03:11,
+AP-20261106-0047,2026-11-06,sample,CL-0167,PHL-004,2026-11-06T15:00,2026-11-06T16:00,13,false,false,PCR,false,1440,LAB-03,routine,2026-11-04T17:49,call_centre,corporate,cancelled,2026-11-05T03:11,
 AP-20261106-0048,2026-11-06,babysitting,CL-0089,BBS-007,2026-11-06T16:00,2026-11-07T00:00,480,true,true,,,,,routine,2026-11-04T19:18,whatsapp,corporate,confirmed,,"Infant, 8 months"
 AP-20261106-0049,2026-11-06,babysitting,CL-0101,BBS-006,2026-11-06T16:00,2026-11-06T20:00,240,true,true,,,,,routine,2026-11-04T08:23,app,self_pay,confirmed,,
-AP-20261106-0050,2026-11-06,sample,CL-0096,PHL-003,2026-11-06T16:00,2026-11-06T17:00,13,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-05T08:36,call_centre,corporate,confirmed,,
+AP-20261106-0050,2026-11-06,sample,CL-0096,PHL-003,2026-11-06T16:00,2026-11-06T17:00,13,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-05T08:36,call_centre,corporate,confirmed,,
 AP-20261106-0051,2026-11-06,sample,CL-0204,PHL-001,2026-11-06T16:00,2026-11-06T17:00,20,false,false,CBC,false,480,LAB-02,routine,2026-11-04T13:41,app,corporate,no_show,,Call on arrival
-AP-20261106-0052,2026-11-06,sample,CL-0030,PHL-002,2026-11-06T17:00,2026-11-06T18:00,19,false,false,CBC,false,480,LAB-02,routine,2026-11-05T13:48,b2b,insurance,cancelled,2026-11-06T02:51,
-AP-20261106-0053,2026-11-06,sample,CL-0172,PHL-005,2026-11-06T17:00,2026-11-06T18:00,11,false,false,PCR,false,1440,LAB-02,routine,2026-11-05T09:21,app,self_pay,cancelled,2026-11-05T10:09,
-AP-20261106-0054,2026-11-06,sample,CL-0119,PHL-001,2026-11-06T17:15,2026-11-06T18:15,17,false,false,coag_PT_INR,false,480,LAB-01,fast_track,2026-11-06T16:12,app,self_pay,confirmed,,Call on arrival
+AP-20261106-0052,2026-11-06,sample,CL-0030,PHL-002,2026-11-06T17:00,2026-11-06T18:00,19,false,false,CBC,false,480,LAB-01,routine,2026-11-05T13:48,b2b,insurance,cancelled,2026-11-06T02:51,
+AP-20261106-0053,2026-11-06,sample,CL-0172,PHL-005,2026-11-06T17:00,2026-11-06T18:00,11,false,false,PCR,false,1440,LAB-03,routine,2026-11-05T09:21,app,self_pay,cancelled,2026-11-05T10:09,
+AP-20261106-0054,2026-11-06,sample,CL-0119,PHL-001,2026-11-06T17:15,2026-11-06T18:15,17,false,false,coag_PT_INR,false,480,LAB-02,fast_track,2026-11-06T16:12,app,self_pay,confirmed,,Call on arrival
 AP-20261106-0055,2026-11-06,babysitting,CL-0084,BBS-012,2026-11-06T18:00,2026-11-07T00:00,360,true,true,,,,,routine,2026-11-04T18:29,app,corporate,cancelled,2026-11-05T12:15,Nut allergy in the house
 AP-20261106-0056,2026-11-06,sample,CL-0049,PHL-003,2026-11-06T18:00,2026-11-06T19:00,14,false,false,PCR,false,1440,LAB-01,routine,2026-11-03T21:10,whatsapp,insurance,confirmed,,
-AP-20261106-0057,2026-11-06,sample,CL-0180,PHL-002,2026-11-06T18:00,2026-11-06T19:00,11,false,false,CBC,false,480,LAB-02,routine,2026-11-01T20:46,app,self_pay,confirmed,,Call on arrival
-AP-20261106-0058,2026-11-06,sample,CL-0159,PHL-004,2026-11-06T18:15,2026-11-06T19:15,19,false,false,PCR,false,1440,LAB-03,fast_track,2026-11-06T17:30,call_centre,corporate,confirmed,,Difficult veins
+AP-20261106-0057,2026-11-06,sample,CL-0180,PHL-002,2026-11-06T18:00,2026-11-06T19:00,11,false,false,CBC,false,480,LAB-01,routine,2026-11-01T20:46,app,self_pay,confirmed,,Call on arrival
+AP-20261106-0058,2026-11-06,sample,CL-0159,PHL-004,2026-11-06T18:15,2026-11-06T19:15,19,false,false,PCR,false,1440,LAB-01,fast_track,2026-11-06T17:30,call_centre,corporate,confirmed,,Difficult veins
 AP-20261106-0059,2026-11-06,sample,CL-0123,PHL-003,2026-11-06T18:30,2026-11-06T19:30,10,false,false,urine,false,120,LAB-01,fast_track,2026-11-06T16:49,b2b,insurance,confirmed,,"Elderly patient, ground floor"
 AP-20261106-0060,2026-11-06,nursing,CL-0094,NUR-012,2026-11-06T19:00,2026-11-07T07:00,720,true,false,,,,,routine,2026-11-04T08:25,whatsapp,insurance,confirmed,,"Bedridden, two-person transfer"
 AP-20261106-0061,2026-11-06,babysitting,CL-0212,BBS-011,2026-11-06T19:00,2026-11-06T23:00,240,true,true,,,,,routine,2026-11-04T15:37,whatsapp,self_pay,confirmed,,
 AP-20261107-0001,2026-11-07,nursing,CL-0069,NUR-007,2026-11-07T07:00,2026-11-07T19:00,720,true,true,,,,,routine,2026-11-02T12:43,app,corporate,confirmed,,
 AP-20261107-0002,2026-11-07,sample,CL-0001,PHL-004,2026-11-07T07:00,2026-11-07T08:00,12,false,false,urine,false,120,LAB-02,routine,2026-11-02T16:49,whatsapp,corporate,cancelled,2026-11-06T04:57,Difficult veins
-AP-20261107-0003,2026-11-07,sample,CL-0145,PHL-003,2026-11-07T07:00,2026-11-07T08:00,18,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T20:02,app,insurance,confirmed,,
-AP-20261107-0004,2026-11-07,sample,CL-0172,PHL-005,2026-11-07T07:00,2026-11-07T08:00,14,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T15:22,app,insurance,confirmed,,Difficult veins
+AP-20261107-0003,2026-11-07,sample,CL-0145,PHL-003,2026-11-07T07:00,2026-11-07T08:00,18,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-04T20:02,app,insurance,confirmed,,
+AP-20261107-0004,2026-11-07,sample,CL-0172,PHL-005,2026-11-07T07:00,2026-11-07T08:00,14,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-05T15:22,app,insurance,confirmed,,Difficult veins
 AP-20261107-0005,2026-11-07,sample,CL-0195,PHL-001,2026-11-07T07:00,2026-11-07T08:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-02T08:11,call_centre,insurance,confirmed,,
 AP-20261107-0006,2026-11-07,sample,CL-0196,PHL-002,2026-11-07T07:00,2026-11-07T08:00,12,false,false,PCR,false,1440,LAB-02,routine,2026-11-06T19:55,call_centre,corporate,no_show,,
 AP-20261107-0007,2026-11-07,nursing,CL-0007,NUR-015,2026-11-07T08:00,2026-11-08T08:00,1440,true,false,,,,,routine,2026-11-06T20:29,call_centre,corporate,confirmed,,Live-in
 AP-20261107-0008,2026-11-07,nursing,CL-0183,NUR-001,2026-11-07T08:00,2026-11-07T16:00,480,true,true,,,,,routine,2026-11-06T15:25,call_centre,self_pay,no_show,,"Bedridden, two-person transfer"
 AP-20261107-0009,2026-11-07,babysitting,CL-0071,BBS-008,2026-11-07T08:00,2026-11-07T18:00,600,true,true,,,,,routine,2026-11-06T14:16,whatsapp,self_pay,confirmed,,Call on arrival
 AP-20261107-0010,2026-11-07,sample,CL-0002,PHL-002,2026-11-07T08:00,2026-11-07T09:00,16,false,false,urine,false,120,LAB-02,routine,2026-11-06T08:23,whatsapp,insurance,confirmed,,"Elderly patient, ground floor"
-AP-20261107-0011,2026-11-07,sample,CL-0070,PHL-005,2026-11-07T08:00,2026-11-07T09:00,10,false,false,glucose_fasting,true,120,LAB-03,fast_track,2026-11-07T07:28,whatsapp,insurance,confirmed,,"Child patient, parent present"
+AP-20261107-0011,2026-11-07,sample,CL-0070,PHL-005,2026-11-07T08:00,2026-11-07T09:00,10,false,false,glucose_fasting,true,120,LAB-01,fast_track,2026-11-07T07:28,whatsapp,insurance,confirmed,,"Child patient, parent present"
 AP-20261107-0012,2026-11-07,sample,CL-0088,PHL-001,2026-11-07T08:00,2026-11-07T09:00,15,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T16:41,call_centre,corporate,confirmed,,
-AP-20261107-0013,2026-11-07,sample,CL-0096,PHL-003,2026-11-07T08:00,2026-11-07T09:00,12,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-05T19:33,app,corporate,confirmed,,Call on arrival
-AP-20261107-0014,2026-11-07,sample,CL-0210,PHL-005,2026-11-07T08:00,2026-11-07T09:00,16,false,false,urine,false,120,LAB-01,routine,2026-11-05T15:22,app,self_pay,confirmed,,
+AP-20261107-0013,2026-11-07,sample,CL-0096,PHL-003,2026-11-07T08:00,2026-11-07T09:00,12,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-05T19:33,app,corporate,confirmed,,Call on arrival
+AP-20261107-0014,2026-11-07,sample,CL-0210,PHL-005,2026-11-07T08:00,2026-11-07T09:00,16,false,false,urine,false,120,LAB-03,routine,2026-11-05T15:22,app,self_pay,confirmed,,
 AP-20261107-0015,2026-11-07,nursing,CL-0041,NUR-002,2026-11-07T09:00,2026-11-07T17:00,480,true,false,,,,,routine,2026-11-05T18:13,call_centre,insurance,confirmed,,Call on arrival
 AP-20261107-0016,2026-11-07,nursing,CL-0058,NUR-004,2026-11-07T09:00,2026-11-07T17:00,480,true,true,,,,,routine,2026-11-04T16:13,call_centre,insurance,confirmed,,"Bedridden, two-person transfer"
 AP-20261107-0017,2026-11-07,nursing,CL-0095,NUR-016,2026-11-07T09:00,2026-11-08T09:00,1440,true,false,,,,,routine,2026-10-31T20:59,whatsapp,self_pay,confirmed,,Live-in
 AP-20261107-0018,2026-11-07,nursing,CL-0103,NUR-014,2026-11-07T09:00,2026-11-07T21:00,720,true,true,,,,,routine,2026-11-05T12:31,app,insurance,confirmed,,
-AP-20261107-0019,2026-11-07,sample,CL-0017,PHL-001,2026-11-07T09:00,2026-11-07T10:00,14,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-04T12:16,app,insurance,cancelled,2026-11-04T17:59,
-AP-20261107-0020,2026-11-07,sample,CL-0031,PHL-004,2026-11-07T09:00,2026-11-07T10:00,12,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-04T17:11,app,insurance,confirmed,,
+AP-20261107-0019,2026-11-07,sample,CL-0017,PHL-001,2026-11-07T09:00,2026-11-07T10:00,14,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T12:16,app,insurance,cancelled,2026-11-04T17:59,
+AP-20261107-0020,2026-11-07,sample,CL-0031,PHL-004,2026-11-07T09:00,2026-11-07T10:00,12,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-04T17:11,app,insurance,confirmed,,
 AP-20261107-0021,2026-11-07,sample,CL-0053,PHL-002,2026-11-07T09:00,2026-11-07T10:00,19,false,false,CBC,false,480,LAB-01,routine,2026-11-06T16:45,app,insurance,confirmed,,
-AP-20261107-0022,2026-11-07,sample,CL-0060,PHL-001,2026-11-07T09:00,2026-11-07T10:00,11,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-05T21:03,app,insurance,confirmed,,
-AP-20261107-0023,2026-11-07,sample,CL-0142,PHL-002,2026-11-07T09:00,2026-11-07T10:00,19,false,false,urine,false,120,LAB-02,routine,2026-11-06T18:39,call_centre,insurance,confirmed,,
+AP-20261107-0022,2026-11-07,sample,CL-0060,PHL-001,2026-11-07T09:00,2026-11-07T10:00,11,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T21:03,app,insurance,confirmed,,
+AP-20261107-0023,2026-11-07,sample,CL-0142,PHL-002,2026-11-07T09:00,2026-11-07T10:00,19,false,false,urine,false,120,LAB-03,routine,2026-11-06T18:39,call_centre,insurance,confirmed,,
 AP-20261107-0024,2026-11-07,babysitting,CL-0014,BBS-003,2026-11-07T09:30,2026-11-07T17:30,480,true,true,,,,,routine,2026-11-06T11:31,whatsapp,self_pay,confirmed,,Call on arrival
 AP-20261107-0025,2026-11-07,babysitting,CL-0131,BBS-004,2026-11-07T09:30,2026-11-07T17:30,480,true,true,,,,,routine,2026-11-04T20:18,app,corporate,confirmed,,Call on arrival
 AP-20261107-0026,2026-11-07,babysitting,CL-0024,BBS-014,2026-11-07T10:00,2026-11-07T16:00,360,true,true,,,,,routine,2026-11-02T11:47,app,self_pay,confirmed,,"Twins, 3y"
-AP-20261107-0027,2026-11-07,sample,CL-0009,PHL-003,2026-11-07T10:00,2026-11-07T11:00,14,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-06T10:31,b2b,insurance,confirmed,,
+AP-20261107-0027,2026-11-07,sample,CL-0009,PHL-003,2026-11-07T10:00,2026-11-07T11:00,14,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-06T10:31,b2b,insurance,confirmed,,
 AP-20261107-0028,2026-11-07,sample,CL-0020,PHL-001,2026-11-07T10:00,2026-11-07T11:00,15,false,false,PCR,false,1440,LAB-02,routine,2026-11-05T10:17,call_centre,insurance,confirmed,,
 AP-20261107-0029,2026-11-07,sample,CL-0093,PHL-004,2026-11-07T10:00,2026-11-07T11:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-06T20:40,app,insurance,confirmed,,"Child patient, parent present"
-AP-20261107-0030,2026-11-07,sample,CL-0098,PHL-002,2026-11-07T10:00,2026-11-07T11:00,16,false,false,CBC,false,480,LAB-01,routine,2026-11-06T14:59,app,insurance,confirmed,,
-AP-20261107-0031,2026-11-07,sample,CL-0128,PHL-005,2026-11-07T10:00,2026-11-07T11:00,10,false,false,CBC,false,480,LAB-02,routine,2026-11-06T14:41,b2b,insurance,confirmed,,
+AP-20261107-0030,2026-11-07,sample,CL-0098,PHL-002,2026-11-07T10:00,2026-11-07T11:00,16,false,false,CBC,false,480,LAB-03,routine,2026-11-06T14:59,app,insurance,confirmed,,
+AP-20261107-0031,2026-11-07,sample,CL-0128,PHL-005,2026-11-07T10:00,2026-11-07T11:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-06T14:41,b2b,insurance,confirmed,,
 AP-20261107-0032,2026-11-07,sample,CL-0134,PHL-001,2026-11-07T10:00,2026-11-07T11:00,15,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-05T21:56,app,insurance,no_show,,
 AP-20261107-0033,2026-11-07,sample,CL-0143,PHL-005,2026-11-07T10:00,2026-11-07T11:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-02T18:06,app,insurance,confirmed,,Call on arrival
-AP-20261107-0034,2026-11-07,sample,CL-0171,PHL-003,2026-11-07T10:00,2026-11-07T11:00,15,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-02T19:56,whatsapp,insurance,confirmed,,
-AP-20261107-0035,2026-11-07,sample,CL-0197,PHL-004,2026-11-07T10:00,2026-11-07T11:00,20,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-06T16:30,app,insurance,confirmed,,
+AP-20261107-0034,2026-11-07,sample,CL-0171,PHL-003,2026-11-07T10:00,2026-11-07T11:00,15,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-02T19:56,whatsapp,insurance,confirmed,,
+AP-20261107-0035,2026-11-07,sample,CL-0197,PHL-004,2026-11-07T10:00,2026-11-07T11:00,20,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-06T16:30,app,insurance,confirmed,,
 AP-20261107-0036,2026-11-07,babysitting,CL-0192,BBS-011,2026-11-07T11:00,2026-11-07T21:00,600,true,true,,,,,routine,2026-11-04T08:24,app,self_pay,confirmed,,"Infant, 8 months"
-AP-20261107-0037,2026-11-07,sample,CL-0037,PHL-002,2026-11-07T11:00,2026-11-07T12:00,13,false,false,PCR,false,1440,LAB-01,routine,2026-11-06T18:52,app,insurance,cancelled,2026-11-07T00:15,
-AP-20261107-0038,2026-11-07,sample,CL-0065,PHL-001,2026-11-07T11:00,2026-11-07T12:00,14,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-05T18:14,app,corporate,confirmed,,Call on arrival
+AP-20261107-0037,2026-11-07,sample,CL-0037,PHL-002,2026-11-07T11:00,2026-11-07T12:00,13,false,false,PCR,false,1440,LAB-03,routine,2026-11-06T18:52,app,insurance,cancelled,2026-11-07T00:15,
+AP-20261107-0038,2026-11-07,sample,CL-0065,PHL-001,2026-11-07T11:00,2026-11-07T12:00,14,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-05T18:14,app,corporate,confirmed,,Call on arrival
 AP-20261107-0039,2026-11-07,babysitting,CL-0122,BBS-002,2026-11-07T13:00,2026-11-07T20:00,420,true,true,,,,,routine,2026-11-06T18:45,call_centre,self_pay,confirmed,,Call on arrival
-AP-20261107-0040,2026-11-07,sample,CL-0122,PHL-003,2026-11-07T13:00,2026-11-07T14:00,18,false,false,CBC,false,480,LAB-02,routine,2026-11-06T10:58,app,insurance,confirmed,,
-AP-20261107-0041,2026-11-07,sample,CL-0110,PHL-005,2026-11-07T14:00,2026-11-07T15:00,18,false,false,CBC,false,480,LAB-02,routine,2026-11-06T21:18,call_centre,insurance,confirmed,,
+AP-20261107-0040,2026-11-07,sample,CL-0122,PHL-003,2026-11-07T13:00,2026-11-07T14:00,18,false,false,CBC,false,480,LAB-03,routine,2026-11-06T10:58,app,insurance,confirmed,,
+AP-20261107-0041,2026-11-07,sample,CL-0110,PHL-005,2026-11-07T14:00,2026-11-07T15:00,18,false,false,CBC,false,480,LAB-01,routine,2026-11-06T21:18,call_centre,insurance,confirmed,,
 AP-20261107-0042,2026-11-07,sample,CL-0156,PHL-004,2026-11-07T15:00,2026-11-07T16:00,19,false,false,urine,false,120,LAB-02,routine,2026-11-06T12:44,app,insurance,confirmed,,Call on arrival
 AP-20261107-0043,2026-11-07,babysitting,CL-0163,BBS-009,2026-11-07T16:00,2026-11-07T21:00,300,true,true,,,,,routine,2026-11-04T08:19,app,self_pay,confirmed,,
-AP-20261107-0044,2026-11-07,sample,CL-0174,PHL-003,2026-11-07T17:00,2026-11-07T18:00,18,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-06T10:20,whatsapp,insurance,confirmed,,
-AP-20261107-0045,2026-11-07,sample,CL-0046,PHL-002,2026-11-07T18:00,2026-11-07T19:00,11,false,false,CBC,false,480,LAB-03,routine,2026-11-05T14:30,app,insurance,confirmed,,Difficult veins
+AP-20261107-0044,2026-11-07,sample,CL-0174,PHL-003,2026-11-07T17:00,2026-11-07T18:00,18,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-06T10:20,whatsapp,insurance,confirmed,,
+AP-20261107-0045,2026-11-07,sample,CL-0046,PHL-002,2026-11-07T18:00,2026-11-07T19:00,11,false,false,CBC,false,480,LAB-01,routine,2026-11-05T14:30,app,insurance,confirmed,,Difficult veins
 AP-20261107-0046,2026-11-07,nursing,CL-0132,NUR-009,2026-11-07T19:00,2026-11-08T07:00,720,true,false,,,,,routine,2026-11-02T14:55,b2b,insurance,confirmed,,Patient wheelchair user
 AP-20261107-0047,2026-11-07,nursing,CL-0162,NUR-005,2026-11-07T19:00,2026-11-08T07:00,720,true,false,,,,,routine,2026-11-04T20:00,call_centre,insurance,confirmed,,"Diabetic, check glucose log"
 AP-20261108-0001,2026-11-08,nursing,CL-0162,NUR-003,2026-11-08T07:00,2026-11-08T15:00,480,true,false,,,,,routine,2026-11-01T15:19,app,corporate,confirmed,,"Bedridden, two-person transfer"
-AP-20261108-0002,2026-11-08,sample,CL-0045,PHL-001,2026-11-08T07:00,2026-11-08T08:00,14,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-06T20:11,b2b,insurance,confirmed,,
-AP-20261108-0003,2026-11-08,sample,CL-0052,PHL-005,2026-11-08T07:00,2026-11-08T08:00,18,false,false,PCR,false,1440,LAB-02,routine,2026-11-06T14:37,whatsapp,self_pay,confirmed,,
-AP-20261108-0004,2026-11-08,sample,CL-0057,PHL-001,2026-11-08T07:00,2026-11-08T08:00,18,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-06T14:06,app,self_pay,confirmed,,
-AP-20261108-0005,2026-11-08,sample,CL-0100,PHL-003,2026-11-08T07:00,2026-11-08T08:00,12,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-07T19:07,call_centre,self_pay,confirmed,,Difficult veins
+AP-20261108-0002,2026-11-08,sample,CL-0045,PHL-001,2026-11-08T07:00,2026-11-08T08:00,14,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-06T20:11,b2b,insurance,confirmed,,
+AP-20261108-0003,2026-11-08,sample,CL-0052,PHL-005,2026-11-08T07:00,2026-11-08T08:00,18,false,false,PCR,false,1440,LAB-01,routine,2026-11-06T14:37,whatsapp,self_pay,confirmed,,
+AP-20261108-0004,2026-11-08,sample,CL-0057,PHL-001,2026-11-08T07:00,2026-11-08T08:00,18,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-06T14:06,app,self_pay,confirmed,,
+AP-20261108-0005,2026-11-08,sample,CL-0100,PHL-003,2026-11-08T07:00,2026-11-08T08:00,12,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-07T19:07,call_centre,self_pay,confirmed,,Difficult veins
 AP-20261108-0006,2026-11-08,sample,CL-0144,PHL-002,2026-11-08T07:00,2026-11-08T08:00,18,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-07T19:13,whatsapp,insurance,confirmed,,
 AP-20261108-0007,2026-11-08,sample,CL-0151,PHL-005,2026-11-08T07:00,2026-11-08T08:00,18,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-07T10:41,b2b,corporate,confirmed,,
 AP-20261108-0008,2026-11-08,sample,CL-0166,PHL-002,2026-11-08T07:00,2026-11-08T08:00,18,false,false,glucose_fasting,true,120,LAB-02,routine,2026-11-07T12:07,b2b,insurance,confirmed,,
-AP-20261108-0009,2026-11-08,sample,CL-0171,PHL-003,2026-11-08T07:00,2026-11-08T08:00,14,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-05T19:17,b2b,self_pay,confirmed,,Call on arrival
+AP-20261108-0009,2026-11-08,sample,CL-0171,PHL-003,2026-11-08T07:00,2026-11-08T08:00,14,false,false,lipid_fasting,true,240,LAB-01,routine,2026-11-05T19:17,b2b,self_pay,confirmed,,Call on arrival
 AP-20261108-0010,2026-11-08,nursing,CL-0094,NUR-012,2026-11-08T08:00,2026-11-09T08:00,1440,true,false,,,,,routine,2026-11-07T20:05,whatsapp,insurance,confirmed,,Live-in
 AP-20261108-0011,2026-11-08,nursing,CL-0186,NUR-007,2026-11-08T08:00,2026-11-08T20:00,720,true,true,,,,,routine,2026-11-03T08:04,app,self_pay,confirmed,,
 AP-20261108-0012,2026-11-08,sample,CL-0001,PHL-005,2026-11-08T08:00,2026-11-08T09:00,15,false,false,CBC,false,480,LAB-02,routine,2026-11-07T17:18,app,insurance,confirmed,,
 AP-20261108-0013,2026-11-08,sample,CL-0049,PHL-003,2026-11-08T08:00,2026-11-08T09:00,13,false,false,CBC,false,480,LAB-01,routine,2026-11-03T09:02,call_centre,insurance,confirmed,,
-AP-20261108-0014,2026-11-08,sample,CL-0135,PHL-005,2026-11-08T08:00,2026-11-08T09:00,18,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-07T21:50,whatsapp,self_pay,confirmed,,
+AP-20261108-0014,2026-11-08,sample,CL-0135,PHL-005,2026-11-08T08:00,2026-11-08T09:00,18,false,false,lipid_fasting,true,240,LAB-03,routine,2026-11-07T21:50,whatsapp,self_pay,confirmed,,
 AP-20261108-0015,2026-11-08,sample,CL-0141,PHL-001,2026-11-08T08:00,2026-11-08T09:00,13,false,false,lipid_fasting,true,240,LAB-02,routine,2026-11-07T19:18,app,self_pay,confirmed,,Call on arrival
 AP-20261108-0016,2026-11-08,sample,CL-0218,PHL-002,2026-11-08T08:00,2026-11-08T09:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-05T21:05,app,insurance,confirmed,,"Elderly patient, ground floor"
 AP-20261108-0017,2026-11-08,babysitting,CL-0089,BBS-007,2026-11-08T08:30,2026-11-08T16:30,480,true,true,,,,,routine,2026-11-05T13:03,app,self_pay,confirmed,,"Two kids, 4y and 7y"
 AP-20261108-0018,2026-11-08,nursing,CL-0001,NUR-004,2026-11-08T09:00,2026-11-08T17:00,480,true,true,,,,,routine,2026-11-06T15:34,call_centre,corporate,confirmed,,
 AP-20261108-0019,2026-11-08,babysitting,CL-0131,BBS-010,2026-11-08T09:00,2026-11-08T13:00,240,true,true,,,,,routine,2026-11-06T09:00,call_centre,self_pay,confirmed,,Call on arrival
-AP-20261108-0020,2026-11-08,sample,CL-0161,PHL-001,2026-11-08T09:00,2026-11-08T10:00,14,false,false,CBC,false,480,LAB-02,routine,2026-11-06T13:31,call_centre,self_pay,cancelled,2026-11-06T17:19,
-AP-20261108-0021,2026-11-08,sample,CL-0213,PHL-005,2026-11-08T09:00,2026-11-08T10:00,13,false,false,glucose_fasting,true,120,LAB-03,routine,2026-11-07T19:06,b2b,insurance,confirmed,,
+AP-20261108-0020,2026-11-08,sample,CL-0161,PHL-001,2026-11-08T09:00,2026-11-08T10:00,14,false,false,CBC,false,480,LAB-03,routine,2026-11-06T13:31,call_centre,self_pay,cancelled,2026-11-06T17:19,
+AP-20261108-0021,2026-11-08,sample,CL-0213,PHL-005,2026-11-08T09:00,2026-11-08T10:00,13,false,false,glucose_fasting,true,120,LAB-01,routine,2026-11-07T19:06,b2b,insurance,confirmed,,
 AP-20261108-0022,2026-11-08,babysitting,CL-0116,BBS-006,2026-11-08T09:30,2026-11-08T13:30,240,true,true,,,,,routine,2026-11-07T15:37,app,self_pay,confirmed,,"Two kids, 4y and 7y"
 AP-20261108-0023,2026-11-08,sample,CL-0204,PHL-001,2026-11-08T10:15,2026-11-08T11:15,12,false,false,lipid_fasting,true,240,LAB-02,fast_track,2026-11-08T08:15,app,corporate,cancelled,2026-11-08T08:50,
 AP-20261108-0024,2026-11-08,babysitting,CL-0043,BBS-009,2026-11-08T10:30,2026-11-08T16:30,360,true,true,,,,,routine,2026-11-06T20:04,whatsapp,self_pay,confirmed,,
-AP-20261108-0025,2026-11-08,sample,CL-0155,PHL-003,2026-11-08T11:00,2026-11-08T12:00,10,false,false,CBC,false,480,LAB-01,routine,2026-11-07T11:05,whatsapp,insurance,confirmed,,
+AP-20261108-0025,2026-11-08,sample,CL-0155,PHL-003,2026-11-08T11:00,2026-11-08T12:00,10,false,false,CBC,false,480,LAB-03,routine,2026-11-07T11:05,whatsapp,insurance,confirmed,,
 AP-20261108-0026,2026-11-08,sample,CL-0157,PHL-003,2026-11-08T11:00,2026-11-08T12:00,18,false,false,PCR,false,1440,LAB-01,routine,2026-11-07T19:59,call_centre,corporate,confirmed,,Call on arrival
-AP-20261108-0027,2026-11-08,sample,CL-0172,PHL-005,2026-11-08T11:00,2026-11-08T12:00,19,false,false,CBC,false,480,LAB-02,routine,2026-11-07T12:42,app,corporate,confirmed,,Difficult veins
-AP-20261108-0028,2026-11-08,sample,CL-0176,PHL-001,2026-11-08T11:00,2026-11-08T12:00,18,false,false,urine,false,120,LAB-02,routine,2026-11-06T15:33,app,insurance,confirmed,,
-AP-20261108-0029,2026-11-08,sample,CL-0039,PHL-005,2026-11-08T11:45,2026-11-08T12:45,15,false,false,CBC,false,480,LAB-02,fast_track,2026-11-08T10:11,app,corporate,cancelled,2026-11-08T11:34,
-AP-20261108-0030,2026-11-08,sample,CL-0019,PHL-003,2026-11-08T12:00,2026-11-08T13:00,13,false,false,CBC,false,480,LAB-02,routine,2026-11-07T21:33,b2b,self_pay,confirmed,,
-AP-20261108-0031,2026-11-08,sample,CL-0219,PHL-002,2026-11-08T12:00,2026-11-08T13:00,19,false,false,PCR,false,1440,LAB-01,routine,2026-11-07T13:31,app,corporate,confirmed,,
+AP-20261108-0027,2026-11-08,sample,CL-0172,PHL-005,2026-11-08T11:00,2026-11-08T12:00,19,false,false,CBC,false,480,LAB-03,routine,2026-11-07T12:42,app,corporate,confirmed,,Difficult veins
+AP-20261108-0028,2026-11-08,sample,CL-0176,PHL-001,2026-11-08T11:00,2026-11-08T12:00,18,false,false,urine,false,120,LAB-01,routine,2026-11-06T15:33,app,insurance,confirmed,,
+AP-20261108-0029,2026-11-08,sample,CL-0039,PHL-005,2026-11-08T11:45,2026-11-08T12:45,15,false,false,CBC,false,480,LAB-03,fast_track,2026-11-08T10:11,app,corporate,cancelled,2026-11-08T11:34,
+AP-20261108-0030,2026-11-08,sample,CL-0019,PHL-003,2026-11-08T12:00,2026-11-08T13:00,13,false,false,CBC,false,480,LAB-03,routine,2026-11-07T21:33,b2b,self_pay,confirmed,,
+AP-20261108-0031,2026-11-08,sample,CL-0219,PHL-002,2026-11-08T12:00,2026-11-08T13:00,19,false,false,PCR,false,1440,LAB-02,routine,2026-11-07T13:31,app,corporate,confirmed,,
 AP-20261108-0032,2026-11-08,sample,CL-0034,PHL-002,2026-11-08T13:00,2026-11-08T14:00,17,false,false,urine,false,120,LAB-02,routine,2026-11-05T08:16,call_centre,insurance,confirmed,,
 AP-20261108-0033,2026-11-08,sample,CL-0064,PHL-001,2026-11-08T13:00,2026-11-08T14:00,16,false,false,CBC,false,480,LAB-02,routine,2026-11-07T12:41,app,insurance,confirmed,,
-AP-20261108-0034,2026-11-08,sample,CL-0191,PHL-005,2026-11-08T13:00,2026-11-08T14:00,14,false,false,PCR,false,1440,LAB-02,routine,2026-11-07T11:28,call_centre,insurance,confirmed,,
-AP-20261108-0035,2026-11-08,sample,CL-0117,PHL-001,2026-11-08T14:00,2026-11-08T15:00,12,false,false,CBC,false,480,LAB-01,routine,2026-11-07T09:44,whatsapp,insurance,confirmed,,"Child patient, parent present"
-AP-20261108-0036,2026-11-08,sample,CL-0145,PHL-003,2026-11-08T14:00,2026-11-08T15:00,10,false,false,PCR,false,1440,LAB-01,routine,2026-11-07T11:38,call_centre,corporate,confirmed,,Call on arrival
+AP-20261108-0034,2026-11-08,sample,CL-0191,PHL-005,2026-11-08T13:00,2026-11-08T14:00,14,false,false,PCR,false,1440,LAB-01,routine,2026-11-07T11:28,call_centre,insurance,confirmed,,
+AP-20261108-0035,2026-11-08,sample,CL-0117,PHL-001,2026-11-08T14:00,2026-11-08T15:00,12,false,false,CBC,false,480,LAB-03,routine,2026-11-07T09:44,whatsapp,insurance,confirmed,,"Child patient, parent present"
+AP-20261108-0036,2026-11-08,sample,CL-0145,PHL-003,2026-11-08T14:00,2026-11-08T15:00,10,false,false,PCR,false,1440,LAB-03,routine,2026-11-07T11:38,call_centre,corporate,confirmed,,Call on arrival
 AP-20261108-0037,2026-11-08,babysitting,CL-0201,BBS-013,2026-11-08T14:30,2026-11-08T19:30,300,true,true,,,,,routine,2026-11-06T08:52,call_centre,self_pay,confirmed,,"Two kids, 4y and 7y"
 AP-20261108-0038,2026-11-08,sample,CL-0134,PHL-001,2026-11-08T15:00,2026-11-08T16:00,17,false,false,urine,false,120,LAB-02,routine,2026-11-07T21:47,b2b,insurance,confirmed,,Call on arrival
-AP-20261108-0039,2026-11-08,sample,CL-0140,PHL-005,2026-11-08T15:00,2026-11-08T16:00,11,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-05T17:33,b2b,corporate,confirmed,,
-AP-20261108-0040,2026-11-08,sample,CL-0129,PHL-003,2026-11-08T15:15,2026-11-08T16:15,12,false,false,PCR,false,1440,LAB-02,fast_track,2026-11-08T14:29,app,corporate,confirmed,,
+AP-20261108-0039,2026-11-08,sample,CL-0140,PHL-005,2026-11-08T15:00,2026-11-08T16:00,11,false,false,coag_PT_INR,false,480,LAB-02,routine,2026-11-05T17:33,b2b,corporate,confirmed,,
+AP-20261108-0040,2026-11-08,sample,CL-0129,PHL-003,2026-11-08T15:15,2026-11-08T16:15,12,false,false,PCR,false,1440,LAB-01,fast_track,2026-11-08T14:29,app,corporate,confirmed,,
 AP-20261108-0041,2026-11-08,babysitting,CL-0122,BBS-010,2026-11-08T16:00,2026-11-08T22:00,360,true,true,,,,,routine,2026-11-06T11:25,call_centre,self_pay,confirmed,,
-AP-20261108-0042,2026-11-08,sample,CL-0031,PHL-001,2026-11-08T16:00,2026-11-08T17:00,17,false,false,CBC,false,480,LAB-03,routine,2026-11-03T09:25,call_centre,self_pay,confirmed,,Call on arrival
+AP-20261108-0042,2026-11-08,sample,CL-0031,PHL-001,2026-11-08T16:00,2026-11-08T17:00,17,false,false,CBC,false,480,LAB-01,routine,2026-11-03T09:25,call_centre,self_pay,confirmed,,Call on arrival
 AP-20261108-0043,2026-11-08,sample,CL-0053,PHL-002,2026-11-08T16:45,2026-11-08T17:45,10,false,false,CBC,false,480,LAB-01,fast_track,2026-11-08T15:50,whatsapp,self_pay,confirmed,,"Child patient, parent present"
-AP-20261108-0044,2026-11-08,sample,CL-0070,PHL-005,2026-11-08T18:00,2026-11-08T19:00,12,false,false,coag_PT_INR,false,480,LAB-03,routine,2026-11-07T14:56,call_centre,self_pay,cancelled,2026-11-08T08:05,
+AP-20261108-0044,2026-11-08,sample,CL-0070,PHL-005,2026-11-08T18:00,2026-11-08T19:00,12,false,false,coag_PT_INR,false,480,LAB-01,routine,2026-11-07T14:56,call_centre,self_pay,cancelled,2026-11-08T08:05,
 AP-20261108-0045,2026-11-08,nursing,CL-0044,NUR-013,2026-11-08T19:00,2026-11-09T07:00,720,true,true,,,,,routine,2026-10-25T20:10,call_centre,self_pay,confirmed,,Post-op wound care

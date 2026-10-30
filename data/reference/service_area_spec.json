@@ -1,0 +1,39 @@
+{
+  "_doc": {
+    "purpose": "Inputs for tools/build_service_area.py, which writes service_area.geojson: the land inside the emirates the demo serves. Every generated point must fall inside it.",
+    "emirates": "OSM boundary relations (admin_level 4) for the emirates served (Dubai + northern emirates; no Abu Dhabi). name -> relation id.",
+    "coastline_bbox": "[south, west, north, east] for the OSM natural=coastline download; must cover both coasts of the served emirates.",
+    "sea_seeds": "[lat, lon] points known to be open sea; polygon faces containing one are water.",
+    "simplify_deg": "Douglas-Peucker tolerance in degrees for the written geometry (0.0002 deg is about 20 m).",
+    "source": "OpenStreetMap contributors, ODbL (Nominatim for boundaries, Overpass for coastline)."
+  },
+  "emirates": {
+    "Dubai": 3766483,
+    "Sharjah": 3766486,
+    "Ajman": 3766482,
+    "Umm Al Quwain": 3766487,
+    "Ras Al Khaimah": 3766485,
+    "Fujairah": 3766484
+  },
+  "coastline_bbox": [
+    24.6,
+    54.85,
+    26.2,
+    56.6
+  ],
+  "sea_seeds": [
+    [
+      25.3,
+      55.0
+    ],
+    [
+      25.8,
+      55.6
+    ],
+    [
+      25.3,
+      56.55
+    ]
+  ],
+  "simplify_deg": 0.0002
+}

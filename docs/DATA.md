@@ -15,7 +15,9 @@ operation's aggregates as ranges. No real row, location, name or volume figure e
 ```
 data/
   reference/              hand-maintained (committed)
-    areas.csv             public Dubai neighbourhood centroids + weights
+    areas.csv             public neighbourhood centroids (Dubai + northern emirates) + weights
+    service_area.geojson  land inside the served emirates (built by tools/build_service_area.py)
+    service_area_spec.json  inputs for that build: OSM relation ids, coastline box, sea seeds
     office.csv            the ops office: supplies, default standby
     labs.csv              partner labs (synthetic names)
     services.csv          the service catalog (Services tab)
@@ -38,6 +40,22 @@ All times are Dubai local time, ISO 8601 without offset. Coordinates are WGS84 w
 Patient and staff points are jittered around a public area centroid and never point at a real
 address.
 
+## Geography
+
+The service area is **Dubai plus the northern emirates**: Sharjah, Ajman, Umm Al Quwain, Ras Al
+Khaimah and Fujairah. There is **no Abu Dhabi**. `service_area.geojson` holds each emirate's OSM
+boundary intersected with land: sea, the Palm's lagoons and Dubai Creek are excluded, and so are
+Omani enclaves such as Madha.
+
+- **Every point is placed by rejection.** A jittered point is redrawn until it falls on land in its
+  own area's emirate. `geo.max_resample` in the profile caps the draws, and exceeding it is an
+  error.
+- **Area centroids are checked twice:** by the service area, and by OSM reverse geocoding (done
+  2026-10-30 for all 48).
+- **Tests fail** if any centroid, lab, office, client or staff point is off land or in the wrong
+  emirate.
+- **Source:** OpenStreetMap contributors, ODbL.
+
 ## Reference tables
 
 ### areas.csv
@@ -45,8 +63,8 @@ address.
 | column | type | meaning |
 |---|---|---|
 | area_id | str | `AR-01` … |
-| area_name | str | public neighbourhood name |
-| emirate | str | `Dubai` (S1) |
+| area_name | str | public neighbourhood name (checked against OSM) |
+| emirate | str | one of the served emirates (S1) |
 | lat, lon | float | approximate public centroid |
 | jitter_m | int | radius for scattering points |
 | w_orders | float | relative weight of field-visit orders from this area |
@@ -170,7 +188,7 @@ distances.
 
 | # | Assumption | Mocked as |
 |---|---|---|
-| S1 | The demo covers Dubai only (the real fleet also served other emirates) | Dubai areas |
+| S1 | Dubai plus the northern emirates; most demand in Dubai, then Sharjah and Ajman, a little further north and east; no Abu Dhabi | 32 Dubai + 16 northern areas, weighted |
 | S2 | One ops office: supplies pick-up and the default standby spot | `OF-01` |
 | S3 | 9–12 nurse–driver pairs on duty a day; 12 h shifts inside 06:00–22:00, some split 6+6; fixed weekly rest day | staff counts in `.env`, shift shapes in the profile |
 | S4 | About 35–55 orders published a day | mean in `.env`, weekday multipliers in the profile |

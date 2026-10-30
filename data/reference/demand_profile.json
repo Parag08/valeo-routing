@@ -2,6 +2,7 @@
   "_doc": {
     "summary": "Shape of synthetic demand. Volumes, seed and dates live in .env; everything else the generator draws from is here. All weights are relative (they need not sum to 1). Hours are local Dubai time, 0-23.",
     "weekday_multipliers": "Mon..Sun -> multiplier on the .env daily volume (A14).",
+    "geo.max_resample": "Draws allowed when placing a point on land in its area's emirate before the generator gives up (see service_area.geojson).",
     "volume_noise_sd_factor": "Daily count = round(gauss(mean, factor * sqrt(mean))), floored at 0.",
     "booking_hours": "[first, last) hour of day when routine bookings are made, on the booking day.",
     "drivers.shifts": "Per fleet home_vertical: contracted shift start HH:MM and length in hours (A5).",
@@ -27,6 +28,7 @@
     "fleet_events": "Per active car per day, at most one event. breakdown: rate, out_for_day_share, repair_h [min, max], at drawn inside the driver's shift. late_start: rate, delay_min [min, max], ops learns notice_min [min, max] before shift start. driver_absent: rate, notice_min [min, max] before shift start; car out for the day."
   },
   "weekday_multipliers": {"Mon": 1.0, "Tue": 1.03, "Wed": 0.98, "Thu": 1.02, "Fri": 0.97, "Sat": 0.8, "Sun": 0.7},
+  "geo": {"max_resample": 200},
   "volume_noise_sd_factor": 1.0,
   "booking_hours": [8, 22],
   "drivers": {
