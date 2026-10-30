@@ -1,0 +1,221 @@
+client_id,area_id,lat,lon,building_type,access_note,services
+CL-0001,AR-17,25.076532,55.133527,apartment,Register at reception,nursing;sample
+CL-0002,AR-04,25.066437,55.164205,villa,,sample
+CL-0003,AR-18,25.196835,55.284603,apartment,Parking in basement B1,sample
+CL-0004,AR-11,25.229481,55.420552,apartment,,nursing;babysitting
+CL-0005,AR-03,25.113180,55.139640,villa,,babysitting
+CL-0006,AR-22,25.041992,55.230580,villa,"Villa, park outside gate",sample
+CL-0007,AR-16,25.069607,55.145264,apartment,Visitor parking at the back,nursing
+CL-0008,AR-08,25.185970,55.236005,villa,,sample
+CL-0009,AR-15,25.076320,55.136324,apartment,Register at reception,sample
+CL-0010,AR-10,25.109482,55.199927,apartment,Parking in basement B1,sample
+CL-0011,AR-12,25.017011,55.246993,villa,Ring the side gate bell,sample
+CL-0012,AR-09,25.150295,55.215690,villa,,sample
+CL-0013,AR-22,25.049277,55.234617,apartment,,sample
+CL-0014,AR-26,25.281714,55.380085,apartment,Visitor parking at the back,babysitting
+CL-0015,AR-04,25.069582,55.170881,villa,"Villa, park outside gate",babysitting
+CL-0016,AR-13,25.027633,55.145090,apartment,Gate code at security,sample
+CL-0017,AR-25,25.286449,55.375929,apartment,Register at reception,sample
+CL-0018,AR-31,25.144267,55.230413,apartment,Parking in basement B1,sample
+CL-0019,AR-09,25.140686,55.214414,apartment,Parking in basement B1,sample
+CL-0020,AR-17,25.079502,55.133880,apartment,Gate code at security,sample
+CL-0021,AR-06,25.220616,55.260637,villa,,babysitting
+CL-0022,AR-14,25.041951,55.160175,villa,,sample
+CL-0023,AR-20,25.063507,55.215032,apartment,,sample
+CL-0024,AR-29,25.171291,55.404503,apartment,Register at reception,babysitting;sample
+CL-0025,AR-20,25.070098,55.210569,apartment,,nursing
+CL-0026,AR-15,25.076399,55.140133,apartment,,sample
+CL-0027,AR-20,25.066939,55.209754,apartment,Visitor parking at the back,nursing
+CL-0028,AR-14,25.046875,55.157397,villa,,nursing
+CL-0029,AR-01,25.047986,55.257357,villa,"Dog in garden, call first",sample
+CL-0030,AR-16,25.069053,55.143450,apartment,,sample
+CL-0031,AR-25,25.282145,55.378614,apartment,Parking in basement B1,sample
+CL-0032,AR-04,25.069605,55.171348,villa,"Villa, park outside gate",sample
+CL-0033,AR-24,25.238991,55.307161,apartment,Visitor parking at the back,sample
+CL-0034,AR-14,25.050995,55.154020,villa,Gate code at security,sample
+CL-0035,AR-15,25.073755,55.138567,apartment,,nursing
+CL-0036,AR-21,25.110561,55.382005,villa,,sample
+CL-0037,AR-29,25.171580,55.413325,apartment,,sample
+CL-0038,AR-03,25.111858,55.138875,villa,,nursing
+CL-0039,AR-20,25.065548,55.204210,apartment,Parking in basement B1,sample
+CL-0040,AR-32,25.226042,55.323226,apartment,,sample
+CL-0041,AR-10,25.109039,55.199555,apartment,,nursing
+CL-0042,AR-19,25.187566,55.268111,apartment,,sample
+CL-0043,AR-06,25.221932,55.258492,villa,,babysitting
+CL-0044,AR-12,25.028894,55.255436,villa,"Villa, park outside gate",nursing
+CL-0045,AR-16,25.073133,55.140502,apartment,,sample
+CL-0046,AR-26,25.264855,55.378819,apartment,,nursing;sample
+CL-0047,AR-22,25.040475,55.233503,apartment,Gate code at security,nursing;sample
+CL-0048,AR-20,25.059075,55.221509,apartment,Parking in basement B1,nursing
+CL-0049,AR-18,25.195366,55.285976,apartment,Register at reception,sample
+CL-0050,AR-19,25.187781,55.267491,apartment,,sample
+CL-0051,AR-07,25.204406,55.243708,villa,"Villa, park outside gate",babysitting
+CL-0052,AR-16,25.072135,55.146716,apartment,Register at reception,sample
+CL-0053,AR-24,25.241750,55.302793,apartment,,sample
+CL-0054,AR-01,25.054909,55.259209,villa,,babysitting
+CL-0055,AR-26,25.275978,55.389469,villa,,nursing
+CL-0056,AR-02,25.104093,55.254381,apartment,Visitor parking at the back,sample
+CL-0057,AR-19,25.190504,55.267869,apartment,Visitor parking at the back,sample
+CL-0058,AR-03,25.112869,55.141151,apartment,Parking in basement B1,nursing
+CL-0059,AR-08,25.187245,55.231515,villa,Gate code at security,babysitting;sample
+CL-0060,AR-08,25.186230,55.237992,villa,,sample
+CL-0061,AR-15,25.077131,55.140945,apartment,Parking in basement B1,sample
+CL-0062,AR-09,25.143341,55.211709,villa,,sample
+CL-0063,AR-25,25.281664,55.376737,apartment,Gate code at security,sample
+CL-0064,AR-04,25.067854,55.180585,villa,,sample
+CL-0065,AR-27,25.266892,55.328535,apartment,Parking in basement B1,sample
+CL-0066,AR-03,25.111977,55.139927,villa,Gate code at security,sample
+CL-0067,AR-20,25.049462,55.212315,apartment,,sample
+CL-0068,AR-13,25.022826,55.147285,villa,,sample
+CL-0069,AR-24,25.250853,55.304819,apartment,,nursing
+CL-0070,AR-25,25.281561,55.374175,apartment,Gate code at security,sample
+CL-0071,AR-15,25.077108,55.136083,apartment,,babysitting
+CL-0072,AR-06,25.218403,55.257604,apartment,,babysitting
+CL-0073,AR-04,25.058421,55.170719,villa,,babysitting
+CL-0074,AR-18,25.196853,55.283258,apartment,,sample
+CL-0075,AR-01,25.048161,55.266852,villa,,sample
+CL-0076,AR-25,25.285224,55.377653,apartment,Visitor parking at the back,sample
+CL-0077,AR-09,25.149234,55.211315,villa,"Villa, park outside gate",sample
+CL-0078,AR-16,25.067198,55.142910,apartment,,sample
+CL-0079,AR-24,25.249715,55.302509,apartment,Register at reception,sample
+CL-0080,AR-09,25.146049,55.219400,villa,"Villa, park outside gate",babysitting
+CL-0081,AR-20,25.056859,55.202920,apartment,,sample
+CL-0082,AR-32,25.230875,55.317586,apartment,,sample
+CL-0083,AR-06,25.219732,55.259218,villa,"Dog in garden, call first",sample
+CL-0084,AR-07,25.201075,55.242812,villa,,babysitting
+CL-0085,AR-18,25.190723,55.278413,apartment,Visitor parking at the back,sample
+CL-0086,AR-20,25.064685,55.202086,apartment,Register at reception,sample
+CL-0087,AR-06,25.222604,55.259538,villa,"Villa, park outside gate",nursing
+CL-0088,AR-03,25.113267,55.137457,villa,"Villa, park outside gate",sample
+CL-0089,AR-11,25.221589,55.422793,villa,,babysitting
+CL-0090,AR-06,25.219394,55.255034,villa,,nursing;babysitting
+CL-0091,AR-27,25.265196,55.322651,villa,"Villa, park outside gate",sample
+CL-0092,AR-25,25.283819,55.379382,apartment,Register at reception,sample
+CL-0093,AR-06,25.218641,55.255753,apartment,,sample
+CL-0094,AR-03,25.114254,55.141544,villa,Ring the side gate bell,nursing
+CL-0095,AR-09,25.146650,55.218826,villa,"Villa, park outside gate",nursing
+CL-0096,AR-29,25.165808,55.399092,apartment,Parking in basement B1,sample
+CL-0097,AR-27,25.263740,55.326573,apartment,Register at reception,sample
+CL-0098,AR-21,25.129513,55.375408,apartment,Visitor parking at the back,sample
+CL-0099,AR-15,25.076966,55.138309,apartment,Register at reception,sample
+CL-0100,AR-27,25.264027,55.324354,apartment,,sample
+CL-0101,AR-16,25.068862,55.138566,apartment,,babysitting;sample
+CL-0102,AR-19,25.189564,55.270439,apartment,,sample
+CL-0103,AR-29,25.168900,55.417093,apartment,Parking in basement B1,nursing
+CL-0104,AR-15,25.076431,55.138891,apartment,,babysitting
+CL-0105,AR-06,25.220415,55.254757,villa,,sample
+CL-0106,AR-16,25.068176,55.145148,apartment,Visitor parking at the back,sample
+CL-0107,AR-06,25.221863,55.260470,villa,"Villa, park outside gate",babysitting
+CL-0108,AR-27,25.269495,55.320848,apartment,Visitor parking at the back,sample
+CL-0109,AR-20,25.063788,55.211305,apartment,,sample
+CL-0110,AR-22,25.043638,55.238627,villa,"Villa, park outside gate",sample
+CL-0111,AR-15,25.078057,55.142091,apartment,,sample
+CL-0112,AR-03,25.113229,55.142027,villa,Ring the side gate bell,babysitting
+CL-0113,AR-15,25.078034,55.141593,apartment,,sample
+CL-0114,AR-11,25.227453,55.425119,villa,"Villa, park outside gate",babysitting
+CL-0115,AR-30,25.223924,55.277987,apartment,Register at reception,babysitting
+CL-0116,AR-05,25.068670,55.163114,villa,,babysitting
+CL-0117,AR-28,25.250322,55.288478,apartment,Register at reception,sample
+CL-0118,AR-22,25.049350,55.231740,villa,Gate code at security,nursing
+CL-0119,AR-19,25.186397,55.266845,apartment,Parking in basement B1,sample
+CL-0120,AR-19,25.184209,55.266845,apartment,Visitor parking at the back,sample
+CL-0121,AR-20,25.062239,55.213392,apartment,Visitor parking at the back,nursing
+CL-0122,AR-10,25.107743,55.201900,villa,,babysitting;sample
+CL-0123,AR-18,25.197175,55.281937,apartment,Parking in basement B1,sample
+CL-0124,AR-12,25.014485,55.252278,apartment,,babysitting
+CL-0125,AR-16,25.072346,55.145347,apartment,,sample
+CL-0126,AR-13,25.020170,55.142871,apartment,,sample
+CL-0127,AR-07,25.202426,55.246619,villa,,sample
+CL-0128,AR-23,25.005269,55.281255,apartment,Register at reception,sample
+CL-0129,AR-20,25.066341,55.208210,apartment,Parking in basement B1,sample
+CL-0130,AR-28,25.255594,55.301182,apartment,Parking in basement B1,nursing;sample
+CL-0131,AR-01,25.062704,55.268182,villa,,babysitting
+CL-0132,AR-03,25.112220,55.140137,apartment,Register at reception,nursing
+CL-0133,AR-22,25.040213,55.232272,apartment,Gate code at security,sample
+CL-0134,AR-08,25.188167,55.233637,apartment,,sample
+CL-0135,AR-09,25.140534,55.215493,apartment,,sample
+CL-0136,AR-01,25.059981,55.258056,villa,,nursing
+CL-0137,AR-11,25.216108,55.423888,villa,,sample
+CL-0138,AR-05,25.065095,55.169075,villa,,babysitting
+CL-0139,AR-32,25.236050,55.320555,apartment,Parking in basement B1,sample
+CL-0140,AR-19,25.186259,55.267973,apartment,Visitor parking at the back,sample
+CL-0141,AR-13,25.027851,55.139117,villa,,sample
+CL-0142,AR-09,25.147314,55.209751,villa,"Villa, park outside gate",sample
+CL-0143,AR-10,25.106052,55.201743,apartment,Register at reception,sample
+CL-0144,AR-18,25.188121,55.281537,apartment,,sample
+CL-0145,AR-27,25.266899,55.328315,apartment,,babysitting;sample
+CL-0146,AR-15,25.080507,55.139285,villa,"Villa, park outside gate",babysitting;sample
+CL-0147,AR-25,25.284000,55.375873,apartment,,sample
+CL-0148,AR-05,25.074631,55.165105,villa,,babysitting
+CL-0149,AR-28,25.255817,55.291387,apartment,Parking in basement B1,sample
+CL-0150,AR-27,25.268333,55.321673,apartment,,sample
+CL-0151,AR-26,25.263367,55.379878,apartment,Gate code at security,sample
+CL-0152,AR-13,25.028240,55.150133,villa,,nursing
+CL-0153,AR-04,25.070543,55.170325,villa,,sample
+CL-0154,AR-27,25.265829,55.325497,apartment,Register at reception,sample
+CL-0155,AR-32,25.235089,55.325016,apartment,Register at reception,sample
+CL-0156,AR-01,25.061605,55.268932,villa,"Villa, park outside gate",sample
+CL-0157,AR-24,25.245028,55.301082,apartment,Gate code at security,sample
+CL-0158,AR-18,25.194206,55.273519,apartment,,nursing
+CL-0159,AR-26,25.269811,55.386509,apartment,Register at reception,sample
+CL-0160,AR-10,25.114206,55.202748,villa,Gate code at security,babysitting
+CL-0161,AR-20,25.064121,55.220319,apartment,,babysitting;sample
+CL-0162,AR-08,25.186717,55.236593,villa,,nursing
+CL-0163,AR-03,25.112584,55.139313,apartment,Parking in basement B1,babysitting
+CL-0164,AR-13,25.021113,55.149718,apartment,Visitor parking at the back,sample
+CL-0165,AR-32,25.234603,55.322763,apartment,Register at reception,sample
+CL-0166,AR-01,25.059098,55.262544,villa,Ring the side gate bell,sample
+CL-0167,AR-28,25.253393,55.301804,apartment,,sample
+CL-0168,AR-28,25.253989,55.296856,apartment,Parking in basement B1,sample
+CL-0169,AR-05,25.072913,55.166582,villa,"Dog in garden, call first",nursing
+CL-0170,AR-26,25.269669,55.377826,apartment,,nursing
+CL-0171,AR-23,24.997193,55.291036,villa,,sample
+CL-0172,AR-31,25.147160,55.241778,apartment,,sample
+CL-0173,AR-02,25.117301,55.250452,villa,,nursing
+CL-0174,AR-28,25.249665,55.290164,villa,,sample
+CL-0175,AR-31,25.141783,55.229428,apartment,,sample
+CL-0176,AR-16,25.070923,55.140340,apartment,Gate code at security,sample
+CL-0177,AR-17,25.076664,55.132200,apartment,,babysitting
+CL-0178,AR-09,25.144322,55.215993,villa,,sample
+CL-0179,AR-11,25.220736,55.423336,villa,"Villa, park outside gate",sample
+CL-0180,AR-15,25.074617,55.139499,apartment,Visitor parking at the back,sample
+CL-0181,AR-10,25.111761,55.191068,apartment,Register at reception,sample
+CL-0182,AR-16,25.072420,55.139225,apartment,,sample
+CL-0183,AR-15,25.075499,55.137339,apartment,,nursing
+CL-0184,AR-04,25.063307,55.172841,villa,,babysitting
+CL-0185,AR-29,25.167437,55.409067,apartment,Visitor parking at the back,babysitting
+CL-0186,AR-28,25.249990,55.294423,apartment,,nursing
+CL-0187,AR-10,25.103825,55.190093,villa,Ring the side gate bell,sample
+CL-0188,AR-04,25.050835,55.175060,villa,,babysitting
+CL-0189,AR-32,25.225400,55.325076,apartment,,babysitting;sample
+CL-0190,AR-18,25.194318,55.278869,apartment,,sample
+CL-0191,AR-05,25.072440,55.169376,villa,Gate code at security,sample
+CL-0192,AR-06,25.218584,55.261563,apartment,Register at reception,babysitting
+CL-0193,AR-03,25.112912,55.140326,apartment,,nursing
+CL-0194,AR-12,25.033185,55.246475,villa,"Villa, park outside gate",babysitting
+CL-0195,AR-02,25.109162,55.258386,villa,,sample
+CL-0196,AR-09,25.144787,55.215427,villa,"Dog in garden, call first",babysitting;sample
+CL-0197,AR-23,24.999888,55.291275,apartment,,sample
+CL-0198,AR-18,25.196092,55.273631,apartment,Gate code at security,nursing
+CL-0199,AR-04,25.054760,55.167227,villa,Gate code at security,nursing
+CL-0200,AR-32,25.234750,55.323265,apartment,,sample
+CL-0201,AR-10,25.111435,55.197482,apartment,Visitor parking at the back,babysitting
+CL-0202,AR-06,25.222677,55.256140,apartment,Gate code at security,sample
+CL-0203,AR-26,25.265545,55.375655,apartment,,sample
+CL-0204,AR-04,25.059487,55.176968,apartment,Gate code at security,sample
+CL-0205,AR-11,25.221909,55.426091,villa,"Villa, park outside gate",babysitting
+CL-0206,AR-21,25.111880,55.379883,villa,"Villa, park outside gate",nursing
+CL-0207,AR-18,25.191969,55.281532,apartment,Visitor parking at the back,nursing
+CL-0208,AR-18,25.197756,55.283239,apartment,Gate code at security,sample
+CL-0209,AR-29,25.164165,55.416015,apartment,,babysitting
+CL-0210,AR-27,25.260458,55.326310,apartment,Register at reception,sample
+CL-0211,AR-03,25.111566,55.138619,apartment,Register at reception,nursing;sample
+CL-0212,AR-01,25.051573,55.258222,villa,Gate code at security,babysitting
+CL-0213,AR-26,25.270775,55.381990,apartment,Parking in basement B1,sample
+CL-0214,AR-10,25.101187,55.207048,apartment,Visitor parking at the back,sample
+CL-0215,AR-14,25.047347,55.160870,villa,Ring the side gate bell,babysitting
+CL-0216,AR-16,25.071927,55.146044,apartment,Gate code at security,sample
+CL-0217,AR-10,25.096064,55.193416,villa,"Villa, park outside gate",sample
+CL-0218,AR-13,25.033877,55.144497,apartment,Visitor parking at the back,sample
+CL-0219,AR-06,25.216606,55.259116,villa,Gate code at security,sample
+CL-0220,AR-12,25.018387,55.251741,apartment,Parking in basement B1,babysitting

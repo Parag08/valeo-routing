@@ -1,0 +1,11 @@
+car_id,plate,make_model,passenger_seats,fuel_l_per_100km,has_cool_box,home_vertical,depot_id,status
+CAR-01,K 48213,Toyota Innova,6,9.8,false,nursing,DEP-01,active
+CAR-02,M 30574,Toyota Innova,6,9.6,false,nursing,DEP-01,active
+CAR-03,P 61902,Toyota Hiace,6,11.0,false,nursing,DEP-01,active
+CAR-04,L 27446,Toyota Innova,6,9.9,false,babysitting,DEP-01,active
+CAR-05,R 85130,Kia Carnival,7,10.5,false,babysitting,DEP-01,active
+CAR-06,T 19387,Kia Carnival,7,10.3,false,babysitting,DEP-01,active
+CAR-07,N 52768,Nissan Sunny,4,6.4,true,sample,DEP-01,active
+CAR-08,S 74021,Nissan Sunny,4,6.6,true,sample,DEP-01,active
+CAR-09,H 36659,Toyota Yaris,4,6.0,true,sample,DEP-01,active
+CAR-10,Q 90815,Toyota Yaris,4,6.2,true,sample,DEP-01,active

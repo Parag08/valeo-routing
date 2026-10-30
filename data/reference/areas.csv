@@ -1,0 +1,33 @@
+area_id,area_name,emirate,lat,lon,jitter_m,w_nursing,w_babysitting,w_sample,w_staff_home
+AR-01,Arabian Ranches,Dubai,25.054000,55.266000,1200,3.0,4.0,2.0,0.0
+AR-02,Dubai Hills Estate,Dubai,25.108000,55.250000,1200,2.5,4.0,2.5,0.0
+AR-03,Palm Jumeirah,Dubai,25.112000,55.140000,300,2.5,3.5,2.0,0.0
+AR-04,The Springs / The Meadows,Dubai,25.061000,55.173000,1200,2.5,3.5,2.0,0.0
+AR-05,Emirates Hills,Dubai,25.070000,55.168000,700,2.0,2.5,1.0,0.0
+AR-06,Jumeirah 1,Dubai,25.220000,55.258000,400,2.5,3.0,1.5,0.2
+AR-07,Jumeirah 2,Dubai,25.203000,55.245000,400,2.0,2.5,1.5,0.1
+AR-08,Jumeirah 3,Dubai,25.188000,55.235000,400,2.0,2.5,1.5,0.1
+AR-09,Umm Suqeim,Dubai,25.145000,55.215000,600,2.5,3.0,2.0,0.1
+AR-10,Al Barsha,Dubai,25.105000,55.197000,1200,2.0,2.0,2.5,1.0
+AR-11,Mirdif,Dubai,25.221000,55.420000,1200,2.5,3.0,2.5,0.5
+AR-12,Damac Hills,Dubai,25.024000,55.249000,1200,1.5,2.5,1.5,0.1
+AR-13,Al Furjan,Dubai,25.027000,55.145000,1000,1.5,2.5,1.5,0.3
+AR-14,Jumeirah Park,Dubai,25.046000,55.156000,800,1.5,2.5,1.0,0.0
+AR-15,Dubai Marina,Dubai,25.077000,55.140000,400,1.5,1.5,3.0,0.3
+AR-16,Jumeirah Lake Towers (JLT),Dubai,25.070000,55.143000,500,1.0,1.0,2.5,0.5
+AR-17,Jumeirah Beach Residence (JBR),Dubai,25.077500,55.134000,250,1.0,1.0,1.5,0.1
+AR-18,Downtown Dubai,Dubai,25.193500,55.279500,700,1.5,1.0,2.5,0.1
+AR-19,Business Bay,Dubai,25.187000,55.266000,600,1.0,1.0,2.5,0.4
+AR-20,Jumeirah Village Circle (JVC),Dubai,25.060000,55.210000,1200,1.5,2.0,3.0,1.5
+AR-21,Dubai Silicon Oasis,Dubai,25.120000,55.380000,1200,1.0,1.5,2.0,1.5
+AR-22,Motor City,Dubai,25.045000,55.235000,800,1.0,1.5,1.5,0.3
+AR-23,Town Square,Dubai,25.005000,55.289000,1000,1.0,2.0,1.5,0.5
+AR-24,Al Karama,Dubai,25.245000,55.303000,800,1.0,0.3,2.0,4.0
+AR-25,Al Nahda,Dubai,25.285000,55.375000,500,1.0,0.5,2.0,3.5
+AR-26,Al Qusais,Dubai,25.272000,55.380000,1100,1.0,0.5,2.0,3.5
+AR-27,Deira / Al Rigga,Dubai,25.265000,55.323000,800,1.0,0.3,2.0,3.5
+AR-28,Bur Dubai / Al Mankhool,Dubai,25.253000,55.294000,800,1.2,0.5,2.0,4.0
+AR-29,International City,Dubai,25.165000,55.410000,1200,0.5,0.3,1.5,4.0
+AR-30,Al Satwa,Dubai,25.228000,55.274000,700,0.8,0.3,1.5,3.0
+AR-31,Al Quoz,Dubai,25.142000,55.232000,1200,0.5,0.5,1.0,2.0
+AR-32,Oud Metha (Dubai Healthcare City),Dubai,25.230000,55.322000,700,1.5,0.5,1.5,1.0
