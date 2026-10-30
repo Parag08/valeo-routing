@@ -110,7 +110,8 @@ The demo rebuilds these with synthetic data.
 
 ## Open questions for Parag
 
-1. **Roster auto-allocation** (your description cut off at "who all are present that…"). What rules
+1. **Roster auto-allocation** (your description cut off at "who all are present that…"). The demo now
+   covers an expected hourly demand curve, with peaks first (PLAN, step 5). What rules
    did it use: shift shapes (12 h, split 6+6), fixed driver–nurse pairs, rest days, how peaks set
    start times?
 2. **Acceptance v1 capacity check.** Was "has capacity" a full feasibility check (a pair can reach

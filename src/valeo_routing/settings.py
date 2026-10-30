@@ -86,6 +86,16 @@ class EngineSettings(BaseSettings):
     roster_shift_starts: str  # 'HH:MM,...' placeholder roster, cycled over the pairs (until PLAN step 5)
     standby_min_gap_min: int  # idle gaps shorter than this are waited out in place
 
+    # Roster auto-allocation (PLAN step 5).
+    roster_target_utilisation: float  # share of an on-duty hour a pair should spend working, in the demand model
+    roster_travel_allowance_min: int  # driving time allowed per order when sizing demand in pair-hours
+    roster_start_earliest: str  # earliest shift start the roster may choose
+    roster_start_latest: str
+    roster_start_step_min: int  # shift starts sit on this grid
+    roster_lead_min: int  # a pair must be on duty this long before the slot it serves: time to reach the patient
+    roster_min_pairs_when_booked: float  # an hour that usually has bookings keeps at least this many pairs on duty
+    roster_min_orders_for_cover: float  # "usually has bookings": expected orders per hour at or above this
+
     # Acceptance and replay (PLAN step 3).
     replay_seed: int
     office_hours: str  # 'HH:MM-HH:MM': when ops are at their desks to accept orders
@@ -100,6 +110,33 @@ class EngineSettings(BaseSettings):
     @classmethod
     def _check_windows(cls, value: str) -> str:
         parse_windows(value)
+        return value
+
+    @field_validator("roster_target_utilisation")
+    @classmethod
+    def _check_utilisation(cls, value: float) -> float:
+        if not 0.0 < value <= 1.0:
+            raise ValueError("roster_target_utilisation must be above 0 and at most 1")
+        return value
+
+    @field_validator("roster_lead_min")
+    @classmethod
+    def _check_lead(cls, value: int) -> int:
+        if not 0 <= value <= 60:
+            raise ValueError("roster_lead_min must be between 0 and 60")
+        return value
+
+    @field_validator("roster_start_step_min")
+    @classmethod
+    def _check_step(cls, value: int) -> int:
+        if value <= 0:
+            raise ValueError("roster_start_step_min must be positive")
+        return value
+
+    @field_validator("roster_start_earliest", "roster_start_latest")
+    @classmethod
+    def _check_start(cls, value: str) -> str:
+        parse_clock(value)
         return value
 
     @field_validator("office_hours")
@@ -127,6 +164,14 @@ class EngineSettings(BaseSettings):
         if not 0.0 <= value <= 1.0:
             raise ValueError("plan_duration_position must be between 0 and 1")
         return value
+
+    @property
+    def roster_starts(self) -> List[int]:
+        """Every shift start the roster may choose, on the step grid from earliest to latest."""
+        first, last = parse_clock(self.roster_start_earliest), parse_clock(self.roster_start_latest)
+        if last < first:
+            raise ValueError("roster_start_latest is before roster_start_earliest")
+        return list(range(first, last + 1, self.roster_start_step_min))
 
     @property
     def office_window(self) -> Tuple[int, int]:

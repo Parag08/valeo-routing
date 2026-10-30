@@ -128,3 +128,105 @@ def test_api_settings_fail_fast(tmp_path, monkeypatch):
     env.write_text("\n".join(l for l in lines if not l.startswith("API_PORT=")), encoding="utf-8")
     with pytest.raises(ValidationError, match="PORT"):
         ApiSettings(_env_file=str(env))
+
+
+# --- roster, sick staff and service edits -----------------------------------------------------
+
+
+def roster(client, **params):
+    response = client.get("/api/roster", params={"date": DAY, **params})
+    assert response.status_code == 200, response.text
+    return response.json()
+
+
+def test_meta_lists_the_rosters(client):
+    meta = client.get("/api/meta").json()
+    assert [r["id"] for r in meta["rosters"]] == ["auto", "simple"]
+    assert meta["settings"]["plan_duration_position"] == 0.5 and meta["settings"]["roster_starts"] == [330, 600]
+
+
+def test_roster_view(client):
+    r = roster(client)
+    assert r["synthetic"] is True and r["roster"] == "auto" and len(r["pairs"]) == 9
+    people = {p["id"]: p for p in r["staff"]}
+    assert len(people) == 26 and {p["role"] for p in people.values()} == {"nurse", "driver"}
+    placed = [p for p in r["staff"] if p["pair_id"]]
+    assert len(placed) == 18 and all(p["status"] == "available" for p in placed)
+    assert {p["id"] for p in r["staff"] if p["status"] == "available" and not p["pair_id"]} == set(r["reserve"])
+    assert {p["status"] for p in r["staff"]} <= {"available", "rest", "sick", "leave", "marked_sick"}
+    curve = r["curve"]
+    n = len(curve["hours"])
+    assert n == len(curve["expected_orders"]) == len(curve["required_pairs"]) == len(curve["on_duty"]["auto"]) == len(curve["on_duty"]["simple"])
+    assert curve["shortfall"]["auto"] < curve["shortfall"]["simple"]
+    assert set(r["compare"]) == {"auto", "simple"} and r["compare"]["auto"]["offered"] == r["compare"]["simple"]["offered"]
+
+
+def test_auto_and_simple_rosters_differ_in_shift_starts(client):
+    auto, simple = roster(client, roster="auto"), roster(client, roster="simple")
+    assert sorted({p["shift_start"] for p in simple["pairs"]}) == [330, 480, 600]
+    assert {p["shift_start"] for p in auto["pairs"]} != {p["shift_start"] for p in simple["pairs"]}
+    assert day(client, roster="simple")["roster"] == "simple" and day(client)["roster"] == "auto"
+
+
+def test_marking_someone_sick_removes_them_and_replans(client):
+    before = roster(client)
+    driver = next(p for p in before["staff"] if p["role"] == "driver" and p["pair_id"])
+    after = roster(client, unavailable=driver["id"])
+    status = {p["id"]: p for p in after["staff"]}
+    assert status[driver["id"]]["status"] == "marked_sick" and status[driver["id"]]["pair_id"] is None
+    assert len(after["pairs"]) == len(before["pairs"]) - 1 and after["unavailable"] == [driver["id"]]
+    planned = day(client, unavailable=driver["id"])
+    assert len(planned["pairs"]) == 8 and planned["unavailable"] == [driver["id"]] and planned["violations"] == 0
+    assert planned["kpis"] != day(client)["kpis"]
+
+
+def test_marking_someone_already_off_changes_nothing(client):
+    resting = next(p for p in roster(client)["staff"] if p["status"] == "rest")
+    assert day(client, unavailable=resting["id"])["pairs"] == day(client)["pairs"]
+
+
+def test_services_catalog(client):
+    r = client.get("/api/services").json()
+    rows = {s["id"]: s for s in r["services"]}
+    assert r["synthetic"] is True and len(rows) == 12 and not any(s["edited"] for s in rows.values())
+    assert sum(s["mix_share"] for s in rows.values()) == pytest.approx(1.0, abs=1e-3)
+    assert rows["SV-08"]["planned_min"] == 60 and rows["SV-01"]["needs_lab"] and rows["SV-01"]["sample_max_min"] == 480
+    assert rows["SV-11"]["sample_max_min"] is None and rows["SV-07"]["iv_certified_only"]
+
+
+def test_service_edits_flow_into_the_day(client):
+    edited = client.get("/api/services", params={"services": "SV-01:30-40"}).json()["services"]
+    row = next(s for s in edited if s["id"] == "SV-01")
+    assert (row["duration_lo"], row["duration_hi"], row["planned_min"], row["edited"]) == (30, 40, 35, True)
+    assert row["default_lo"] == 10 and next(s for s in edited if s["id"] == "SV-02")["edited"] is False
+
+    base, changed = day(client), day(client, services="SV-01:30-40")
+    cbc = [i for i, j in base["jobs"].items() if j["service"].startswith("Blood draw - routine")]
+    assert cbc and all(base["jobs"][i]["duration"] == 15 and changed["jobs"][i]["duration"] == 35 for i in cbc)
+    lengths = {b["end"] - b["start"] for p in changed["pairs"] for b in p["blocks"] if b["kind"] == "visit" and b["job_id"] in cbc}
+    assert lengths == {40}  # 35 minutes of service plus 5 of access
+    assert changed["services_edited"] == ["SV-01"] and changed["violations"] == 0
+    assert changed["kpis"] != base["kpis"]
+
+
+def test_a_shorter_sample_limit_makes_labs_unreachable(client):
+    base, tight = day(client), day(client, services="SV-03:10-20:15")
+    assert sum("lab_unreachable" in r["reason"] for r in tight["log"]) > sum("lab_unreachable" in r["reason"] for r in base["log"])
+    assert tight["kpis"]["capture_rate"] <= base["kpis"]["capture_rate"]
+
+
+@pytest.mark.parametrize("params", [
+    {"unavailable": "NOPE-1"}, {"services": "SV-99:1-2"}, {"services": "SV-08:90-40"}, {"services": "SV-08:0-10"},
+    {"services": "SV-11:10-20:60"}, {"services": "SV-01:10-20:5"}, {"services": "junk"}, {"services": "SV-08:1-2:3:4"},
+    {"roster": "x"},
+])
+def test_bad_scenarios_are_refused(client, params):
+    response = client.get("/api/day", params={"date": DAY, **params})
+    assert response.status_code == 422, params
+    assert client.get("/api/roster", params={"date": DAY, **params}).status_code == 422
+
+
+def test_the_same_scenario_gives_the_same_answer(client):
+    scenario = {"services": "SV-01:30-40", "unavailable": "NUR-001", "auto_accept_lead_h": 20}
+    assert day(client, **scenario) == day(client, **scenario)
+    assert roster(client, **scenario) == roster(client, **scenario)

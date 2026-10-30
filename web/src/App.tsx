@@ -1,19 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
-import { query, useFetch } from "./api";
-import type { Compare, DayData, Meta, Overrides, Policy } from "./api";
+import { query, serviceTokens, useFetch } from "./api";
+import type { Compare, DayData, Meta, Overrides, Policy, RosterMode, ServiceEdit } from "./api";
 import { Acceptance } from "./Acceptance";
 import { DayView } from "./DayView";
 import { Kpis } from "./Kpis";
+import { Roster } from "./Roster";
+import { Services } from "./Services";
 
-type Tab = "day" | "acceptance";
+type Tab = "day" | "roster" | "services" | "acceptance";
+const TABS: { id: Tab; label: string }[] = [
+  { id: "day", label: "Day view" },
+  { id: "roster", label: "Roster" },
+  { id: "services", label: "Services" },
+  { id: "acceptance", label: "Acceptance engine" },
+];
 type Theme = "light" | "dark" | null;
 
-function initial(): { date: string | null; policy: Policy; tab: Tab } {
+function initial(): { date: string | null; policy: Policy; tab: Tab; roster: RosterMode } {
   const q = new URLSearchParams(window.location.search);
+  const tab = q.get("tab");
   return {
     date: q.get("date"),
     policy: q.get("policy") === "excel" ? "excel" : "lv1",
-    tab: q.get("tab") === "acceptance" ? "acceptance" : "day",
+    tab: TABS.some((t) => t.id === tab) ? (tab as Tab) : "day",
+    roster: q.get("roster") === "simple" ? "simple" : "auto",
   };
 }
 
@@ -31,8 +41,11 @@ export default function App() {
   const meta = useFetch<Meta>("/api/meta");
   const [date, setDate] = useState<string | null>(start.date);
   const [policy, setPolicy] = useState<Policy>(start.policy);
+  const [roster, setRoster] = useState<RosterMode>(start.roster);
   const [tab, setTab] = useState<Tab>(start.tab);
   const [overrides, setOverrides] = useState<Overrides>({});
+  const [unavailable, setUnavailable] = useState<string[]>([]);
+  const [edits, setEdits] = useState<Record<string, ServiceEdit>>({});
   const [selected, setSelected] = useState<string | null>(null);
   const [theme, setTheme] = useState<Theme>(readTheme);
 
@@ -49,10 +62,18 @@ export default function App() {
   const dates = meta.data?.dates ?? [];
   const current = date && dates.some((d) => d.date === date) ? date : dates[0]?.date ?? null;
   useEffect(() => {
-    if (current) window.history.replaceState(null, "", `?${query({ date: current, policy, tab })}`);
-  }, [current, policy, tab]);
+    if (current) window.history.replaceState(null, "", `?${query({ date: current, policy, roster, tab })}`);
+  }, [current, policy, roster, tab]);
 
-  const q = query({ date: current ?? undefined, ...overrides });
+  // Everything that changes a plan travels in the query string; the API keeps no state.
+  const scenario = {
+    roster,
+    unavailable: [...unavailable].sort().join(","),
+    services: serviceTokens(edits),
+    ...overrides,
+  };
+  const qs = query({ ...scenario, policy });
+  const q = query({ date: current ?? undefined, ...scenario });
   const day = useFetch<DayData>(current ? `/api/day?${q}&policy=${policy}` : null);
   const compare = useFetch<Compare>(current ? `/api/compare?${q}` : null);
 
@@ -62,8 +83,23 @@ export default function App() {
     if (next) {
       setDate(next.date);
       setSelected(null);
+      setUnavailable([]); // sick marks belong to one day
     }
   };
+  const toggleSick = (id: string) => setUnavailable((u) => (u.includes(id) ? u.filter((x) => x !== id) : [...u, id]));
+  const setEdit = (id: string, edit: ServiceEdit | null) =>
+    setEdits((e) => {
+      const next = { ...e };
+      if (edit) next[id] = edit;
+      else delete next[id];
+      return next;
+    });
+
+  const changes = [
+    unavailable.length ? `${unavailable.length} marked sick` : "",
+    Object.keys(edits).length ? `${Object.keys(edits).length} service${Object.keys(edits).length === 1 ? "" : "s"} edited` : "",
+    Object.keys(overrides).length ? "acceptance rules changed" : "",
+  ].filter(Boolean);
 
   const m = meta.data;
   return (
@@ -89,7 +125,7 @@ export default function App() {
             <div className="field">
               <button className="step" onClick={() => move(-1)} disabled={index <= 0} aria-label="Previous day">‹</button>
               <label htmlFor="date" className="sr" style={{ position: "absolute", left: -9999 }}>Day</label>
-              <select id="date" value={current} onChange={(e) => { setDate(e.target.value); setSelected(null); }}>
+              <select id="date" value={current} onChange={(e) => { setDate(e.target.value); setSelected(null); setUnavailable([]); }}>
                 {dates.map((d) => (
                   <option key={d.date} value={d.date}>{d.weekday} {d.date} · {d.orders} orders</option>
                 ))}
@@ -101,20 +137,33 @@ export default function App() {
                 <button key={p.id} aria-pressed={policy === p.id} onClick={() => setPolicy(p.id)}>{p.label}</button>
               ))}
             </div>
+            {changes.length > 0 && (
+              <span className="scenario">
+                Scenario: {changes.join(" · ")}{" "}
+                <button className="link-btn" onClick={() => { setUnavailable([]); setEdits({}); setOverrides({}); }}>Clear all</button>
+              </span>
+            )}
           </div>
 
           {day.data && <Kpis day={day.data} compare={compare.data} loading={day.loading || compare.loading} />}
 
           <div className="tabs" role="tablist">
-            <button role="tab" aria-selected={tab === "day"} onClick={() => setTab("day")}>Day view</button>
-            <button role="tab" aria-selected={tab === "acceptance"} onClick={() => setTab("acceptance")}>Acceptance engine</button>
-            <span className="soon">Roster · Services · Metrics · Hubs · Capacity: coming</span>
+            {TABS.map((t) => (
+              <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}>{t.label}</button>
+            ))}
+            <span className="soon">Hubs · Capacity · Metrics: coming</span>
           </div>
 
           {day.error && tab === "day" && <p className="error">{day.error}</p>}
           {day.data && tab === "day" && (
             <DayView day={day.data} tolerance={m.settings.arrival_tolerance_min} selected={selected}
                      onSelect={setSelected} onShowInLog={() => setTab("acceptance")} loading={day.loading} />
+          )}
+          {tab === "roster" && (
+            <Roster qs={qs} date={current} mode={roster} setMode={setRoster} unavailable={unavailable} toggleSick={toggleSick} />
+          )}
+          {tab === "services" && (
+            <Services qs={qs} setEdit={setEdit} resetAll={() => setEdits({})} />
           )}
           {day.data && tab === "acceptance" && (
             <Acceptance day={day.data} compare={compare.data} meta={m} overrides={overrides} setOverrides={setOverrides}
