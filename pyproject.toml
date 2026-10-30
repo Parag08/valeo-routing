@@ -14,6 +14,7 @@ dev = ["pytest"]
 
 [project.scripts]
 valeo-gen = "valeo_routing.datagen.cli:main"
+valeo-plan = "valeo_routing.engine.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

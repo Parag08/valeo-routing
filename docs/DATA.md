@@ -191,7 +191,7 @@ distances.
 |---|---|---|
 | S1 | Dubai plus the northern emirates; most demand in Dubai, then Sharjah and Ajman, a little further north and east; no Abu Dhabi | 32 Dubai + 16 northern areas, weighted |
 | S2 | One ops office: supplies pick-up and the default standby spot | `OF-01` |
-| S3 | 9–12 nurse–driver pairs on duty a day; 12 h shifts inside 06:00–22:00, some split 6+6; fixed weekly rest day | 14 nurses and 12 drivers (`.env`), 12 cars; about 9.6 pairs a day, 7 on the busiest rest-day Sundays; shift preference is stored but not yet used |
+| S3 | 9–12 nurse–driver pairs on duty a day; 12 h shifts between 05:30 and 22:00 (a pair must start before the first 06:00 slot to reach it), some split 6+6; fixed weekly rest day | 14 nurses and 12 drivers (`.env`), 12 cars; about 9.6 pairs a day, 7 on the busiest rest-day Sundays; shift preference is stored but not yet used |
 | S4 | About 35–55 orders per service day | `ORDERS_PER_DAY=45` before the weekday multiplier (Sat 0.8, Sun 0.7), so about 42 a day |
 | S5 | Mix of about 60% sample collection, 30% IV, 10% injection | `services.mix_weight` |
 | S6 | On site: blood draw 10–20 min, other samples up to 30, injection 20–30, IV 30–120 by type | duration ranges per service |

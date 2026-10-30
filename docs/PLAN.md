@@ -84,6 +84,31 @@ All of it is pure functions over plain data, with no web framework inside.
 | `validator` | Independent of the planner. Checks every plan for time windows (±tolerance), shift length, lab deadlines, no double-booked pair, the office stop before IV | Runs in tests and on every API response in dev |
 | `replay` | Steps through a day minute by minute: publishes orders, runs acceptance, applies cancellations and disruptions | Drives the day view's "now" line |
 
+### Rules the engine plans by (step 2)
+
+- **A day starts and ends at the office.** The way home counts towards km, not towards the shift.
+- **Arrival** must fall within ±`ARRIVAL_TOLERANCE_MIN` of the requested slot. The pair aims for the
+  start of that window, then spends `ACCESS_MIN` before service starts. Planned service time comes from
+  the catalog (`PLAN_DURATION_POSITION`).
+- **Samples** must reach their lab within `sample_max_min` of the visit ending, inside the lab's opening
+  hours and before it closes less the handover. Samples for the same lab are batched into one run. A
+  one-visit lookahead sends the pair to the lab early when serving the next visit first would make a
+  carried sample late.
+- **IV kits.** An IV order not prepared in advance needs the pair to have been at the office at least
+  `OFFICE_SUPPLY_STOP_MIN` after the order was published; otherwise the plan adds an office stop.
+- **IV orders** go only to IV-certified nurses.
+- **Idle gaps** of at least `STANDBY_MIN_GAP_MIN` are spent at the policy's standby spot (the office in
+  the Excel era, a hub later) if the detour still arrives on time; otherwise the pair waits in place.
+- **Insertion** adds each order where it adds the fewest km across all pairs and positions; ties go to
+  the lower pair id. An order that fits nowhere is rejected as `no_certified_nurse`, `lab_unreachable`,
+  `outside_shifts` or `no_capacity`.
+- **The validator** re-checks every plan without using planner code: continuity in time and place,
+  drive km and minutes, arrival windows, durations, shift bounds, certification, lab hours, sample
+  deadlines, kits and double-booking.
+- **Not yet modelled:** split shifts (one window per pair), late starts and car breakdowns, cancellations
+  during the day (the offline plan simply leaves cancelled orders out), and the roster (pairs are
+  formed by a placeholder until step 5).
+
 ## Stack
 
 - **Backend:** Python 3.9-compatible (the local machine's Python), FastAPI and pydantic-settings.
@@ -102,7 +127,7 @@ All of it is pure functions over plain data, with no web framework inside.
 |---|---|---|
 | 0 | **Docs** (this rewrite) and README claim fixes | done |
 | 1 | **Rework the generator for the field-visit model** (DATA.md): services, staff, availability, 35 days of orders with publish times and cancellations, events. Reuses the settings layer and the land-only point placement. **Done.** "Actual" km is derived later by the replay (step 3), not stored. | done |
-| 2 | **Engine core:** `distance`, `catalog`, `planner`, `validator`, with tests. One day planned end to end from a fixed acceptance. | 1–2 days |
+| 2 | **Engine core:** `distance`, `catalog`, `planner`, `validator`, with tests. One day planned end to end from a fixed acceptance. **Done** (`.venv/bin/valeo-plan --date 2026-11-04`). | done |
 | 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. | 1 day |
 | 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. | 2 days |
 | 5 | **Roster auto-allocation + Services tab.** | 1 day |
