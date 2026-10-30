@@ -3,8 +3,29 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
+from typing import List, Tuple
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def parse_clock(value: str) -> int:
+    """'HH:MM' as minutes after midnight."""
+    hours, minutes = value.strip().split(":")
+    if not (0 <= int(hours) <= 47 and 0 <= int(minutes) <= 59):
+        raise ValueError("bad clock time {!r}".format(value))
+    return int(hours) * 60 + int(minutes)
+
+
+def parse_windows(value: str) -> List[Tuple[int, int]]:
+    """'07:00-09:30,16:00-19:00' as [(420, 570), (960, 1140)]."""
+    windows = []
+    for part in value.split(","):
+        start, end = (parse_clock(x) for x in part.split("-"))
+        if end <= start:
+            raise ValueError("window {!r} ends before it starts".format(part))
+        windows.append((start, end))
+    return windows
 
 
 class Settings(BaseSettings):
@@ -27,3 +48,53 @@ class Settings(BaseSettings):
 def load_settings(**overrides) -> Settings:
     """Load settings from `.env` (and the environment), with optional explicit overrides."""
     return Settings(**overrides)
+
+
+class EngineSettings(BaseSettings):
+    """Planning-engine parameters. Same `.env`, same rule: every field is required."""
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+
+    road_factor: float  # predicted road km = straight line x this (S14)
+    speed_kmh_off_peak: float
+    speed_kmh_peak: float
+    peak_windows: str  # 'HH:MM-HH:MM,...' when the peak speed applies
+    arrival_tolerance_min: int  # arrive within +/- this of the requested slot (S9)
+    access_min: int  # parking and reaching the patient's door, before service starts
+    office_supply_stop_min: int  # time at the office to collect IV kits
+    plan_duration_position: float  # planned on-site time = lo + position * (hi - lo)
+    shift_hours: float
+    roster_shift_starts: str  # 'HH:MM,...' placeholder roster, cycled over the pairs (until PLAN step 5)
+    standby_min_gap_min: int  # idle gaps shorter than this are waited out in place
+
+    @field_validator("peak_windows")
+    @classmethod
+    def _check_windows(cls, value: str) -> str:
+        parse_windows(value)
+        return value
+
+    @field_validator("roster_shift_starts")
+    @classmethod
+    def _check_starts(cls, value: str) -> str:
+        for part in value.split(","):
+            parse_clock(part)
+        return value
+
+    @field_validator("plan_duration_position")
+    @classmethod
+    def _check_position(cls, value: float) -> float:
+        if not 0.0 <= value <= 1.0:
+            raise ValueError("plan_duration_position must be between 0 and 1")
+        return value
+
+    @property
+    def peak_window_minutes(self) -> List[Tuple[int, int]]:
+        return parse_windows(self.peak_windows)
+
+    @property
+    def shift_start_minutes(self) -> List[int]:
+        return [parse_clock(p) for p in self.roster_shift_starts.split(",")]
+
+
+def load_engine_settings(**overrides) -> EngineSettings:
+    return EngineSettings(**overrides)
