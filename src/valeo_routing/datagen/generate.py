@@ -6,49 +6,34 @@ import random
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from ..settings import Settings
-from .appointments import Appointment, make_appointments
-from .fleet_events import FleetEvent, make_fleet_events
-from .people import Client, Driver, Staff, draw_names, make_clients, make_drivers, make_staff
-from .reference import load_reference
+from .events import Event, make_events
+from .orders import Order, make_orders
+from .reference import Reference, load_reference
 from .schema import COLUMNS, COORD_DECIMALS, DATE_FMT, DATETIME_FMT
+from .staff import Availability, Staff, make_availability, make_staff
 
 
 @dataclass
 class Dataset:
-    drivers: List[Driver]
     staff: List[Staff]
-    clients: List[Client]
-    appointments: List[Appointment]
-    fleet_events: List[FleetEvent]
-    declined: Dict[str, int]
+    availability: List[Availability]
+    orders: List[Order]
+    events: List[Event]
+    reference: Reference
 
 
 def generate(settings: Settings) -> Dataset:
     """Build every table from one random.Random seeded from settings."""
     rng = random.Random(settings.data_seed)
     ref = load_reference(settings.data_reference_dir, settings.demand_profile_path)
-    counts = {
-        "home_nurse": settings.staff_home_nurses,
-        "babysitter": settings.staff_babysitters,
-        "collection_nurse": settings.staff_collection_nurses,
-    }
-    names = draw_names(rng, ref, len(ref.fleet) + sum(counts.values()))
-    drivers = make_drivers(rng, ref, names[: len(ref.fleet)])
-    staff = make_staff(rng, ref, counts, names[len(ref.fleet):])
-    clients = make_clients(rng, ref, settings.clients_total)
-    volumes = {
-        "nursing": settings.vol_nursing_per_day,
-        "babysitting": settings.vol_babysitting_per_day,
-        "sample": settings.vol_sample_per_day,
-    }
-    appointments, declined = make_appointments(
-        rng, ref, clients, staff, settings.data_start_date, settings.data_days, volumes
-    )
-    events = make_fleet_events(rng, ref, drivers, settings.data_start_date, settings.data_days)
-    return Dataset(drivers, staff, clients, appointments, events, declined)
+    staff = make_staff(rng, ref, settings.staff_nurses, settings.staff_drivers)
+    availability = make_availability(rng, ref, staff, settings.data_start_date, settings.data_days)
+    orders = make_orders(rng, ref, settings.data_start_date, settings.data_days, settings.orders_per_day)
+    events = make_events(rng, ref, staff, availability, settings.data_start_date, settings.data_days)
+    return Dataset(staff, availability, orders, events, ref)
 
 
 def _fmt(value) -> str:
@@ -74,11 +59,10 @@ def _row(obj, columns: List[str]) -> List[str]:
 def tables(data: Dataset) -> Dict[str, List[List[str]]]:
     """Formatted rows per output file, in deterministic order."""
     sources = {
-        "drivers.csv": sorted(data.drivers, key=lambda d: d.driver_id),
         "staff.csv": sorted(data.staff, key=lambda s: s.staff_id),
-        "clients.csv": sorted(data.clients, key=lambda c: c.client_id),
-        "appointments.csv": sorted(data.appointments, key=lambda a: a.appt_id),
-        "fleet_events.csv": sorted(data.fleet_events, key=lambda e: e.event_id),
+        "availability.csv": sorted(data.availability, key=lambda a: (a.date, a.staff_id)),
+        "orders.csv": sorted(data.orders, key=lambda o: o.order_id),
+        "events.csv": sorted(data.events, key=lambda e: e.event_id),
     }
     return {name: [_row(o, COLUMNS[name]) for o in rows] for name, rows in sources.items()}
 

@@ -1,166 +1,79 @@
 {
   "_doc": {
-    "summary": "Shape of synthetic demand. Volumes, seed and dates live in .env; everything else the generator draws from is here. All weights are relative (they need not sum to 1). Hours are local Dubai time, 0-23.",
-    "weekday_multipliers": "Mon..Sun -> multiplier on the .env daily volume (A14).",
+    "summary": "Shape of the synthetic field-visit operation. Seed, dates, volumes, staff counts and paths live in .env; everything the generator draws from is here. Weights are relative (they need not sum to 1). Times are local Dubai time. Assumption numbers (S1..S15) refer to docs/DATA.md.",
     "geo.max_resample": "Draws allowed when placing a point on land in its area's emirate before the generator gives up (see service_area.geojson).",
-    "volume_noise_sd_factor": "Daily count = round(gauss(mean, factor * sqrt(mean))), floored at 0.",
-    "booking_hours": "[first, last) hour of day when routine bookings are made, on the booking day.",
-    "drivers.shifts": "Per fleet home_vertical: contracted shift start HH:MM and length in hours (A5).",
-    "staff.work_days_per_week": "Days each nurse/babysitter works; the rest days are drawn from rest_day_weights.",
-    "staff.languages": "Per role: ';'-separated language set -> weight.",
-    "clients.primary_mix": "Share of clients whose main service is each vertical; the area is drawn from that vertical's weight in areas.csv.",
-    "clients.second_service_prob": "Chance a client also uses one other vertical.",
-    "clients.villa_share_by_area": "area_id -> probability a client there lives in a villa (area-type heuristic); other areas use villa_share_default.",
-    "clients.access_notes": "Per building_type: access note -> weight. Empty string means no note.",
-    "verticals.<v>.bookings": "nursing/babysitting: list of booking kinds. Each has weight, start_hour_weights, start_minute_weights, duration_h_weights, optional latest_end_hour (end must not pass this hour, counted from the start day's midnight, 24 = midnight), dropoff_share and pickup_share (A7), and an optional fixed note.",
-    "verticals.<v>.lead_time_days": "Days before service date the routine booking is made -> weight.",
-    "verticals.<v>.channel_mix / payer_mix": "Value -> weight.",
-    "verticals.<v>.cancel_rate / no_show_rate": "Probabilities per booking. cancelled_at falls between booked_at and start.",
-    "verticals.<v>.staff_turnaround_min": "Minutes a staff member is blocked after a booking ends before the next can start (nursing: minimum rest between shifts).",
-    "verticals.<v>.staff_max_concurrent": "Most bookings one staff member may hold over overlapping windows. 1 for nursing and babysitting; sample windows are 1-hour slots with a 10-20 minute visit, so a collection nurse can cover more than one per slot.",
-    "verticals.<v>.notes": "Free-text ops note -> weight. Empty string means no note.",
-    "verticals.sample.slot_hour_weights": "Routine collection slot start hour -> weight (A9). Slots last slot_min.",
-    "verticals.sample.service_min": "[min, max] minutes on site for a collection.",
-    "verticals.sample.tests": "Test type -> weight, sample_max_min (A10: minutes from collection to lab), fasting, keep_cold (needs the cool box). The lab is always the nearest lab by distance, computed, not stored.",
-    "verticals.sample.fasting_latest_slot_hour": "Fasting tests only go in slots starting at or before this hour.",
-    "verticals.sample.slot_search_max_shift_h": "If no collection nurse is free in the requested slot, the booking is offered up to this many hours earlier or later before it is declined.",
-    "verticals.sample.fast_track": "share of collections that are same-day fast-tracks (A11), notice_min [min, max], start_hour_weights and start_minute_weights for their start (06:00-22:00 window).",
-    "fleet_events": "Per active car per day, at most one event. breakdown: rate, out_for_day_share, repair_h [min, max], at drawn inside the driver's shift. late_start: rate, delay_min [min, max], ops learns notice_min [min, max] before shift start. driver_absent: rate, notice_min [min, max] before shift start; car out for the day."
+    "weekday_multipliers": "Mon..Sun -> multiplier on ORDERS_PER_DAY (S4).",
+    "volume_noise_sd_factor": "Daily order count = round(gauss(mean, factor * sqrt(mean))), floored at 0.",
+    "slot_hour_weights": "Hour of day (0-23) -> weight for the requested slot start. Peaks 07:00-10:00 and 16:00-18:00 (S7).",
+    "slot_minute_weights": "Minute past the hour -> weight. Slots sit on a quarter-hour grid.",
+    "lab_cutoff_margin_min": "A sample order's slot is redrawn until slot_start is at least this many minutes before its lab closes, so the day can still end with a lab drop.",
+    "slot_max_redraws": "Cap on those redraws; exceeding it is an error.",
+    "lead_time_h": "Buckets for hours between published_at and slot_start: [min_h, max_h, weight]; uniform inside a bucket (S8).",
+    "publish_hour_weights": "Hour of day (0-23) -> relative chance a patient books then. A drawn lead time is accepted with chance weight/max_weight, else redrawn, so most orders are published in waking hours and only a minority overnight (S8).",
+    "lead_max_redraws": "Cap on those redraws; exceeding it is an error.",
+    "patients.repeat_share": "Chance an order comes from an existing patient (chosen in proportion to their past orders) instead of a new one; a repeat patient keeps their location.",
+    "supplies.prep_cutoff_hour": "Orders for services that need office supplies are 'supplies_ready' when published before this hour on the day before the slot (S12). Services that need none are always ready.",
+    "competitor_claim_min": "Minutes after publishing until another provider takes an order nobody has accepted: triangular(lo, hi, mode) (S13).",
+    "cancellation": "Chance an order is cancelled = base_rate * lead_multiplier(lead bucket) * service_multiplier(category) (S10). cancelled_at falls between published_at and slot_start, at a fraction drawn from fraction_range of that span.",
+    "staff.nurses_iv_certified_share": "Share of nurses who may serve IV services.",
+    "staff.rest_day_weights": "Fixed weekly rest day per staff member, drawn from these weights (S3).",
+    "staff.shift_pref_weights": "day / split / any (S3).",
+    "availability": "Per staff-day: rest on the rest day; otherwise sick with p_sick or on leave with p_leave. known_at: sick calls arrive the same morning (hour range) or the evening before; leave and rest days are known days ahead.",
+    "events": "car_breakdown: chance per active car-day, hour range for 'at', chance it lasts all day, otherwise duration range in minutes. late_start: chance per available staff-day, hour range for 'at', delay range in minutes (until = at + delay)."
   },
-  "weekday_multipliers": {"Mon": 1.0, "Tue": 1.03, "Wed": 0.98, "Thu": 1.02, "Fri": 0.97, "Sat": 0.8, "Sun": 0.7},
   "geo": {"max_resample": 200},
+  "weekday_multipliers": {"Mon": 1.0, "Tue": 1.03, "Wed": 0.98, "Thu": 1.02, "Fri": 0.97, "Sat": 0.8, "Sun": 0.7},
   "volume_noise_sd_factor": 1.0,
-  "booking_hours": [8, 22],
-  "drivers": {
-    "shifts": {
-      "nursing": {"start": "06:00", "hours": 8},
-      "babysitting": {"start": "07:00", "hours": 14},
-      "sample": {"start": "07:00", "hours": 12}
-    }
+  "slot_hour_weights": {
+    "6": 3, "7": 10, "8": 12, "9": 11, "10": 7, "11": 5, "12": 4, "13": 4,
+    "14": 4, "15": 6, "16": 9, "17": 9, "18": 5, "19": 3, "20": 2, "21": 1
+  },
+  "slot_minute_weights": {"0": 4, "15": 3, "30": 4, "45": 3},
+  "lab_cutoff_margin_min": 90,
+  "slot_max_redraws": 100,
+  "lead_time_h": [
+    {"min_h": 0.5, "max_h": 2, "weight": 0.04},
+    {"min_h": 2, "max_h": 12, "weight": 0.21},
+    {"min_h": 12, "max_h": 24, "weight": 0.30},
+    {"min_h": 24, "max_h": 48, "weight": 0.45}
+  ],
+  "publish_hour_weights": {
+    "0": 0.1, "1": 0.05, "2": 0.03, "3": 0.03, "4": 0.05, "5": 0.1, "6": 0.3, "7": 0.5,
+    "8": 0.8, "9": 1, "10": 1, "11": 1, "12": 1, "13": 1, "14": 1, "15": 1,
+    "16": 1, "17": 1, "18": 1, "19": 1, "20": 0.9, "21": 0.6, "22": 0.4, "23": 0.25
+  },
+  "lead_max_redraws": 100,
+  "patients": {"repeat_share": 0.3},
+  "supplies": {"prep_cutoff_hour": 18},
+  "competitor_claim_min": {"lo": 30, "hi": 240, "mode": 90},
+  "cancellation": {
+    "base_rate": 0.04,
+    "lead_multiplier": [
+      {"max_lead_h": 2, "multiplier": 0.3},
+      {"max_lead_h": 12, "multiplier": 0.8},
+      {"max_lead_h": 24, "multiplier": 1.1},
+      {"max_lead_h": 48, "multiplier": 1.4}
+    ],
+    "service_multiplier": {"sample": 0.9, "iv": 1.3, "injection": 1.0},
+    "fraction_range": [0.1, 0.9]
   },
   "staff": {
-    "work_days_per_week": 6,
+    "nurses_iv_certified_share": 0.6,
     "rest_day_weights": {"Mon": 0.8, "Tue": 1.0, "Wed": 1.0, "Thu": 0.9, "Fri": 1.0, "Sat": 1.6, "Sun": 2.2},
-    "languages": {
-      "home_nurse": {"English;Tagalog": 5, "English;Malayalam": 4, "English;Hindi": 2, "English;Arabic": 2, "English": 1},
-      "babysitter": {"English;Tagalog": 6, "English;Hindi": 2, "English;Sinhala": 1, "English;Amharic": 1, "English": 1},
-      "collection_nurse": {"English;Tagalog": 3, "English;Malayalam": 3, "English;Arabic": 2, "English;Hindi": 2}
-    }
+    "shift_pref_weights": {"day": 6, "split": 2, "any": 2}
   },
-  "clients": {
-    "primary_mix": {"nursing": 0.15, "babysitting": 0.2, "sample": 0.65},
-    "second_service_prob": 0.08,
-    "villa_share_by_area": {
-      "AR-01": 0.95, "AR-02": 0.6, "AR-03": 0.45, "AR-04": 0.95, "AR-05": 0.98,
-      "AR-06": 0.85, "AR-07": 0.85, "AR-08": 0.85, "AR-09": 0.9, "AR-10": 0.4,
-      "AR-11": 0.85, "AR-12": 0.75, "AR-13": 0.6, "AR-14": 0.95, "AR-22": 0.4,
-      "AR-23": 0.6, "AR-31": 0.2
-    },
-    "villa_share_default": 0.05,
-    "access_notes": {
-      "villa": {"": 5, "Villa, park outside gate": 3, "Gate code at security": 2, "Ring the side gate bell": 1, "Dog in garden, call first": 1},
-      "apartment": {"": 5, "Parking in basement B1": 2, "Visitor parking at the back": 2, "Register at reception": 3, "Gate code at security": 1}
-    }
+  "availability": {
+    "p_sick": 0.03,
+    "p_leave": 0.02,
+    "sick_known_same_morning_share": 0.7,
+    "sick_known_hour_range": [5, 8],
+    "sick_known_evening_before_hour_range": [18, 22],
+    "leave_notice_days_range": [3, 21],
+    "rest_notice_days": 14,
+    "notice_hour": 9
   },
-  "verticals": {
-    "nursing": {
-      "bookings": [
-        {
-          "kind": "day",
-          "weight": 0.8,
-          "start_hour_weights": {"7": 4, "8": 5, "9": 2},
-          "start_minute_weights": {"0": 3, "30": 1},
-          "duration_h_weights": {"8": 0.55, "12": 0.45},
-          "dropoff_share": 0.9,
-          "pickup_share": 0.7,
-          "note": null
-        },
-        {
-          "kind": "night",
-          "weight": 0.1,
-          "start_hour_weights": {"19": 1},
-          "start_minute_weights": {"0": 1},
-          "duration_h_weights": {"12": 1},
-          "dropoff_share": 0.9,
-          "pickup_share": 0.7,
-          "note": null
-        },
-        {
-          "kind": "live_in",
-          "weight": 0.1,
-          "start_hour_weights": {"8": 2, "9": 2, "10": 1},
-          "start_minute_weights": {"0": 1},
-          "duration_h_weights": {"24": 1},
-          "dropoff_share": 1.0,
-          "pickup_share": 0.0,
-          "note": "Live-in"
-        }
-      ],
-      "lead_time_days": {"1": 3, "2": 3, "3": 2, "5": 1, "7": 2, "14": 1},
-      "channel_mix": {"call_centre": 4, "app": 2, "whatsapp": 2, "b2b": 2},
-      "payer_mix": {"insurance": 5, "self_pay": 3, "corporate": 2},
-      "cancel_rate": 0.04,
-      "no_show_rate": 0.01,
-      "staff_turnaround_min": 480,
-      "staff_max_concurrent": 1,
-      "notes": {"": 8, "Patient wheelchair user": 2, "Call on arrival": 2, "Bedridden, two-person transfer": 1, "Post-op wound care": 1, "Diabetic, check glucose log": 1}
-    },
-    "babysitting": {
-      "bookings": [
-        {
-          "kind": "standard",
-          "weight": 1.0,
-          "start_hour_weights": {"8": 4, "9": 3, "10": 2, "11": 1, "12": 1, "13": 1, "14": 1, "15": 1, "16": 2, "17": 2, "18": 2, "19": 1.5, "20": 1},
-          "start_minute_weights": {"0": 3, "30": 1},
-          "duration_h_weights": {"4": 4, "5": 3, "6": 3, "7": 2, "8": 2, "9": 1, "10": 1},
-          "latest_end_hour": 24,
-          "dropoff_share": 0.98,
-          "pickup_share": 0.95,
-          "note": null
-        }
-      ],
-      "lead_time_days": {"1": 4, "2": 3, "3": 2, "5": 1, "7": 1},
-      "channel_mix": {"app": 5, "whatsapp": 3, "call_centre": 2},
-      "payer_mix": {"self_pay": 8, "corporate": 2},
-      "cancel_rate": 0.07,
-      "no_show_rate": 0.01,
-      "staff_turnaround_min": 60,
-      "staff_max_concurrent": 1,
-      "notes": {"": 6, "Twins, 3y": 1, "Infant, 8 months": 1, "Two kids, 4y and 7y": 2, "Nut allergy in the house": 1, "Call on arrival": 2}
-    },
-    "sample": {
-      "slot_min": 60,
-      "slot_hour_weights": {"7": 9, "8": 10, "9": 9, "10": 7, "11": 6, "12": 5, "13": 4, "14": 4, "15": 4, "16": 3, "17": 3, "18": 3},
-      "service_min": [10, 20],
-      "tests": {
-        "CBC": {"weight": 6, "sample_max_min": 480, "fasting": false, "keep_cold": true},
-        "lipid_fasting": {"weight": 3, "sample_max_min": 240, "fasting": true, "keep_cold": true},
-        "glucose_fasting": {"weight": 3, "sample_max_min": 120, "fasting": true, "keep_cold": true},
-        "PCR": {"weight": 3, "sample_max_min": 1440, "fasting": false, "keep_cold": true},
-        "coag_PT_INR": {"weight": 1, "sample_max_min": 480, "fasting": false, "keep_cold": false},
-        "urine": {"weight": 2, "sample_max_min": 120, "fasting": false, "keep_cold": true}
-      },
-      "fasting_latest_slot_hour": 10,
-      "slot_search_max_shift_h": 3,
-      "fast_track": {
-        "share": 0.12,
-        "notice_min": [30, 120],
-        "start_hour_weights": {"6": 1, "7": 2, "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3, "15": 3, "16": 3, "17": 2, "18": 2, "19": 2, "20": 1},
-        "start_minute_weights": {"0": 1, "15": 1, "30": 1, "45": 1}
-      },
-      "lead_time_days": {"1": 6, "2": 3, "3": 1, "5": 1},
-      "channel_mix": {"app": 5, "call_centre": 3, "whatsapp": 2, "b2b": 2},
-      "payer_mix": {"insurance": 6, "self_pay": 3, "corporate": 2},
-      "cancel_rate": 0.05,
-      "no_show_rate": 0.03,
-      "staff_turnaround_min": 0,
-      "staff_max_concurrent": 2,
-      "notes": {"": 10, "Call on arrival": 3, "Elderly patient, ground floor": 1, "Child patient, parent present": 1, "Difficult veins": 1}
-    }
-  },
-  "fleet_events": {
-    "breakdown": {"rate": 0.02, "out_for_day_share": 0.4, "repair_h": [1, 4]},
-    "late_start": {"rate": 0.05, "delay_min": [20, 90], "notice_min": [0, 15]},
-    "driver_absent": {"rate": 0.01, "notice_min": [30, 120]}
+  "events": {
+    "car_breakdown": {"p_per_car_day": 0.02, "at_hour_range": [7, 19], "all_day_share": 0.4, "duration_min_range": [90, 360]},
+    "late_start": {"p_per_staff_day": 0.03, "at_hour_range": [5, 7], "delay_min_range": [30, 120]}
   }
 }

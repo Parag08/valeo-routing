@@ -101,7 +101,7 @@ All of it is pure functions over plain data, with no web framework inside.
 | Step | Work | Size |
 |---|---|---|
 | 0 | **Docs** (this rewrite) and README claim fixes | done |
-| 1 | **Rework the generator for the field-visit model** (DATA.md): services, staff, 30+ days of orders with publish times, cancellations, synthetic "actual" km. Reuse the settings layer and tests; drop the three-vertical model. | 1 day |
+| 1 | **Rework the generator for the field-visit model** (DATA.md): services, staff, availability, 35 days of orders with publish times and cancellations, events. Reuses the settings layer and the land-only point placement. **Done.** "Actual" km is derived later by the replay (step 3), not stored. | done |
 | 2 | **Engine core:** `distance`, `catalog`, `planner`, `validator`, with tests. One day planned end to end from a fixed acceptance. | 1–2 days |
 | 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. | 1 day |
 | 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. | 2 days |

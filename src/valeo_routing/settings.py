@@ -19,15 +19,9 @@ class Settings(BaseSettings):
     data_output_dir: Path
     demand_profile_path: Path
 
-    vol_nursing_per_day: float
-    vol_babysitting_per_day: float
-    vol_sample_per_day: float
-
-    staff_home_nurses: int
-    staff_babysitters: int
-    staff_collection_nurses: int
-
-    clients_total: int
+    orders_per_day: float
+    staff_nurses: int
+    staff_drivers: int
 
 
 def load_settings(**overrides) -> Settings:

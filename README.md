@@ -27,8 +27,8 @@ See [docs/CONTEXT.md](docs/CONTEXT.md) for the measurement and its caveats.
 **This repo is synthetic.** It is not Valeo's code or data. Every number the app produces comes from
 seeded synthetic data and is labelled as such.
 
-Status: **planning done, build starting.** The data generator exists (from the earlier
-three-vertical model) and is being reworked; see the plan.
+Status: **data generator reworked** (PLAN step 1 done): a month of synthetic field-visit orders,
+staff, availability and events across Dubai and the northern emirates. The engine and the app are next.
 
 - [docs/CONTEXT.md](docs/CONTEXT.md): the real project, the seven tabs, rollout, verified results, open questions
 - [docs/PLAN.md](docs/PLAN.md): screens, engine, stack, build order

@@ -1,0 +1,13 @@
+service_id,name,category,duration_min_lo,duration_min_hi,needs_lab,sample_max_min,keep_cold,needs_office_supplies,iv_certified_only,mix_weight
+SV-01,Blood draw - routine panel (CBC),sample,10,20,true,480,true,false,false,18
+SV-02,Blood draw - fasting lipid profile,sample,10,20,true,240,true,false,false,12
+SV-03,Blood draw - fasting glucose / HbA1c,sample,10,20,true,120,true,false,false,10
+SV-04,Blood draw - coagulation (PT/INR),sample,10,20,true,480,false,false,false,6
+SV-05,Urine sample collection,sample,10,15,true,120,true,false,false,6
+SV-06,PCR swab collection,sample,15,25,true,1440,true,false,false,8
+SV-07,IV - quick vitamin push,iv,30,40,false,,false,true,true,7
+SV-08,IV - hydration drip,iv,50,70,false,,false,true,true,12
+SV-09,IV - vitamin infusion,iv,60,90,false,,false,true,true,8
+SV-10,IV - extended infusion,iv,90,120,false,,false,true,true,3
+SV-11,Injection - intramuscular,injection,15,25,false,,false,false,false,6
+SV-12,Vaccination,injection,20,30,false,,false,true,false,4
