@@ -5,23 +5,34 @@ from datetime import date
 from pathlib import Path
 from typing import List, Tuple
 
-from pydantic import field_validator
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 def parse_clock(value: str) -> int:
     """'HH:MM' as minutes after midnight."""
-    hours, minutes = value.strip().split(":")
-    if not (0 <= int(hours) <= 47 and 0 <= int(minutes) <= 59):
+    try:
+        hours, minutes = (int(x) for x in value.strip().split(":"))
+    except ValueError:
+        raise ValueError("expected a time like 08:00, got {!r}".format(value))
+    if not (0 <= hours <= 47 and 0 <= minutes <= 59):
         raise ValueError("bad clock time {!r}".format(value))
-    return int(hours) * 60 + int(minutes)
+    return hours * 60 + minutes
+
+
+def _split_window(part: str) -> Tuple[int, int]:
+    try:
+        start, end = part.split("-")
+    except ValueError:
+        raise ValueError("expected hours like 08:00-20:00, got {!r}".format(part))
+    return parse_clock(start), parse_clock(end)
 
 
 def parse_windows(value: str) -> List[Tuple[int, int]]:
     """'07:00-09:30,16:00-19:00' as [(420, 570), (960, 1140)]."""
     windows = []
     for part in value.split(","):
-        start, end = (parse_clock(x) for x in part.split("-"))
+        start, end = _split_window(part)
         if end <= start:
             raise ValueError("window {!r} ends before it starts".format(part))
         windows.append((start, end))
@@ -30,7 +41,7 @@ def parse_windows(value: str) -> List[Tuple[int, int]]:
 
 def parse_wrapping_window(value: str) -> Tuple[int, int]:
     """'22:00-06:00' as (1320, 360): a window that may run past midnight."""
-    start, end = (parse_clock(x) for x in value.split("-"))
+    start, end = _split_window(value)
     if start == end:
         raise ValueError("window {!r} is empty".format(value))
     return start, end
@@ -136,3 +147,19 @@ class EngineSettings(BaseSettings):
 
 def load_engine_settings(**overrides) -> EngineSettings:
     return EngineSettings(**overrides)
+
+
+class ApiSettings(BaseSettings):
+    """The web server. Same `.env`, same rule: every field is required."""
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+
+    api_host: str
+    # PORT is the hosting convention (preview tools and platforms set it); it wins over API_PORT in .env.
+    api_port: int = Field(validation_alias=AliasChoices("PORT", "API_PORT"))
+    web_dist_dir: Path  # the built UI; served at / when it exists
+    dev_cors_origin: str  # the Vite dev server, allowed to call the API while developing
+
+
+def load_api_settings(**overrides) -> ApiSettings:
+    return ApiSettings(**overrides)
