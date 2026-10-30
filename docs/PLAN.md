@@ -188,6 +188,33 @@ All of it is pure functions over plain data, with no web framework inside.
 - **Not modelled:** split shifts, keeping a nurse and driver together from day to day, `shift_pref`, and
   sick calls played out in real time (marking someone sick changes the whole day's roster).
 
+### Hub siting and capacity (step 6)
+
+- **Siting.** K-median on the orders of the last `HUB_HISTORY_DAYS` service days (cancelled ones left out),
+  over a fixed candidate set: the public area centroids in `areas.csv`, so every hub is on land in its own
+  emirate by construction (and a test re-checks it against the service area). The office always stays open
+  as a standby spot, so k = 0 is office-only standby. Greedy, then local swap; ties go to the lower area id.
+  The objective, road km from an order to its nearest spot, is a proxy; the replay measures what is driven.
+- **Hub standby.** Logistics Valeo v1 waits at whichever spot, a hub or the office, adds the least driving
+  between the two visits (`HubStandby`, behind `StandbyPolicy`). The Excel era still waits at the office.
+  `hubs=k` joins the scenario; the default is `HUB_COUNT`. "Use in the day view" on the Hubs tab sets it.
+- **Result on the synthetic month** (35 days, auto roster, Logistics Valeo v1, km per visit from totals, way
+  home included): office only 32.1; 1 hub 29.3; 2 hubs 27.9; 3 hubs 27.4; 4 hubs 27.4. On the 5 days the
+  siting did not see, 2 hubs give 27.6. A fourth hub (Fujairah) changes nothing. Capture dips slightly with
+  hubs (81.0% to 80.4%): a pair waiting at a hub is sometimes less well placed for a late order. Every plan
+  passes the validator.
+- **Capacity.** Per day, a concurrency floor (most visits overlapping, arrival window to end of service) and
+  a simulated need: the fewest hypothetical pairs (roster-chosen shift starts, the pool's IV-certified share)
+  with which the offline planner serves `CAPACITY_SERVE_SHARE` of what `CAPACITY_MAX_PAIRS` pairs can serve.
+  Orders even the largest fleet cannot fit are shown as unservable. Service levels are nearest-rank
+  percentiles across days (`CAPACITY_LEVELS`). On the synthetic month: 10 pairs at p50, 11 at p75, 12 at
+  p90, against 7 to 11 rostered. The month takes about 25 s to simulate, so the server warms it at start.
+- **Map.** MapLibre GL over raster tiles from `MAP_TILE_URL` (OpenStreetMap by default, light use only).
+  Orders are one neutral series; hubs and the office are labelled pins, with each spot's share in a table.
+  Four hub colours could not pass the colour-blind checks on a scatter, so identity is carried by labels.
+- **Not modelled:** hub bays (any number of pairs may wait at a hub), hubs supplying IV kits, and siting
+  that weighs order time or service type.
+
 ## Stack
 
 - **Backend:** Python 3.9-compatible (the local machine's Python), FastAPI and pydantic-settings.
@@ -210,7 +237,7 @@ All of it is pure functions over plain data, with no web framework inside.
 | 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. **Done** (`.venv/bin/valeo-replay --days 7 --log`). | done |
 | 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. **Done** (`valeo-serve`, UI in `web/`). Not yet: the replay slider that steps through the day as orders arrive, and the add / cancel / unavailable actions. | done |
 | 5 | **Roster auto-allocation + Services tab.** **Done** (Roster and Services tabs; `engine/roster.py`). | done |
-| 6 | **Tier 2:** hub siting, capacity, metrics. | 2–3 days |
+| 6 | **Tier 2:** hub siting, capacity, metrics. **Hubs and capacity done** (Hub siting and Capacity tabs; `engine/hubs.py`, `engine/capacity.py`, `.venv/bin/valeo-hubs`). Metrics still to do. | 2–3 days |
 | 7 | **v2 swap-out** behind its toggle. | 1 day |
 | 8 | **Polish:** About panel, recorded clip (20–30 s), portfolio card with the 路 seal, rewritten case study. | 1 day |
 

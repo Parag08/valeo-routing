@@ -16,7 +16,7 @@ not yet played out as disruptions.
 from __future__ import annotations
 
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date
 from typing import Dict, List, Optional, Sequence, Tuple
 
@@ -116,7 +116,12 @@ def replay_day(
     day: date, pairs: Sequence[Pair], rows: Sequence[OrderRow], services: Dict, catalog: Catalog,
     ctx: Context, policy: AcceptancePolicy, replay_seed: int, trace: bool = False,
 ) -> DayResult:
-    """Run the day under `policy`. `rows` are every order for the service date, cancelled ones included."""
+    """Run the day under `policy`. `rows` are every order for the service date, cancelled ones included.
+
+    Idle pairs wait where the policy says (office or hubs); a policy without a standby keeps the context's.
+    """
+    if policy.standby is not None:
+        ctx = replace(ctx, standby=policy.standby)
     rng = random.Random("{}|{}|{}".format(replay_seed, day, policy.name))
     ordered = sorted(rows, key=lambda r: r.order_id)
     jobs = {r.order_id: to_job(r, services[r.service_id], catalog) for r in ordered}

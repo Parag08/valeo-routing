@@ -20,7 +20,7 @@ def api_settings(tmp_path, dist=None) -> ApiSettings:
 @pytest.fixture(scope="module")
 def client(settings, written, tmp_path_factory):
     engine = EngineSettings(_env_file=str(ROOT / ".env.example"))
-    return TestClient(create_app(settings, engine, api_settings(tmp_path_factory.mktemp("api"))))
+    return TestClient(create_app(settings, engine, api_settings(tmp_path_factory.mktemp("api")), warm=False))
 
 
 def day(client, **params):
@@ -114,7 +114,7 @@ def test_root_serves_the_built_ui(settings, written, tmp_path):
     dist = tmp_path / "dist"
     dist.mkdir()
     (dist / "index.html").write_text("<!doctype html><title>Logistics Valeo</title>", encoding="utf-8")
-    app = create_app(settings, EngineSettings(_env_file=str(ROOT / ".env.example")), api_settings(tmp_path, dist))
+    app = create_app(settings, EngineSettings(_env_file=str(ROOT / ".env.example")), api_settings(tmp_path, dist), warm=False)
     response = TestClient(app).get("/")
     assert response.status_code == 200 and "Logistics Valeo" in response.text
     assert TestClient(app).get("/api/meta").status_code == 200  # the API still wins over the static mount
@@ -230,3 +230,46 @@ def test_the_same_scenario_gives_the_same_answer(client):
     scenario = {"services": "SV-01:30-40", "unavailable": "NUR-001", "auto_accept_lead_h": 20}
     assert day(client, **scenario) == day(client, **scenario)
     assert roster(client, **scenario) == roster(client, **scenario)
+
+
+# --- hubs and capacity (PLAN step 6) -------------------------------------------------------------
+
+
+def test_hubs_view(client):
+    meta = client.get("/api/meta").json()
+    r = client.get("/api/hubs", params={"date": DAY})
+    assert r.status_code == 200, r.text
+    data = r.json()
+    top = meta["settings"]["hub_max_count"]
+    assert data["synthetic"] is True and data["applied"] == data["default"] == meta["settings"]["hub_count"]
+    assert [s["k"] for s in data["sitings"]] == list(range(top + 1))
+    assert data["window"]["days"] == meta["settings"]["hub_history_days"] and len(data["orders"]) == data["window"]["orders"]
+    assert data["sitings"][0]["hubs"] == [] and all(len(s["hubs"]) == s["k"] for s in data["sitings"])
+    proxy = [s["km_to_spot"] for s in data["sitings"]]
+    assert proxy == sorted(proxy, reverse=True)
+    assert data["sitings"][meta["settings"]["hub_count"]]["day"]["km"] < data["sitings"][0]["day"]["km"]
+    assert meta["map"]["tile_url"].startswith("https://")
+
+
+def test_hubs_flow_into_the_day_view(client):
+    with_hubs, office_only = day(client, hubs=2), day(client, hubs=0)
+    assert with_hubs["violations"] == office_only["violations"] == 0
+    assert len(with_hubs["hubs"]) == 2 and office_only["hubs"] == []
+    notes = {b["note"] for p in with_hubs["pairs"] for b in p["blocks"] if b["kind"] == "standby"}
+    assert any(n.startswith("hub ") for n in notes)
+    assert with_hubs["kpis"]["km"] < office_only["kpis"]["km"]
+    excel = day(client, policy="excel", hubs=2)
+    assert excel["hubs"] == [] and excel["kpis"] == day(client, policy="excel", hubs=0)["kpis"]  # the Excel era waits at the office
+    assert client.get("/api/day", params={"date": DAY, "hubs": 9}).status_code == 422
+
+
+def test_capacity_view(client):
+    r = client.get("/api/capacity")
+    assert r.status_code == 200, r.text
+    data = r.json()
+    assert data["synthetic"] is True and len(data["days"]) == 35
+    pairs = [lvl["pairs"] for lvl in data["levels"]]
+    assert pairs == sorted(pairs) and all(1 <= p <= data["max_pairs"] for p in pairs)
+    for d in data["days"]:
+        assert d["floor"] <= d["needed"] <= data["max_pairs"]
+        assert d["served"] + d["unservable"] <= d["orders"]

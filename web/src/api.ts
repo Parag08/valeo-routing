@@ -23,7 +23,14 @@ export interface Meta {
     roster_target_utilisation: number;
     roster_travel_allowance_min: number;
     roster_starts: [number, number];
+    hub_count: number;
+    hub_max_count: number;
+    hub_history_days: number;
+    capacity_serve_share: number;
+    capacity_max_pairs: number;
+    capacity_levels: number[];
   };
+  map: { tile_url: string; attribution: string };
   office: { lat: number; lon: number; name: string };
   labs: { id: string; name: string; lat: number; lon: number }[];
 }
@@ -106,6 +113,7 @@ export interface DayData {
   roster_label: string;
   unavailable: string[];
   services_edited: string[];
+  hubs: Hub[];
   window: { start: number; end: number };
   pairs: PairDay[];
   jobs: Record<string, Job>;
@@ -193,6 +201,47 @@ export function serviceTokens(edits: Record<string, ServiceEdit>): string {
     .sort()
     .map((id) => `${id}:${edits[id].lo}-${edits[id].hi}${edits[id].limit !== null ? `:${edits[id].limit}` : ""}`)
     .join(",");
+}
+
+export interface Hub {
+  id: string;
+  area_id: string;
+  name: string;
+  emirate: string;
+  lat: number;
+  lon: number;
+  orders: number;
+}
+
+export interface HubsData {
+  date: string;
+  applied: number;
+  default: number;
+  window: { from: string; to: string; days: number; orders: number };
+  orders: [number, number][];
+  office: { lat: number; lon: number; name: string };
+  excel_day: Kpis;
+  sitings: { k: number; km_to_spot: number; office_orders: number; hubs: Hub[]; day: Kpis }[];
+}
+
+export interface CapacityDay {
+  date: string;
+  weekday: string;
+  orders: number;
+  floor: number;
+  unservable: number;
+  needed: number;
+  served: number;
+  rostered: number;
+}
+
+export interface CapacityData {
+  serve_share: number;
+  max_pairs: number;
+  hubs: number;
+  levels: { p: number; pairs: number }[];
+  rostered: { min: number; max: number };
+  days: CapacityDay[];
 }
 
 export interface Compare {

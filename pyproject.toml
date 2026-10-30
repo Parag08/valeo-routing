@@ -16,6 +16,7 @@ dev = ["pytest", "httpx"]
 valeo-gen = "valeo_routing.datagen.cli:main"
 valeo-plan = "valeo_routing.engine.cli:main"
 valeo-replay = "valeo_routing.engine.replay_cli:main"
+valeo-hubs = "valeo_routing.engine.hubs_cli:main"
 valeo-serve = "valeo_routing.api.app:main"
 
 [tool.setuptools.packages.find]

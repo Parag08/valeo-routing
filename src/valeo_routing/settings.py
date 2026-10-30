@@ -96,6 +96,21 @@ class EngineSettings(BaseSettings):
     roster_min_pairs_when_booked: float  # an hour that usually has bookings keeps at least this many pairs on duty
     roster_min_orders_for_cover: float  # "usually has bookings": expected orders per hour at or above this
 
+    # Hub siting (PLAN step 6).
+    hub_history_days: int  # hubs are sited on the orders of the last this-many service days in the data
+    hub_max_count: int  # the Hubs tab sites 1 to this many hubs
+    hub_count: int  # how many hubs Logistics Valeo uses unless the page applies another siting
+
+    # Capacity (PLAN step 6).
+    capacity_serve_share: float  # a day counts as covered when the planner serves at least this share of its orders
+    capacity_max_pairs: int  # the simulation tries up to this many pairs
+    capacity_levels: str  # service levels shown, as percentiles across days: '50,75,90'
+
+    # Map (Hubs tab).
+    map_tile_url: str  # raster tile URL template; '{key}' is replaced by MAP_API_KEY
+    map_api_key: str  # may be empty for providers that need none
+    map_attribution: str
+
     # Acceptance and replay (PLAN step 3).
     replay_seed: int
     office_hours: str  # 'HH:MM-HH:MM': when ops are at their desks to accept orders
@@ -117,6 +132,47 @@ class EngineSettings(BaseSettings):
     def _check_utilisation(cls, value: float) -> float:
         if not 0.0 < value <= 1.0:
             raise ValueError("roster_target_utilisation must be above 0 and at most 1")
+        return value
+
+    @field_validator("hub_history_days", "hub_max_count")
+    @classmethod
+    def _check_positive(cls, value: int) -> int:
+        if value < 1:
+            raise ValueError("must be at least 1")
+        return value
+
+    @field_validator("capacity_serve_share")
+    @classmethod
+    def _check_share(cls, value: float) -> float:
+        if not 0.0 < value <= 1.0:
+            raise ValueError("capacity_serve_share must be above 0 and at most 1")
+        return value
+
+    @field_validator("capacity_max_pairs")
+    @classmethod
+    def _check_max_pairs(cls, value: int) -> int:
+        if value < 1:
+            raise ValueError("capacity_max_pairs must be at least 1")
+        return value
+
+    @field_validator("capacity_levels")
+    @classmethod
+    def _check_levels(cls, value: str) -> str:
+        levels = [float(x) for x in value.split(",")]
+        if not levels or any(not 0 < x <= 100 for x in levels) or levels != sorted(levels):
+            raise ValueError("capacity_levels must be ascending percentiles between 0 and 100, like 50,75,90")
+        return value
+
+    @property
+    def capacity_percentiles(self) -> List[float]:
+        return [float(x) for x in self.capacity_levels.split(",")]
+
+    @field_validator("hub_count")
+    @classmethod
+    def _check_hub_count(cls, value: int, info) -> int:
+        top = info.data.get("hub_max_count")
+        if value < 0 or (top is not None and value > top):
+            raise ValueError("hub_count must be between 0 and hub_max_count")
         return value
 
     @field_validator("roster_lead_min")

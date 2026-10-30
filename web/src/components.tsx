@@ -1,3 +1,5 @@
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { Outcome } from "./api";
 
@@ -32,4 +34,44 @@ export function Tooltip({ x, y, children }: { x: number; y: number; children: Re
       {children}
     </div>
   );
+}
+
+/** The width of a container, kept current as it resizes. */
+export function useWidth(fallback: number): [React.RefObject<HTMLDivElement | null>, number] {
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(fallback);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setWidth(el.clientWidth));
+    observer.observe(el);
+    setWidth(el.clientWidth);
+    return () => observer.disconnect();
+  }, []);
+  return [ref, width];
+}
+
+/** Whether the page is in dark mode, from the toggle or, when it is unset, the OS. */
+export function useDark(): boolean {
+  const read = () =>
+    document.documentElement.dataset.theme === "dark" ||
+    (!document.documentElement.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const [dark, setDark] = useState(read);
+  useEffect(() => {
+    const update = () => setDark(read());
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    media.addEventListener("change", update);
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => {
+      media.removeEventListener("change", update);
+      observer.disconnect();
+    };
+  }, []);
+  return dark;
+}
+
+/** A CSS custom property's current value, e.g. token("--accent"). */
+export function token(name: string): string {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }

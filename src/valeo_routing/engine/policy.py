@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import random
 from dataclasses import dataclass
-from typing import Protocol, Tuple
+from typing import Optional, Protocol, Tuple
 
 from valeo_routing.settings import EngineSettings
 
@@ -79,12 +79,13 @@ class LogisticsValeoV1:
 
     name = "lv1"
 
-    def __init__(self, s: EngineSettings, office: Tuple[float, float]):
+    def __init__(self, s: EngineSettings, office: Tuple[float, float], standby: Optional[StandbyPolicy] = None):
         self.office_open, self.office_close = s.office_window
         self.quiet = s.quiet_window
         self.threshold_h = s.auto_accept_lead_h
         self.lo, self.hi = s.manual_response_min_lo, s.manual_response_min_hi
-        self.standby: StandbyPolicy = OfficeStandby(office)
+        # Idle pairs go back to the office until hubs are sited and applied (HubStandby).
+        self.standby: StandbyPolicy = standby if standby is not None else OfficeStandby(office)
 
     def when(self, job: Job, rng: random.Random) -> Decision:
         if effective_lead_h(job, self.quiet) >= self.threshold_h:

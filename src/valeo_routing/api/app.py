@@ -1,12 +1,13 @@
 """The web API: replay a day under a scenario and return everything the screens draw.
 
-A scenario is a policy, a roster mode, optional acceptance-rule overrides, staff marked sick and service
-duration overrides. Everything is carried in the query string, so the API holds no state and every
+A scenario is a policy, a roster mode, optional acceptance-rule overrides, staff marked sick, service
+duration overrides and how many hubs Logistics Valeo waits at. Everything is carried in the query string, so the API holds no state and every
 response is reproducible. All data is the synthetic month; responses say so (`synthetic: true`).
 Replays and rosters are cached per scenario because a day takes a moment to plan.
 """
 from __future__ import annotations
 
+import threading
 from dataclasses import dataclass, replace
 from datetime import date, datetime
 from typing import Dict, List, Optional, Tuple
@@ -19,12 +20,15 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 
 from valeo_routing.datagen.reference import Service
+from valeo_routing.engine import capacity as capacities
 from valeo_routing.engine import roster as rosters
 from valeo_routing.engine.catalog import Catalog
 from valeo_routing.engine.data import World, engine_labs, load_world, make_context
+from valeo_routing.engine.hubs import Siting, curve, history_window
 from valeo_routing.engine.model import Block, Job, Pair, PairDay
 from valeo_routing.engine.policy import ExcelEra, LogisticsValeoV1
 from valeo_routing.engine.replay import DayKpis, DayResult, replay_day
+from valeo_routing.engine.standby import HubStandby
 from valeo_routing.engine.validator import Rules, validate
 from valeo_routing.settings import (
     ApiSettings, EngineSettings, Settings, load_api_settings, load_engine_settings, load_settings,
@@ -45,6 +49,7 @@ class Scenario:
     overrides: Tuple[Tuple[str, object], ...]  # acceptance-rule overrides, sorted by name
     unavailable: Tuple[str, ...]  # staff marked sick for the day, sorted
     services: Tuple[Tuple[str, int, int, Optional[int]], ...]  # id, minutes lo, hi, sample limit; sorted
+    hubs: int  # hubs Logistics Valeo waits at (the Excel era always waits at the office)
 
 
 def _block(b: Block) -> dict:
@@ -78,8 +83,13 @@ class Engine:
         self.rules = Rules(self.ctx.dist, self.ctx.office, engine_labs(self.world.ref),
                            self.ctx.tolerance_min, self.ctx.access_min, self.ctx.kit_stop_min)
         self.dates = sorted({o.service_date for o in self.world.orders})
+        self.hub_dates, self.hub_history = history_window(self.world.orders, engine.hub_history_days)
+        self.sitings: List[Siting] = curve([(o.lat, o.lon) for o in self.hub_history], self.world.ref.areas,
+                                           self.ctx.office, engine.hub_max_count, self.ctx.dist)
         self._results: Dict[Tuple, Tuple[DayResult, int, rosters.Roster]] = {}
         self._rosters: Dict[Tuple, rosters.Roster] = {}
+        self._capacity: Dict[Tuple, List[capacities.DayNeed]] = {}
+        self._capacity_lock = threading.Lock()
 
     # -- scenario pieces ---------------------------------------------------------------------
 
@@ -111,18 +121,43 @@ class Engine:
             self._rosters[key] = build(day, self.world.staff, self.world.availability, demand, self.engine, sc.unavailable)
         return self._rosters[key]
 
+    def hub_standby(self, k: int) -> HubStandby:
+        return HubStandby(self.ctx.office, [(h.name, h.loc) for h in self.sitings[k].hubs], self.ctx.dist)
+
+    def policy(self, policy_id: str, engine: EngineSettings, hubs: int):
+        if policy_id == "lv1":
+            return LogisticsValeoV1(engine, self.ctx.office, self.hub_standby(hubs))
+        return ExcelEra(engine, self.ctx.office)
+
     def replay(self, day: date, sc: Scenario, roster_mode: Optional[str] = None,
-               policy: Optional[str] = None) -> Tuple[DayResult, int, rosters.Roster]:
+               policy: Optional[str] = None, hubs: Optional[int] = None) -> Tuple[DayResult, int, rosters.Roster]:
         mode, policy_id = roster_mode or sc.roster, policy or sc.policy
-        key = (day, policy_id, mode, sc.overrides, sc.unavailable, sc.services)
+        k = sc.hubs if hubs is None else hubs
+        key = (day, policy_id, mode, sc.overrides, sc.unavailable, sc.services, k if policy_id == "lv1" else 0)
         if key not in self._results:
             engine = self.settings_with(sc.overrides)
             roster = self.roster(day, sc, mode)
             result = replay_day(day, roster.pairs, self.world.orders_on(day), self.services_with(sc.services),
                                 Catalog(engine.plan_duration_position), self.ctx,
-                                POLICIES[policy_id][1](engine, self.ctx.office), engine.replay_seed)
+                                self.policy(policy_id, engine, k), engine.replay_seed)
             self._results[key] = (result, len(validate(result.plan, result.jobs, self.rules)), roster)
         return self._results[key]
+
+    def capacity(self, sc: Scenario) -> List[capacities.DayNeed]:
+        """Pairs needed on every day of the month; slow (a few plans per day), so cached and warmed at start."""
+        key = (sc.services, sc.hubs)
+        with self._capacity_lock:
+            if key not in self._capacity:
+                services = self.services_with(sc.services)
+                catalog = Catalog(self.engine.plan_duration_position)
+                ctx = replace(self.ctx, standby=self.hub_standby(sc.hubs))
+                default = Scenario("lv1", "auto", (), (), sc.services, sc.hubs)
+                self._capacity[key] = [
+                    capacities.day_need(d, self.world.orders_on(d), self.world.orders, self.world.staff, services,
+                                        catalog, ctx, self.engine, len(self.roster(d, default, "auto").pairs))
+                    for d in self.dates
+                ]
+            return self._capacity[key]
 
     # -- JSON ---------------------------------------------------------------------------------
 
@@ -180,8 +215,16 @@ def parse_service_edits(text: Optional[str], services: Dict[str, Service]) -> Tu
     return tuple(edits[k] for k in sorted(edits))
 
 
-def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSettings) -> FastAPI:
+def _hub_json(h) -> dict:
+    return {"id": h.hub_id, "area_id": h.area_id, "name": h.name, "emirate": h.emirate,
+            "lat": h.loc[0], "lon": h.loc[1], "orders": h.orders}
+
+
+def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSettings, warm: bool = True) -> FastAPI:
     engine = Engine(settings, engine_settings)
+    if warm:  # the month's capacity takes a while; start it now so the Capacity tab is ready when opened
+        threading.Thread(target=engine.capacity, args=(Scenario("lv1", "auto", (), (), (), engine_settings.hub_count),),
+                         daemon=True).start()
     app = FastAPI(title="Logistics Valeo rebuild", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.add_middleware(CORSMiddleware, allow_origins=[api.dev_cors_origin], allow_methods=["GET"], allow_headers=["*"])
 
@@ -199,6 +242,7 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
         auto_accept_lead_h: Optional[float] = Query(None, ge=0, le=72),
         office_hours: Optional[str] = None, quiet_hours: Optional[str] = None,
         unavailable: Optional[str] = None, services: Optional[str] = None,
+        hubs: Optional[int] = Query(None, ge=0),
     ) -> Scenario:
         if policy not in POLICIES:
             raise HTTPException(422, detail="policy must be one of {}".format(sorted(POLICIES)))
@@ -211,7 +255,10 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
         unknown = [i for i in ids if i not in engine.staff]
         if unknown:
             raise HTTPException(422, detail=[{"field": "unavailable", "message": "unknown staff id {}".format(i)} for i in unknown])
-        return Scenario(policy, roster, overrides, ids, parse_service_edits(services, engine.base_services))
+        k = engine.engine.hub_count if hubs is None else hubs
+        if k > engine.engine.hub_max_count:
+            raise HTTPException(422, detail=[{"field": "hubs", "message": "hubs must be 0 to {}".format(engine.engine.hub_max_count)}])
+        return Scenario(policy, roster, overrides, ids, parse_service_edits(services, engine.base_services), k)
 
     @app.get("/api/meta")
     def meta() -> dict:
@@ -234,7 +281,11 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
                 "roster_target_utilisation": e.roster_target_utilisation,
                 "roster_travel_allowance_min": e.roster_travel_allowance_min,
                 "roster_starts": [e.roster_starts[0], e.roster_starts[-1]],
+                "hub_count": e.hub_count, "hub_max_count": e.hub_max_count, "hub_history_days": e.hub_history_days,
+                "capacity_serve_share": e.capacity_serve_share, "capacity_max_pairs": e.capacity_max_pairs,
+                "capacity_levels": e.capacity_percentiles,
             },
+            "map": {"tile_url": e.map_tile_url.replace("{key}", e.map_api_key), "attribution": e.map_attribution},
             "office": {"lat": engine.world.ref.office.lat, "lon": engine.world.ref.office.lon,
                        "name": engine.world.ref.office.name},
             "labs": [{"id": l.lab_id, "name": l.name, "lat": l.lat, "lon": l.lon} for l in engine.world.ref.labs],
@@ -250,6 +301,7 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
             "policy": sc.policy, "policy_label": POLICIES[sc.policy][0], "roster": sc.roster,
             "roster_label": ROSTERS[sc.roster], "window": {"start": WINDOW[0], "end": WINDOW[1]},
             "unavailable": list(sc.unavailable), "services_edited": [e[0] for e in sc.services],
+            "hubs": [_hub_json(h) for h in engine.sitings[sc.hubs].hubs] if sc.policy == "lv1" else [],
             "pairs": [engine.pair_json(d) for d in result.plan.pairs.values()],
             "jobs": {i: engine.job_json(j, rows[i]) for i, j in result.jobs.items()},
             "log": [
@@ -297,6 +349,40 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
                 "shortfall": {m: round(r.shortfall, 2) for m, r in curves.items()},
             },
             "compare": {m: _kpis(engine.replay(service_day, sc, roster_mode=m)[0].kpis) for m in ROSTERS},
+        }
+
+    @app.get("/api/hubs")
+    def hubs_view(date: str, sc: Scenario = Depends(scenario)) -> dict:
+        service_day = parse_day(date)
+        sitings = []
+        for s in engine.sitings:
+            k = engine.replay(service_day, sc, policy="lv1", hubs=s.k)[0].kpis
+            sitings.append({"k": s.k, "km_to_spot": round(s.km_per_order, 2), "office_orders": s.office_orders,
+                            "hubs": [_hub_json(h) for h in s.hubs], "day": _kpis(k)})
+        return {
+            "synthetic": True, "date": service_day.isoformat(), "applied": sc.hubs, "default": engine.engine.hub_count,
+            "window": {"from": engine.hub_dates[0].isoformat(), "to": engine.hub_dates[-1].isoformat(),
+                       "days": len(engine.hub_dates), "orders": len(engine.hub_history)},
+            "orders": [[round(o.lat, 5), round(o.lon, 5)] for o in engine.hub_history],
+            "office": {"lat": engine.world.ref.office.lat, "lon": engine.world.ref.office.lon, "name": engine.world.ref.office.name},
+            "excel_day": _kpis(engine.replay(service_day, sc, policy="excel")[0].kpis),
+            "sitings": sitings,
+        }
+
+    @app.get("/api/capacity")
+    def capacity_view(sc: Scenario = Depends(scenario)) -> dict:
+        needs = engine.capacity(sc)
+        e = engine.engine
+        levels = [{"p": p, "pairs": capacities.percentile([n.needed for n in needs], p)} for p in e.capacity_percentiles]
+        return {
+            "synthetic": True, "serve_share": e.capacity_serve_share, "max_pairs": e.capacity_max_pairs,
+            "hubs": sc.hubs, "levels": levels,
+            "rostered": {"min": min(n.rostered for n in needs), "max": max(n.rostered for n in needs)},
+            "days": [
+                {"date": n.day.isoformat(), "weekday": n.day.strftime("%a"), "orders": n.orders, "floor": n.floor,
+                 "unservable": n.unservable, "needed": n.needed, "served": n.served, "rostered": n.rostered}
+                for n in needs
+            ],
         }
 
     @app.get("/api/services")
