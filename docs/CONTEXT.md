@@ -1,84 +1,119 @@
-# Context: Valeo Health fleet operations
+# Context: what this demo recreates
 
-Everything known so far, gathered from Parag on 2026-10-29 and from the Valeo Health case study on
-his portfolio (parag08.github.io/work/valeo-health/). Read this before planning or building anything.
+Read this before planning or building anything. Sources: Parag's own account (2026-10-30) and his
+internship deliverables, checked claim by claim against them. Those deliverables stay private; see
+"What must never come into this repo".
 
-## Where this comes from
+## The project
 
-Over the summer of 2026 Parag worked with the **Valeo Health operations team (UAE)**. He did the
-financial diagnosis of the fleet's costs, sat with the people running the routes, specified a
-routing application, and built a separate prototype (Valeo Smart Tracker, a medication-adherence
-app; not part of this repo).
+In summer 2026 Parag was a management intern at **Valeo Health**, a UAE home-healthcare provider,
+working on fleet and scheduling cost. Nurse–driver pairs drive to patients' homes for short field
+visits: **sample collection (SC), IV therapy and injections** (SC/IV for short). Orders come from a
+partner booking platform, where they are broadcast and claimed by the provider. The company also
+runs home nursing and babysitting, which are long shifts with commute-only driving. Those lines were
+analysed but deliberately not tooled (see "Judgement calls").
 
-Results of the real routing work, as published in the case study:
+He started from no baseline at all. He rebuilt the fleet's cost base from invoices, trackers, card
+statements and payroll; designed hub siting and roster planning; and built **Logistics Valeo**, the
+dispatch tool ops ran the field-visit line on. It was built on Lovable, the low-code platform ops
+already used.
 
-| Result | Value |
-|---|---|
-| Adoption by the operations team | 100% in the first week |
-| Distance saved | 20,000 km per month |
-| Cost saved | AED 12,200 per month |
+## How it worked before
 
-The lesson the case study draws: the cost baseline came first so the problem had a number, and the
-product was designed around the people running the routes, because a routing tool nobody uses
-removes no kilometres.
+- Ops kept acceptance and scheduling in **Excel**, claiming orders from the platform by hand. They
+  captured about **60–70%** of the orders offered.
+- Idle pairs waited at the **office** between visits, so every gap became a round trip.
+- Field visits averaged **60 km per order**, the agreed baseline from four months of closed
+  accounts.
+- A km saved is worth the **marginal** cost per km (fuel, tolls, parking), which is less than half
+  the all-in average. Salary and rental don't fall when cars drive less.
 
-**This repo is a demo rebuild, not Valeo's code.** It must use synthetic data only: no real patient,
-staff, client or address data from Valeo, and no Valeo branding beyond naming the case.
+## What Logistics Valeo did: seven tabs
 
-## The operation
+The demo rebuilds these with synthetic data.
 
-An operations fleet (Parag described it as "a fleet of 10"; read as about 10 cars, to be confirmed)
-of drivers carrying nurses and babysitters to clients' homes, across three business verticals.
+1. **Day view.** A timeline from 06:00 to 22:00 with one row per nurse–driver pair. It shows each
+   appointment, the travel legs with km to the next stop, and time on site. "Add appointment" and
+   the other actions sit at the top. This is the screen ops lived in.
+2. **Roster.** Who is on duty tomorrow, and removing anyone who is sick. It **auto-allocates** the
+   roster from the staff who are present, planning around the demand peaks of 07:00–10:00 and about
+   16:00–18:00.
+3. **Services.** On-site duration per appointment type. A blood draw takes about 15 minutes; IV
+   takes from about 30 minutes to 2 hours depending on the type. This sets every appointment's
+   length.
+4. **Acceptance engine.** It automatically accepts an order if the fleet has the capacity to serve
+   it. It keeps a log of the decision on every order, and its parameters are configurable.
+   - **Lead-time rule.** Orders far enough ahead are accepted automatically. Orders inside the
+     manual window go to ops to accept, with the open slots shown upfront.
+   - **Changes after ops pushback.** The auto-accept lead time moved from 3 h to 24 h and became
+     configurable. Night hours are ignored. Without these changes, orders booked overnight were
+     accepted for early-morning slots after the ops shift had ended, leaving nobody to react if the
+     tool got it wrong.
+   - **v2, designed but not shipped.** When an order doesn't fit, check whether swapping out an
+     accepted order makes the fleet better off. Score each swap on distance and on each order's
+     probability of being cancelled.
+5. **Metrics.** Predicted km against actual km from ground data, and the same comparison for time.
+   Predictions came from straight-line distance × a road multiplier.
+6. **Hub siting.** Where standby hubs should sit, from the last 30 days of orders.
+7. **Capacity.** How many nurses and drivers the incoming demand needs, for example 11 or 12.
 
-### 1. Home nursing
+## Rollout and adoption
 
-- One car starts in the morning, picks up all the nurses (from their homes or a hub), and drops each
-  one at their client's location.
-- Shape: a morning multi-pickup, multi-drop run with arrival deadlines at each client.
-- Unknown: how nurses get home at the end of the shift (does the same car collect them?), shift
-  lengths, and whether visits are fixed daily or change.
+- Live on **1 August 2026**: partly at first, with ops fully on the tool **within a week**.
+- The first day had many issues. Parag held **daily catch-ups with ops for 14 days** to collect
+  problems and improvements.
+- What won ops over: the tool worked out the routing itself and showed the whole day live.
+- **Hub resistance.** Nurses wanted to stay at the office and said the hubs didn't seem optimal.
+  Carrot and stick moved them: Wi-Fi and an air-conditioned place to sit at each hub, and staff
+  seen at the office were sent back to their hub. The km data settled the argument.
 
-### 2. Babysitting
+## Verified results (real; the only real numbers this repo may show)
 
-- The driver picks up the babysitters and drops them at clients' locations, then later brings them
-  from the client's location back to their own location.
-- There is **idle time in the middle** for the driver between drop-off and return.
-- Shape: paired pickup-and-delivery trips (out in the morning, back later) with a gap the car spends
-  idle. The idle gap is the obvious waste and the obvious opportunity.
+| Result | Value | Status |
+|---|---|---|
+| Orders captured from the platform | 60–70% → 80–90% | Measured, validated by the ops lead |
+| SC/IV distance per order | 60 → 45.3 km (−24.6%) over 16 Aug–16 Sep; 42.6 km in September | Measured on 29 clean days |
+| Distance saved | ~23,000 km a month | Measured, at that month's order volume |
+| Cost saved | ~AED 12,400 a month, at the marginal cost per km | Measured; accepted by the company |
 
-### 3. Sample collection
+- **Caveat (Parag's own).** Daily order volume rose over the same period, and denser days cost less
+  per order. The share of the km drop due to hubs versus volume was not separated. Say "km per order
+  fell 25% after launch", not "hubs cut km by 25%".
+- **Do not claim:**
+  - "100% adoption": say "ops fully moved onto the tool within a week".
+  - Any absolute fleet spend.
+  - The modelled ~21% programme saving, unless it is clearly labelled "modelled".
 
-- Shifts of **12 hours**. The driver picks up a nurse, then they go from client to client through
-  the day: collect samples, drop them at labs, go to the next client.
-- **Lots of disruption**: fast-track appointments and other changes arrive during the day and have to
-  be fitted in.
-- Shape: a dynamic route with time windows, lab drop-offs (samples likely have a time limit before
-  they must reach a lab), and re-planning when an urgent job is inserted mid-route.
+## Judgement calls worth telling
+
+- **Home nursing and babysitting got no routing tool.** Ops already paired 86% of shift changeovers
+  and 93% of movements repeat day to day, so routing had little left to gain. The lever there is a
+  trip record and an incentive, not an optimiser.
+- **The baseline was withdrawn when the data disproved it.** Every money figure in CEO reporting was
+  tagged by confidence: invoiced, measured, modelled, bounded or do-not-bank.
+- **The saving was counted carefully:**
+  - from totals (sum of km ÷ sum of orders), not by averaging daily ratios
+  - excluding corrupt or incomplete days
+  - at the marginal rate per km
+
+## What must never come into this repo
+
+- Any file, row, screenshot or code from the private internship folder. It contains patient and
+  staff names, addresses, home coordinates, a partner API host and keys.
+- Real hub or office locations, staff or patient names, vendor names, salaries, absolute costs, or
+  order volumes beyond the ranges used to shape synthetic data.
+- The demo's code is written fresh. The algorithms are generic, but the original code touched real
+  data and belongs to the employer.
 
 ## Open questions for Parag
 
-1. Fleet: 10 cars in total, or 10 per vertical? Are cars dedicated to a vertical or shared?
-2. Home nursing: who brings nurses home, and when? Fixed visits or daily changes?
-3. Babysitting: typical length of a booking, and so of the driver's idle gap?
-4. Sample collection: how long can a sample wait before reaching a lab? How many labs? How often do
-   fast-track appointments arrive, and how much notice do they give?
-5. Geography: which emirates or areas (Dubai only, or Dubai + Sharjah + Abu Dhabi)?
-6. How were routes planned before (by hand, by a dispatcher, on WhatsApp)? This is the baseline the
-   demo compares against.
-7. Cost inputs: fuel cost per km, driver cost per hour, any per-trip charges, so the demo can report
-   AED like the case study did.
-8. What did the real product's frontline workflow look like (dispatcher screen, driver phone view)?
-
-## Parag's standing preferences that apply here
-
-- **Config in `.env`, never hardcoded.** Every parameter (costs, speeds, shift lengths, solver time
-  limits, API keys, map keys) comes from `.env` through a settings layer that fails fast on a missing
-  key. No silent in-code defaults. Ship a `.env.example` documenting every key. Reference and seed
-  data live in data files, not code literals.
-- **Minimal, modern design.** The UI should be clean and quiet, not decorated.
-- **Honesty in claims.** The portfolio states what is real and what is a demo; numbers the demo
-  produces must be labelled as coming from synthetic data.
-- **Portfolio tie-in.** The finished demo should become a card on parag08.github.io/projects.html,
-  which currently shows JobSearch, MicroDuck and the pluggable support agent, each with a recorded
-  clip and a vermilion hanko seal (道, 歩, 助). A natural seal here would be 路 ("route"). The existing
-  "Valeo routing application" case study on the site would link to it.
+1. **Roster auto-allocation** (your description cut off at "who all are present that…"). What rules
+   did it use: shift shapes (12 h, split 6+6), fixed driver–nurse pairs, rest days, how peaks set
+   start times?
+2. **Acceptance v1 capacity check.** Was "has capacity" a full feasibility check (a pair can reach
+   it on time given its existing jobs, lab deadline and shift end) or a simpler slot count?
+3. **The claim race.** How quickly did an unclaimed order disappear to another provider? This sets
+   how much capture the Excel era lost.
+4. **Cancellation probability for v2.** Which signals did you have in mind: lead time, service
+   type, area, patient history?
+5. **Metrics.** Where did "actual" km come from: vehicle trackers, odometers or the portal?

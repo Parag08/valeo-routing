@@ -1,0 +1,4 @@
+lab_id,name,area_id,lat,lon,opens,closes,handover_min
+LAB-01,Central Lab (Healthcare City),AR-32,25.231000,55.321000,06:00,22:00,8
+LAB-02,West Lab (Al Barsha),AR-10,25.108500,55.193000,07:00,20:00,6
+LAB-03,North Lab (Al Qusais),AR-26,25.275500,55.377000,07:00,20:00,7

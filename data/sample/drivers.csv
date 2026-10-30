@@ -1,0 +1,11 @@
+driver_id,name,car_id,shift_start,shift_end,home_area_id
+DRV-01,Moses C.,CAR-01,06:00,14:00,AR-27
+DRV-02,Anita S.,CAR-02,06:00,14:00,AR-26
+DRV-03,Joel W.,CAR-03,06:00,14:00,AR-28
+DRV-04,Njeri F.,CAR-04,07:00,21:00,AR-29
+DRV-05,Nuwan R.,CAR-05,07:00,21:00,AR-32
+DRV-06,Bilal K.,CAR-06,07:00,21:00,AR-28
+DRV-07,Asif H.,CAR-07,07:00,19:00,AR-28
+DRV-08,Kamran N.,CAR-08,07:00,19:00,AR-31
+DRV-09,Akinyi T.,CAR-09,07:00,19:00,AR-27
+DRV-10,Rowena W.,CAR-10,07:00,19:00,AR-24
