@@ -27,10 +27,10 @@ See [docs/CONTEXT.md](docs/CONTEXT.md) for the measurement and its caveats.
 **This repo is synthetic.** It is not Valeo's code or data. Every number the app produces comes from
 seeded synthetic data and is labelled as such.
 
-Status: **five of the seven tabs** (PLAN steps 1–5): a month of synthetic field-visit data across Dubai
-and the northern emirates, a planner with an independent validator, a day-by-day replay that compares
-the Excel-era acceptance with Logistics Valeo v1, and a web app with the day view, roster, services and
-acceptance engine. Hubs, capacity and metrics are next.
+Status: **six of the seven tabs** (PLAN steps 1–5 and most of 6): a month of synthetic field-visit data
+across Dubai and the northern emirates, a planner with an independent validator, a day-by-day replay that
+compares the Excel-era acceptance with Logistics Valeo v1, and a web app with the day view, roster,
+services, acceptance engine, hub siting and capacity. Metrics is next.
 
 - [docs/CONTEXT.md](docs/CONTEXT.md): the real project, the seven tabs, rollout, verified results, open questions
 - [docs/PLAN.md](docs/PLAN.md): screens, engine, stack, build order
@@ -45,6 +45,7 @@ cp .env.example .env
 .venv/bin/valeo-gen                          # generate the month
 .venv/bin/valeo-plan --date 2026-11-04        # plan one day and validate it
 .venv/bin/valeo-replay --days 7 --log         # replay a week under both policies, with the decision log
+.venv/bin/valeo-hubs                          # site 0-4 hubs and replay the month with each (about 30 s)
 .venv/bin/pytest -q
 
 # the web app

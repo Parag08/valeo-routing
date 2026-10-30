@@ -6,8 +6,9 @@ the pair to the next visit on time. Hubs (PLAN step 6) are another policy behind
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional, Protocol
+from typing import Optional, Protocol, Sequence, Tuple
 
+from .distance import DistanceModel
 from .model import Loc
 
 
@@ -36,3 +37,15 @@ class StayStandby:
 
     def spot(self, from_loc: Loc, to_loc: Loc) -> Optional[Spot]:
         return None
+
+
+class HubStandby:
+    """Logistics Valeo with hubs: wait at the standby spot, a hub or the office, that adds the least
+    driving between the two visits. Ties go to the office, then to the hub listed first."""
+
+    def __init__(self, office: Loc, hubs: Sequence[Tuple[str, Loc]], dist: DistanceModel):
+        self.spots = [Spot(office, "office")] + [Spot(loc, "hub " + name) for name, loc in hubs]
+        self.dist = dist
+
+    def spot(self, from_loc: Loc, to_loc: Loc) -> Optional[Spot]:
+        return min(self.spots, key=lambda s: self.dist.km(from_loc, s.loc) + self.dist.km(s.loc, to_loc))
