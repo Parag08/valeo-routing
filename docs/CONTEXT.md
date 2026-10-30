@@ -49,6 +49,9 @@ The demo rebuilds these with synthetic data.
      configurable. Night hours are ignored. Without these changes, orders booked overnight were
      accepted for early-morning slots after the ops shift had ended, leaving nobody to react if the
      tool got it wrong.
+   - **Demo rule.** The demo accepts by itself when the lead time, not counting quiet hours
+     (22:00–06:00), is at least a configurable number of hours (default 12). Which numbers shipped, and
+     how night hours were excluded, is open question 6.
    - **v2, designed but not shipped.** When an order doesn't fit, check whether swapping out an
      accepted order makes the fleet better off. Score each swap on distance and on each order's
      probability of being cancelled.
@@ -117,3 +120,8 @@ The demo rebuilds these with synthetic data.
 4. **Cancellation probability for v2.** Which signals did you have in mind: lead time, service
    type, area, patient history?
 5. **Metrics.** Where did "actual" km come from: vehicle trackers, odometers or the portal?
+6. **The auto-accept rule as shipped.** You described a 12 h lead time and, after ops pushed back, a
+   change from 3 h to 24 h with night hours ignored. What exactly was the final rule, and what did the
+   tool do with an order published at night for the next morning?
+7. **How fast did ops decide?** The demo assumes 15–90 min in the Excel era (office hours only) and
+   5–30 min with the tool. Roughly right?

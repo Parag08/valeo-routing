@@ -28,6 +28,14 @@ def parse_windows(value: str) -> List[Tuple[int, int]]:
     return windows
 
 
+def parse_wrapping_window(value: str) -> Tuple[int, int]:
+    """'22:00-06:00' as (1320, 360): a window that may run past midnight."""
+    start, end = (parse_clock(x) for x in value.split("-"))
+    if start == end:
+        raise ValueError("window {!r} is empty".format(value))
+    return start, end
+
+
 class Settings(BaseSettings):
     """All runtime parameters. No defaults by design."""
 
@@ -67,10 +75,32 @@ class EngineSettings(BaseSettings):
     roster_shift_starts: str  # 'HH:MM,...' placeholder roster, cycled over the pairs (until PLAN step 5)
     standby_min_gap_min: int  # idle gaps shorter than this are waited out in place
 
+    # Acceptance and replay (PLAN step 3).
+    replay_seed: int
+    office_hours: str  # 'HH:MM-HH:MM': when ops are at their desks to accept orders
+    quiet_hours: str  # 'HH:MM-HH:MM', may wrap midnight: ignored when judging whether ops can react
+    auto_accept_lead_h: float  # the tool accepts by itself when the lead time, quiet hours excluded, is at least this
+    excel_response_min_lo: int  # Excel era: minutes from ops seeing an order to deciding on it
+    excel_response_min_hi: int
+    manual_response_min_lo: int  # with the tool: slots are shown upfront, so ops decide faster
+    manual_response_min_hi: int
+
     @field_validator("peak_windows")
     @classmethod
     def _check_windows(cls, value: str) -> str:
         parse_windows(value)
+        return value
+
+    @field_validator("office_hours")
+    @classmethod
+    def _check_office_hours(cls, value: str) -> str:
+        parse_windows(value)
+        return value
+
+    @field_validator("quiet_hours")
+    @classmethod
+    def _check_quiet_hours(cls, value: str) -> str:
+        parse_wrapping_window(value)
         return value
 
     @field_validator("roster_shift_starts")
@@ -86,6 +116,14 @@ class EngineSettings(BaseSettings):
         if not 0.0 <= value <= 1.0:
             raise ValueError("plan_duration_position must be between 0 and 1")
         return value
+
+    @property
+    def office_window(self) -> Tuple[int, int]:
+        return parse_windows(self.office_hours)[0]
+
+    @property
+    def quiet_window(self) -> Tuple[int, int]:
+        return parse_wrapping_window(self.quiet_hours)
 
     @property
     def peak_window_minutes(self) -> List[Tuple[int, int]]:
