@@ -109,6 +109,35 @@ All of it is pure functions over plain data, with no web framework inside.
   during the day (the offline plan simply leaves cancelled orders out), and the roster (pairs are
   formed by a placeholder until step 5).
 
+### Acceptance and replay rules (step 3)
+
+- **The competitor's clock.** An order nobody has accepted `competitor_claim_min` minutes after it was
+  published is taken by another provider and lost. A decision made exactly at the deadline still counts.
+- **Excel era.** Ops see an order when they next sit down (`OFFICE_HOURS`), then take `EXCEL_RESPONSE_MIN_LO`
+  to `_HI` minutes to decide. Overnight orders therefore wait for the morning, and most are lost.
+- **Logistics Valeo v1.** The tool accepts by itself the moment an order is published when its lead
+  time, **not counting `QUIET_HOURS`**, is at least `AUTO_ACCEPT_LEAD_H`: ops would have time to react
+  if it got something wrong. Any other order goes to ops with the open slots shown upfront, so they
+  decide faster (`MANUAL_RESPONSE_MIN_*`). Both are configurable; the demo default is 12 h.
+- **Same planner under both policies.** An accepted order goes where it adds the fewest km. Both
+  policies send idle pairs back to the office, so step 3 shows the capture gap; the km gap comes with
+  hubs in step 6.
+- **What has started cannot change.** A decision at minute `now` may only change what starts after
+  `now`; a pair that is waiting can leave early. A cancellation removes the visit only if that rule
+  allows it; otherwise it is logged as a late cancellation and the visit still happens.
+- **Decision log.** One row per order: published, decided, mode (`auto` / `manual` / `excel`), outcome
+  (`accepted` / `declined` / `lost` / `cancelled_before_decision`), pair and the reason, and what finally
+  happened to it (`served` / `cancelled` / `late_cancellation` / `not_served`).
+- **KPIs.** *Capturable* orders are those not cancelled before anyone decided; *capture rate* is
+  accepted over capturable; *visits* are accepted less honoured cancellations; *km per visit* is total
+  km (including the way home and late-cancelled visits) over visits; *idle h* is on-shift pair time spent
+  neither driving, serving, at the lab nor collecting kits.
+- **Assumptions behind the capture gap** (all in `.env`, all to be confirmed): office hours 08:00–20:00,
+  quiet hours 22:00–06:00, Excel response 15–90 min, manual response with the tool 5–30 min, auto-accept
+  at 12 h. The synthetic competitor claims an order 30–240 min after publishing.
+- **Simplifications:** the roster is the day's final one (sick calls are not played out as disruptions
+  yet), and v2 swap-out is not built.
+
 ## Stack
 
 - **Backend:** Python 3.9-compatible (the local machine's Python), FastAPI and pydantic-settings.
@@ -128,7 +157,7 @@ All of it is pure functions over plain data, with no web framework inside.
 | 0 | **Docs** (this rewrite) and README claim fixes | done |
 | 1 | **Rework the generator for the field-visit model** (DATA.md): services, staff, availability, 35 days of orders with publish times and cancellations, events. Reuses the settings layer and the land-only point placement. **Done.** "Actual" km is derived later by the replay (step 3), not stored. | done |
 | 2 | **Engine core:** `distance`, `catalog`, `planner`, `validator`, with tests. One day planned end to end from a fixed acceptance. **Done** (`.venv/bin/valeo-plan --date 2026-11-04`). | done |
-| 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. | 1 day |
+| 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. **Done** (`.venv/bin/valeo-replay --days 7 --log`). | done |
 | 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. | 2 days |
 | 5 | **Roster auto-allocation + Services tab.** | 1 day |
 | 6 | **Tier 2:** hub siting, capacity, metrics. | 2–3 days |

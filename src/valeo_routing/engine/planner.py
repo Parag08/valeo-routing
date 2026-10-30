@@ -3,6 +3,9 @@
 Cheapest insertion. For an order, try every pair that may serve it and every position in that pair's
 sequence of visits, lay out the whole day with `build_schedule`, and keep the feasible option that adds
 the fewest km. Ties go to the lower pair id, then the earlier position, so the result is deterministic.
+
+When a decision is made part-way through the day (`now`), the part of each pair's day that has already
+started is fixed: a candidate that would change it is not feasible (see `commit`).
 """
 from __future__ import annotations
 
@@ -10,7 +13,8 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Dict, List, Optional, Sequence
 
-from .model import DayPlan, Job, Pair, PairDay, Rejection
+from .commit import prefix_matches, with_idle_tail
+from .model import Block, DayPlan, Job, Pair, PairDay, Rejection
 from .schedule import Context, Schedule, build_schedule
 
 LAB_REASONS = {"sample_deadline", "lab_closed"}
@@ -29,9 +33,13 @@ def eligible(pair: Pair, job: Job) -> bool:
 
 
 def best_insertion(
-    job: Job, pairs: Sequence[Pair], sequences: Dict[str, List[Job]], km: Dict[str, float], ctx: Context
+    job: Job, pairs: Sequence[Pair], sequences: Dict[str, List[Job]], km: Dict[str, float], ctx: Context,
+    now: Optional[int] = None, blocks: Optional[Dict[str, List[Block]]] = None,
 ) -> Optional[Insertion]:
-    """The cheapest feasible way to add `job` to any pair's day, or None."""
+    """The cheapest feasible way to add `job` to any pair's day, or None.
+
+    With `now` and the pairs' current `blocks`, the part of each day that has started by `now` is kept.
+    """
     best: Optional[Insertion] = None
     for pair in sorted(pairs, key=lambda p: p.pair_id):
         if not eligible(pair, job):
@@ -40,6 +48,10 @@ def best_insertion(
         for position in range(len(jobs) + 1):
             schedule = build_schedule(pair, jobs[:position] + [job] + jobs[position:], ctx)
             if not schedule.ok:
+                continue
+            if now is not None and not prefix_matches(
+                with_idle_tail(pair, blocks[pair.pair_id], ctx.office), with_idle_tail(pair, schedule.blocks, ctx.office), now
+            ):
                 continue
             added = schedule.km - km[pair.pair_id]
             if best is None or added < best.added_km - 1e-9:
