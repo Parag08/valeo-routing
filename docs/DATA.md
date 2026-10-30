@@ -7,8 +7,9 @@ operation holds: master data (office, labs, services, staff, cars) and the partn
 **Everything is synthetic.** The shapes (volumes, peaks, durations, lead times) follow the real
 operation's aggregates as ranges. No real row, location, name or volume figure enters this repo.
 
-> The generator in `src/valeo_routing/datagen/` still implements the earlier three-vertical contract
-> (`docs/archive/DATA_v0.md`). PLAN step 1 reworks it to this one.
+> Implemented by `src/valeo_routing/datagen/` (`.venv/bin/valeo-gen`) and enforced by
+> `tests/test_datagen.py`, which parses the column tables below. The earlier three-vertical contract
+> is archived in `docs/archive/DATA_v0.md`.
 
 ## Layout
 
@@ -145,7 +146,7 @@ The roster's input: one row per staff member per day.
 | date | date | |
 | staff_id | str | FK staff |
 | status | str | `available` / `rest` / `sick` / `leave` |
-| known_at | datetime | when ops learns of it; sick calls can arrive the same morning |
+| known_at | datetime | when ops learns of it: a sick call arrives the same morning or the evening before; leave and rest days are known days ahead; empty when `available` |
 
 ### orders.csv
 
@@ -153,15 +154,15 @@ The partner feed: one row per order the platform publishes.
 
 | column | type | meaning |
 |---|---|---|
-| order_id | str | `OR-20261102-0001` |
+| order_id | str | `OR-20261102-0001`: the service date, then a sequence in publish order within that date |
 | published_at | datetime | when the order appears on the platform (S8) |
 | slot_start | datetime | requested arrival time; arrival allowed within ± tolerance (S9) |
 | service_id | str | FK services |
 | area_id | str | FK areas |
 | lat, lon | float | jittered patient point |
 | patient_ref | str | synthetic, `PT-00042`; repeat patients exist |
-| lab_id | str | nearest lab for samples; empty otherwise |
-| supplies_ready | bool | IV booked before the prep cut-off the day before, so no office stop is needed |
+| lab_id | str | nearest lab for services that need one, by straight-line distance; empty otherwise. The slot is drawn early enough to reach that lab before it closes (`lab_cutoff_margin_min`) |
+| supplies_ready | bool | no office stop is needed: the service needs no supplies, or the order was published before the prep cut-off on the day before the slot |
 | competitor_claim_min | int | minutes after publishing until another provider takes the order if it isn't accepted (S13) |
 | cancelled_at | datetime | when the patient cancels; empty if they don't (S10) |
 
@@ -190,16 +191,18 @@ distances.
 |---|---|---|
 | S1 | Dubai plus the northern emirates; most demand in Dubai, then Sharjah and Ajman, a little further north and east; no Abu Dhabi | 32 Dubai + 16 northern areas, weighted |
 | S2 | One ops office: supplies pick-up and the default standby spot | `OF-01` |
-| S3 | 9–12 nurse–driver pairs on duty a day; 12 h shifts inside 06:00–22:00, some split 6+6; fixed weekly rest day | staff counts in `.env`, shift shapes in the profile |
-| S4 | About 35–55 orders published a day | mean in `.env`, weekday multipliers in the profile |
+| S3 | 9–12 nurse–driver pairs on duty a day; 12 h shifts inside 06:00–22:00, some split 6+6; fixed weekly rest day | 14 nurses and 12 drivers (`.env`), 12 cars; about 9.6 pairs a day, 7 on the busiest rest-day Sundays; shift preference is stored but not yet used |
+| S4 | About 35–55 orders per service day | `ORDERS_PER_DAY=45` before the weekday multiplier (Sat 0.8, Sun 0.7), so about 42 a day |
 | S5 | Mix of about 60% sample collection, 30% IV, 10% injection | `services.mix_weight` |
 | S6 | On site: blood draw 10–20 min, other samples up to 30, injection 20–30, IV 30–120 by type | duration ranges per service |
 | S7 | Demand peaks 07:00–10:00 and 16:00–18:00 | hourly weights in the profile |
-| S8 | Orders are published 2–48 h ahead, some same-day | lead-time distribution in the profile |
+| S8 | Orders are published 2–48 h ahead, some same-day. Patients book mostly in waking hours; about 12% of orders appear overnight (21:00–06:00). The overnight share is a guess, to be checked | lead-time buckets and `publish_hour_weights` in the profile; a drawn lead is kept with chance proportional to its publish hour's weight, so the buckets are a proposal, not the final mix |
 | S9 | Arrival tolerance ±15 min | `.env` |
-| S10 | About 5% of orders cancelled | rate in the profile |
+| S10 | About 5% of orders cancelled; more likely with a longer lead and for IV | `base_rate` × lead multiplier × service multiplier in the profile; about 4.6% |
 | S11 | Samples must reach a lab within their time limit: 2 h for glucose and urine, 4 h for lipids, 8 h for CBC and coagulation | `services.sample_max_min` |
 | S12 | IV kits come from the office unless booked before 18:00 the day before | `supplies_ready` |
 | S13 | An order not accepted is taken by another provider after 30–240 min | `competitor_claim_min` (open question 3) |
 | S14 | Predicted km = straight line × road factor (1.4–1.5); actual adds traffic noise and unplanned detours | `.env` |
 | S15 | Excel-era ops decide only in office hours (about 08:00–20:00), 15–90 min after an order is published | `.env`, baseline policy |
+| S16 | About 30% of orders come from a patient who has ordered before | `patients.repeat_share`; a repeat patient keeps their location |
+| S17 | Staff are sick on about 3% of working days and on leave on about 2%; cars break down on about 2% of car-days; about 3% of working staff-days start late | `availability` and `events` in the profile |
