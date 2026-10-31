@@ -215,6 +215,30 @@ All of it is pure functions over plain data, with no web framework inside.
 - **Not modelled:** hub bays (any number of pairs may wait at a hub), hubs supplying IV kits, and siting
   that weighs order time or service type.
 
+### Metrics and v2 swap-out (steps 6 and 7)
+
+- **Predicted against "actual".** Predicted km and minutes are the planner's (straight line x `ROAD_FACTOR`, the
+  hour's speed). With no real ground data, a synthetic tracker records each drive as the prediction times a
+  seeded log-normal draw (`METRICS_KM_BIAS` 1.06, `METRICS_TIME_BIAS` 1.12). On `METRICS_GAP_DAY_RATE` of days one
+  pair's tracker drops out part-way; on `METRICS_SPIKE_DAY_RATE` it records a GPS jump. Draws depend only on the
+  seed, the day and the pair, so a day's faults are the same under every policy.
+- **Exclusion rules.** A day is left out when any pair's tracker covers under `METRICS_MIN_COVERAGE` of its shift
+  or records over `METRICS_MAX_PAIR_RATIO` x its prediction; the reason is shown. On the synthetic month 31 of 35
+  days are clean, recorded km are 1.06x predicted (median error per pair-day 6%), and the tab suggests
+  recalibrating the road factor from 1.45 to 1.54.
+- **The saving**, measured the way the real one was: Excel era against the tool on the same clean days, km per
+  visit from totals (the average of daily ratios is shown beside it), km saved = difference x the tool's visits,
+  valued at `COST_PER_KM_MARGINAL`, with the all-in rate shown only to show how much it would overstate. The
+  rates are assumptions. Synthetic month, 2 hubs: 35.7 to 29.4 km per visit, about 6,300 km saved over 31 days.
+- **v2 swap-out** (`LogisticsValeoV2`, v1's decisions plus `swap.find_room`). When nothing fits, look at accepted
+  orders that have not started and sit within `V2_SEARCH_WINDOW_MIN` of the new slot. **Move** one to another pair
+  if it fits there (nothing lost; fewest km added wins). Otherwise **swap** it out, releasing it to the platform,
+  only with `V2_MIN_NOTICE_H` notice and when km saved + `V2_VISIT_VALUE_KM` x the difference in cancellation
+  probability reaches `V2_SWAP_MIN_GAIN_KM`. Cancellation probability is the synthetic month's share by service
+  category and lead-time band, smoothed towards the overall share. A released order counts as neither captured
+  nor visited. Synthetic month: capture 80.4% to 82.0%, declines 161 to 128, 28 moves and 8 swaps, km per visit
+  unchanged; every plan passes the validator.
+
 ## Stack
 
 - **Backend:** Python 3.9-compatible (the local machine's Python), FastAPI and pydantic-settings.
@@ -237,9 +261,9 @@ All of it is pure functions over plain data, with no web framework inside.
 | 3 | **Acceptance v1 + baseline + replay**, with the decision log. KPIs: capture rate, km per order, idle hours. **Done** (`.venv/bin/valeo-replay --days 7 --log`). | done |
 | 4 | **API + Day view + Acceptance tab + policy switch.** This alone is a recordable demo. **Done** (`valeo-serve`, UI in `web/`). Not yet: the replay slider that steps through the day as orders arrive, and the add / cancel / unavailable actions. | done |
 | 5 | **Roster auto-allocation + Services tab.** **Done** (Roster and Services tabs; `engine/roster.py`). | done |
-| 6 | **Tier 2:** hub siting, capacity, metrics. **Hubs and capacity done** (Hub siting and Capacity tabs; `engine/hubs.py`, `engine/capacity.py`, `.venv/bin/valeo-hubs`). Metrics still to do. | 2–3 days |
-| 7 | **v2 swap-out** behind its toggle. | 1 day |
-| 8 | **Polish:** About panel, recorded clip (20–30 s), portfolio card with the 路 seal, rewritten case study. | 1 day |
+| 6 | **Tier 2:** hub siting, capacity, metrics. **Done** (Hub siting, Capacity and Metrics tabs; `engine/hubs.py`, `engine/capacity.py`, `engine/metrics.py`, `.venv/bin/valeo-hubs`). | done |
+| 7 | **v2 swap-out** behind its toggle. **Done** (third policy in the header switch, labelled "not shipped"; `engine/swap.py`). | done |
+| 8 | **Polish:** About panel, recorded clip (20–30 s), portfolio card with the 路 seal, rewritten case study. **About panel done**; the clip, card and case study live in the portfolio site repo. | 1 day |
 
 Steps 1–4 are the minimum showcase, about a week. Steps 5–8 bring it to the full tool.
 

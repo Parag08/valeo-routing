@@ -4,7 +4,7 @@ import { OutcomeChip } from "./components";
 import { FINAL_LABEL, MODE_LABEL, pct, shortService, when } from "./format";
 import { OrderDetail } from "./OrderDetail";
 
-const LABEL: Record<Policy, string> = { excel: "Excel era", lv1: "Logistics Valeo v1" };
+const LABEL: Record<Policy, string> = { excel: "Excel era", lv1: "Logistics Valeo v1", lv2: "v2, designed, not shipped" };
 
 interface Props {
   day: DayData;
@@ -33,7 +33,7 @@ export function Acceptance(p: Props) {
             <label htmlFor="lead">Accept by itself from {lead} h of notice</label>
             <input id="lead" className="range" type="range" min={0} max={48} step={1} value={lead}
                    onChange={(e) => p.setOverrides({ ...p.overrides, auto_accept_lead_h: Number(e.target.value) })} />
-            <p className="hint">Notice not counting quiet hours. Shorter notice goes to ops with the open slots shown. Applies to {LABEL.lv1}.</p>
+            <p className="hint">Notice not counting quiet hours. Shorter notice goes to ops with the open slots shown. Applies to Logistics Valeo v1 and v2.</p>
           </div>
           <TextSetting id="quiet" label="Quiet hours" value={p.overrides.quiet_hours ?? meta.settings.quiet_hours}
                        hint="Overnight hours that don't count as time for ops to react. May run past midnight."
@@ -56,11 +56,13 @@ export function Acceptance(p: Props) {
       <div className={`card${p.loading ? " loading" : ""}`} style={{ marginTop: 16 }}>
         <h2>What happened to the day's orders</h2>
         <p className="hint">{day.weekday} {day.date} · {day.kpis.offered} orders published for this day.</p>
-        {compare && (["excel", "lv1"] as Policy[]).map((id) => <OutcomeBar key={id} policy={id} compare={compare} />)}
+        {compare && (["excel", "lv1", "lv2"] as Policy[]).map((id) => <OutcomeBar key={id} policy={id} compare={compare} />)}
         <div className="legend" style={{ marginTop: 4, marginBottom: 0 }}>
           {(["accepted", "lost", "declined", "cancelled_before_decision"] as Outcome[]).map((o) => <OutcomeChip key={o} outcome={o} />)}
         </div>
       </div>
+
+      <SwapOut day={day} compare={compare} meta={meta} active={day.policy === "lv2"} />
 
       {p.selected && (
         <OrderDetail day={day} orderId={p.selected} tolerance={meta.settings.arrival_tolerance_min}
@@ -84,6 +86,45 @@ function TextSetting({ id, label, value, hint, onCommit }: {
       <input id={id} type="text" value={draft} onChange={(e) => setDraft(e.target.value)} onBlur={commit}
              onKeyDown={(e) => e.key === "Enter" && commit()} inputMode="text" spellCheck={false} />
       <p className="hint">{hint}</p>
+    </div>
+  );
+}
+
+/** v2: what the swap-out rule did on this day, and how it decides. */
+function SwapOut({ day, compare, meta, active }: { day: DayData; compare: Compare | null; meta: Meta; active: boolean }) {
+  const s = meta.settings;
+  const v1 = compare?.kpis.lv1;
+  const v2 = compare?.kpis.lv2;
+  const made = day.log.filter((r) => r.room === "move" || r.room === "swap");
+  return (
+    <div className="card" style={{ marginTop: 16 }}>
+      <h2>v2: make room instead of declining <span className="pill">Designed, not shipped</span></h2>
+      <p className="hint">
+        When no pair can take an order, v1 declines it. v2 first tries to <b>move</b> an accepted order, one within{" "}
+        {s.v2_search_window_min} min of the new slot that hasn't started, to another pair, so both are served. If that order fits nowhere else,
+        v2 can <b>swap</b> it out: release it back to the platform for another provider, but only with at least{" "}
+        {s.v2_min_notice_h} h notice, and only when the fleet gains, scored on km saved and on each order's chance of being cancelled.
+      </p>
+      {v1 && v2 && (
+        <div className="levels">
+          <div className="tile"><div className="label">Captured, v1 → v2</div>
+            <div className="value">{pct(v1.capture_rate)} → {pct(v2.capture_rate)}</div>
+            <div className="note">{v1.declined} → {v2.declined} declined, no room</div></div>
+          <div className="tile"><div className="label">Moved to make room</div><div className="value">{v2.moved}</div>
+            <div className="note">accepted orders handed to another pair</div></div>
+          <div className="tile"><div className="label">Swapped out</div><div className="value">{v2.bumped}</div>
+            <div className="note">released to the platform, with notice</div></div>
+          <div className="tile"><div className="label">km per visit, v1 → v2</div>
+            <div className="value">{v1.km_per_visit.toFixed(1)} → {v2.km_per_visit.toFixed(1)}</div>
+            <div className="note">synthetic day</div></div>
+        </div>
+      )}
+      {active && made.length > 0 && (
+        <ul className="room-list">
+          {made.map((r) => <li key={r.order_id}><b>{r.order_id}</b> {r.reason}</li>)}
+        </ul>
+      )}
+      {!active && <p className="hint" style={{ margin: "12px 0 0" }}>Switch the header to v2 to see each move and swap in the log and on the day view.</p>}
     </div>
   );
 }
@@ -172,7 +213,7 @@ function DecisionLog({ day, selected, onSelect, loading }: {
                   <td><OutcomeChip outcome={r.outcome} /></td>
                   <td>{r.pair_id ?? "–"}</td>
                   <td>{FINAL_LABEL[r.final]}</td>
-                  <td className="why">{r.reason}</td>
+                  <td className="why">{r.reason}{r.room && r.room !== "move" && r.room !== "swap" ? `; ${r.room}` : ""}</td>
                 </tr>
               );
             })}

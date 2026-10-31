@@ -15,6 +15,7 @@ from valeo_routing.settings import EngineSettings
 
 from .model import Job
 from .standby import OfficeStandby, StandbyPolicy
+from .swap import CancelModel, SwapRules
 
 DAY = 24 * 60
 AUTO, MANUAL, EXCEL = "auto", "manual", "excel"
@@ -92,3 +93,18 @@ class LogisticsValeoV1:
             return Decision(job.published_min, AUTO)
         seen = next_open(job.published_min, self.office_open, self.office_close)
         return Decision(seen + rng.randint(self.lo, self.hi), MANUAL)
+
+
+class LogisticsValeoV2(LogisticsValeoV1):
+    """v1's decisions, plus making room when an order does not fit: move an accepted order, or swap one out.
+
+    Designed but not shipped at Valeo; see `swap` for the rule.
+    """
+
+    name = "lv2"
+
+    def __init__(self, s: EngineSettings, office: Tuple[float, float], cancels: CancelModel,
+                 standby: Optional[StandbyPolicy] = None):
+        super().__init__(s, office, standby)
+        self.swap_rules = SwapRules.from_settings(s)
+        self.cancels = cancels

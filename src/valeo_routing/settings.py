@@ -106,6 +106,28 @@ class EngineSettings(BaseSettings):
     capacity_max_pairs: int  # the simulation tries up to this many pairs
     capacity_levels: str  # service levels shown, as percentiles across days: '50,75,90'
 
+    # Logistics Valeo v2: making room for an order that does not fit (PLAN step 7).
+    v2_search_window_min: int  # only accepted orders whose slot is this close to the new one are considered
+    v2_min_notice_h: float  # an order may be released to the platform only this long before its slot
+    v2_visit_value_km: float  # an expected visit is worth this many km when scoring a swap
+    v2_swap_min_gain_km: float  # a swap goes ahead only when the fleet gains at least this (km-equivalent)
+    v2_cancel_bands_h: str  # lead-time band edges in hours for the cancellation model: '6,24,48'
+    v2_cancel_prior_weight: float  # a band's cancellation share is pulled to the overall share by this many orders
+
+    # Metrics (PLAN step 6): the synthetic "actual" km and time, the exclusion rules and the cost rates.
+    metrics_seed: int
+    metrics_km_bias: float  # recorded road km per predicted km, on average (the road factor's error)
+    metrics_km_sigma: float  # spread of that ratio per drive (log-normal sigma)
+    metrics_time_bias: float  # recorded driving minutes per predicted minute, on average
+    metrics_time_sigma: float
+    metrics_gap_day_rate: float  # share of days on which one pair's tracker drops out for part of the shift
+    metrics_spike_day_rate: float  # share of days on which one pair's tracker records a GPS jump
+    metrics_min_coverage: float  # a day is excluded when any pair's tracker covers less of its shift than this
+    metrics_max_pair_ratio: float  # a day is excluded when any pair records more than this x its predicted km
+    cost_per_km_marginal: float  # what a km saved is worth: fuel, tolls, parking (assumed, synthetic)
+    cost_per_km_all_in: float  # average cost per km with salaries and rental (assumed, synthetic)
+    cost_currency: str
+
     # Map (Hubs tab).
     map_tile_url: str  # raster tile URL template; '{key}' is replaced by MAP_API_KEY
     map_api_key: str  # may be empty for providers that need none
@@ -161,6 +183,47 @@ class EngineSettings(BaseSettings):
         levels = [float(x) for x in value.split(",")]
         if not levels or any(not 0 < x <= 100 for x in levels) or levels != sorted(levels):
             raise ValueError("capacity_levels must be ascending percentiles between 0 and 100, like 50,75,90")
+        return value
+
+    @field_validator("v2_search_window_min")
+    @classmethod
+    def _check_window(cls, value: int) -> int:
+        if value < 0:
+            raise ValueError("v2_search_window_min must be 0 or more")
+        return value
+
+    @field_validator("v2_min_notice_h", "v2_visit_value_km", "v2_swap_min_gain_km", "v2_cancel_prior_weight",
+                     "metrics_km_sigma", "metrics_time_sigma", "cost_per_km_marginal", "cost_per_km_all_in")
+    @classmethod
+    def _check_non_negative(cls, value: float) -> float:
+        if value < 0:
+            raise ValueError("must be 0 or more")
+        return value
+
+    @field_validator("v2_cancel_bands_h")
+    @classmethod
+    def _check_bands(cls, value: str) -> str:
+        bands = [float(x) for x in value.split(",")]
+        if any(b <= 0 for b in bands) or bands != sorted(set(bands)):
+            raise ValueError("v2_cancel_bands_h must be ascending positive hours, like 6,24,48")
+        return value
+
+    @property
+    def cancel_bands_h(self) -> List[float]:
+        return [float(x) for x in self.v2_cancel_bands_h.split(",")]
+
+    @field_validator("metrics_km_bias", "metrics_time_bias", "metrics_max_pair_ratio")
+    @classmethod
+    def _check_ratio(cls, value: float) -> float:
+        if value <= 0:
+            raise ValueError("must be above 0")
+        return value
+
+    @field_validator("metrics_gap_day_rate", "metrics_spike_day_rate", "metrics_min_coverage")
+    @classmethod
+    def _check_rate(cls, value: float) -> float:
+        if not 0.0 <= value <= 1.0:
+            raise ValueError("must be between 0 and 1")
         return value
 
     @property

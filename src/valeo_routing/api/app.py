@@ -21,20 +21,24 @@ from pydantic import ValidationError
 
 from valeo_routing.datagen.reference import Service
 from valeo_routing.engine import capacity as capacities
+from valeo_routing.engine import metrics as metric
 from valeo_routing.engine import roster as rosters
 from valeo_routing.engine.catalog import Catalog
 from valeo_routing.engine.data import World, engine_labs, load_world, make_context
 from valeo_routing.engine.hubs import Siting, curve, history_window
 from valeo_routing.engine.model import Block, Job, Pair, PairDay
-from valeo_routing.engine.policy import ExcelEra, LogisticsValeoV1
+from valeo_routing.engine.policy import ExcelEra, LogisticsValeoV1, LogisticsValeoV2
 from valeo_routing.engine.replay import DayKpis, DayResult, replay_day
 from valeo_routing.engine.standby import HubStandby
+from valeo_routing.engine.swap import CancelModel
 from valeo_routing.engine.validator import Rules, validate
 from valeo_routing.settings import (
     ApiSettings, EngineSettings, Settings, load_api_settings, load_engine_settings, load_settings,
 )
 
-POLICIES = {"excel": ("Excel era", ExcelEra), "lv1": ("Logistics Valeo v1", LogisticsValeoV1)}
+POLICIES = {"excel": ("Excel era", ExcelEra), "lv1": ("Logistics Valeo v1", LogisticsValeoV1),
+            "lv2": ("v2 (not shipped)", LogisticsValeoV2)}
+TOOLS = ("lv1", "lv2")  # the policies that wait at hubs
 ROSTERS = {"auto": "Auto-allocated", "simple": "Simple pairing"}
 WINDOW = (5 * 60, 23 * 60)  # what the day view draws
 MAX_DURATION_MIN, MAX_SAMPLE_LIMIT_MIN = 480, 1440
@@ -64,6 +68,7 @@ def _kpis(k: DayKpis) -> dict:
         "offered": k.offered, "capturable": k.capturable, "accepted": k.accepted, "lost": k.lost,
         "declined": k.declined, "cancelled_before_decision": k.cancelled_before_decision,
         "honored_cancellations": k.honored_cancellations, "late_cancellations": k.late_cancellations,
+        "moved": k.moved, "bumped": k.bumped,
         "visits": k.visits, "capture_rate": round(k.capture_rate, 4), "km": round(k.km, 1),
         "km_per_visit": round(k.km_per_visit, 2), "visit_h": round(k.visit_h, 1),
         "drive_h": round(k.drive_h, 1), "idle_h": round(k.idle_h, 1),
@@ -90,6 +95,9 @@ class Engine:
         self._rosters: Dict[Tuple, rosters.Roster] = {}
         self._capacity: Dict[Tuple, List[capacities.DayNeed]] = {}
         self._capacity_lock = threading.Lock()
+        self._metrics: Dict[Tuple, Dict[str, List[metric.DayMetrics]]] = {}
+        self._metrics_lock = threading.Lock()
+        self.cancels = CancelModel(self.world.orders, self.base_services, engine.cancel_bands_h, engine.v2_cancel_prior_weight)
 
     # -- scenario pieces ---------------------------------------------------------------------
 
@@ -127,13 +135,15 @@ class Engine:
     def policy(self, policy_id: str, engine: EngineSettings, hubs: int):
         if policy_id == "lv1":
             return LogisticsValeoV1(engine, self.ctx.office, self.hub_standby(hubs))
+        if policy_id == "lv2":
+            return LogisticsValeoV2(engine, self.ctx.office, self.cancels, self.hub_standby(hubs))
         return ExcelEra(engine, self.ctx.office)
 
     def replay(self, day: date, sc: Scenario, roster_mode: Optional[str] = None,
                policy: Optional[str] = None, hubs: Optional[int] = None) -> Tuple[DayResult, int, rosters.Roster]:
         mode, policy_id = roster_mode or sc.roster, policy or sc.policy
         k = sc.hubs if hubs is None else hubs
-        key = (day, policy_id, mode, sc.overrides, sc.unavailable, sc.services, k if policy_id == "lv1" else 0)
+        key = (day, policy_id, mode, sc.overrides, sc.unavailable, sc.services, k if policy_id in TOOLS else 0)
         if key not in self._results:
             engine = self.settings_with(sc.overrides)
             roster = self.roster(day, sc, mode)
@@ -158,6 +168,26 @@ class Engine:
                     for d in self.dates
                 ]
             return self._capacity[key]
+
+    def tool_policy(self, sc: Scenario) -> str:
+        """The policy measured against the Excel era: the scenario's, or v1 when the Excel era is selected."""
+        return sc.policy if sc.policy in TOOLS else "lv1"
+
+    def metrics(self, sc: Scenario) -> Dict[str, List[metric.DayMetrics]]:
+        """The tracker's record of every day, under the Excel era and the tool; a month of replays, so cached."""
+        tool = self.tool_policy(sc)
+        key = (tool, sc.roster, sc.overrides, sc.services, sc.hubs)
+        with self._metrics_lock:
+            if key not in self._metrics:
+                out: Dict[str, List[metric.DayMetrics]] = {}
+                for policy_id in ("excel", tool):
+                    days = []
+                    for d in self.dates:
+                        result = self.replay(d, replace(sc, unavailable=()), policy=policy_id)[0]
+                        days.append(metric.track_day(d, result.plan, result.kpis.visits, self.engine))
+                    out[policy_id] = days
+                self._metrics[key] = out
+            return self._metrics[key]
 
     # -- JSON ---------------------------------------------------------------------------------
 
@@ -223,8 +253,9 @@ def _hub_json(h) -> dict:
 def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSettings, warm: bool = True) -> FastAPI:
     engine = Engine(settings, engine_settings)
     if warm:  # the month's capacity takes a while; start it now so the Capacity tab is ready when opened
-        threading.Thread(target=engine.capacity, args=(Scenario("lv1", "auto", (), (), (), engine_settings.hub_count),),
-                         daemon=True).start()
+        default = Scenario("lv1", "auto", (), (), (), engine_settings.hub_count)
+        threading.Thread(target=engine.capacity, args=(default,), daemon=True).start()
+        threading.Thread(target=engine.metrics, args=(default,), daemon=True).start()
     app = FastAPI(title="Logistics Valeo rebuild", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.add_middleware(CORSMiddleware, allow_origins=[api.dev_cors_origin], allow_methods=["GET"], allow_headers=["*"])
 
@@ -284,6 +315,7 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
                 "hub_count": e.hub_count, "hub_max_count": e.hub_max_count, "hub_history_days": e.hub_history_days,
                 "capacity_serve_share": e.capacity_serve_share, "capacity_max_pairs": e.capacity_max_pairs,
                 "capacity_levels": e.capacity_percentiles,
+                "v2_search_window_min": e.v2_search_window_min, "v2_min_notice_h": e.v2_min_notice_h,
             },
             "map": {"tile_url": e.map_tile_url.replace("{key}", e.map_api_key), "attribution": e.map_attribution},
             "office": {"lat": engine.world.ref.office.lat, "lon": engine.world.ref.office.lon,
@@ -301,12 +333,13 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
             "policy": sc.policy, "policy_label": POLICIES[sc.policy][0], "roster": sc.roster,
             "roster_label": ROSTERS[sc.roster], "window": {"start": WINDOW[0], "end": WINDOW[1]},
             "unavailable": list(sc.unavailable), "services_edited": [e[0] for e in sc.services],
-            "hubs": [_hub_json(h) for h in engine.sitings[sc.hubs].hubs] if sc.policy == "lv1" else [],
+            "hubs": [_hub_json(h) for h in engine.sitings[sc.hubs].hubs] if sc.policy in TOOLS else [],
             "pairs": [engine.pair_json(d) for d in result.plan.pairs.values()],
             "jobs": {i: engine.job_json(j, rows[i]) for i, j in result.jobs.items()},
             "log": [
                 {"order_id": r.order_id, "published": r.published_min, "decided": r.decided_min, "slot": r.slot_min,
-                 "mode": r.mode, "outcome": r.outcome, "reason": r.reason, "pair_id": r.pair_id, "final": r.final}
+                 "mode": r.mode, "outcome": r.outcome, "reason": r.reason, "pair_id": r.pair_id, "final": r.final,
+                 "room": r.room}
                 for r in result.log
             ],
             "kpis": _kpis(result.kpis), "violations": violations,
@@ -383,6 +416,57 @@ def create_app(settings: Settings, engine_settings: EngineSettings, api: ApiSett
                  "unservable": n.unservable, "needed": n.needed, "served": n.served, "rostered": n.rostered}
                 for n in needs
             ],
+        }
+
+    @app.get("/api/metrics")
+    def metrics_view(date: str, sc: Scenario = Depends(scenario)) -> dict:
+        service_day = parse_day(date)
+        tool = engine.tool_policy(sc)
+        record = engine.metrics(sc)
+        e = engine.engine
+        tool_days, base_days = record[tool], record["excel"]
+        clean = [i for i, d in enumerate(tool_days) if not d.excluded and not base_days[i].excluded]
+        kept = metric.Totals.of([tool_days[i] for i in clean])
+        saving = metric.Saving.measure([base_days[i] for i in clean], [tool_days[i] for i in clean], e)
+        km_ratio = kept.actual_km / kept.predicted_km if kept.predicted_km else 1.0
+        error = metric.error_share([p for i in clean for p in tool_days[i].pairs])
+
+        def totals(t: metric.Totals) -> dict:
+            return {"days": t.days, "visits": t.visits, "km": round(t.actual_km, 1),
+                    "km_per_visit": round(t.km_per_visit, 2), "mean_of_daily": round(t.mean_of_daily, 2)}
+
+        def excluded(i: int) -> str:
+            return tool_days[i].excluded or base_days[i].excluded
+
+        today = tool_days[engine.dates.index(service_day)]
+        return {
+            "synthetic": True, "date": service_day.isoformat(), "tool": tool, "tool_label": POLICIES[tool][0],
+            "rules": {"min_coverage": e.metrics_min_coverage, "max_pair_ratio": e.metrics_max_pair_ratio},
+            "rates": {"marginal": e.cost_per_km_marginal, "all_in": e.cost_per_km_all_in, "currency": e.cost_currency},
+            "road_factor": e.road_factor,
+            "summary": {
+                "clean_days": len(clean), "days": len(engine.dates), "km_ratio": round(km_ratio, 4),
+                "time_ratio": round(kept.actual_drive_min / kept.predicted_drive_min, 4) if kept.predicted_drive_min else 1.0,
+                "median_error": round(error, 4) if error is not None else None,
+                "suggested_road_factor": round(e.road_factor * km_ratio, 2),
+            },
+            "days": [
+                {"date": d.day.isoformat(), "weekday": d.day.strftime("%a"), "visits": d.visits,
+                 "predicted_km": round(d.predicted_km, 1), "actual_km": round(d.actual_km, 1),
+                 "predicted_min": d.predicted_drive_min, "actual_min": round(d.actual_drive_min),
+                 "excluded": excluded(i)}
+                for i, d in enumerate(tool_days)
+            ],
+            "pairs": [
+                {"id": p.pair_id, "visits": p.visits, "predicted_km": round(p.predicted_km, 1),
+                 "actual_km": round(p.actual_km, 1), "predicted_min": p.predicted_drive_min,
+                 "actual_min": round(p.actual_drive_min), "coverage": round(p.coverage, 3), "fault": p.fault}
+                for p in today.pairs
+            ],
+            "day_excluded": excluded(engine.dates.index(service_day)),
+            "saving": {"baseline": totals(saving.baseline), "tool": totals(saving.tool),
+                       "km_saved": round(saving.km_saved), "marginal": round(saving.marginal),
+                       "all_in": round(saving.all_in)},
         }
 
     @app.get("/api/services")
