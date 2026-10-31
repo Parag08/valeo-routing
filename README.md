@@ -27,10 +27,12 @@ See [docs/CONTEXT.md](docs/CONTEXT.md) for the measurement and its caveats.
 **This repo is synthetic.** It is not Valeo's code or data. Every number the app produces comes from
 seeded synthetic data and is labelled as such.
 
-Status: **six of the seven tabs** (PLAN steps 1–5 and most of 6): a month of synthetic field-visit data
-across Dubai and the northern emirates, a planner with an independent validator, a day-by-day replay that
-compares the Excel-era acceptance with Logistics Valeo v1, and a web app with the day view, roster,
-services, acceptance engine, hub siting and capacity. Metrics is next.
+Status: **all seven tabs** (PLAN steps 1–7, and the About panel from step 8): a month of synthetic
+field-visit data across Dubai and the northern emirates, a planner with an independent validator, a
+day-by-day replay under three policies (the Excel era, Logistics Valeo v1, and v2's swap-out, which was
+designed but not shipped), and a web app with the day view, roster, services, acceptance engine, hub
+siting, capacity and metrics. "About the real project" in the header holds the real story and the only
+real figures, each with its status.
 
 - [docs/CONTEXT.md](docs/CONTEXT.md): the real project, the seven tabs, rollout, verified results, open questions
 - [docs/PLAN.md](docs/PLAN.md): screens, engine, stack, build order

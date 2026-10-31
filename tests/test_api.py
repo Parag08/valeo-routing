@@ -33,7 +33,7 @@ def test_meta(client):
     meta = client.get("/api/meta").json()
     assert meta["synthetic"] is True
     assert len(meta["dates"]) == 35 and meta["dates"][0] == {"date": "2026-11-02", "weekday": "Mon", "orders": meta["dates"][0]["orders"]}
-    assert [p["id"] for p in meta["policies"]] == ["excel", "lv1"]
+    assert [p["id"] for p in meta["policies"]] == ["excel", "lv1", "lv2"]
     assert meta["settings"]["auto_accept_lead_h"] == 12 and meta["settings"]["quiet_hours"] == "22:00-06:00"
     assert len(meta["labs"]) == 3 and meta["office"]["name"].startswith("Ops office")
 
@@ -273,3 +273,25 @@ def test_capacity_view(client):
     for d in data["days"]:
         assert d["floor"] <= d["needed"] <= data["max_pairs"]
         assert d["served"] + d["unservable"] <= d["orders"]
+
+
+def test_v2_is_a_third_policy(client):
+    d = day(client, policy="lv2")
+    assert d["policy_label"] == "v2 (not shipped)" and d["violations"] == 0
+    assert {"moved", "bumped"} <= set(d["kpis"]) and all("room" in r for r in d["log"])
+    compare = client.get("/api/compare", params={"date": DAY}).json()
+    assert set(compare["kpis"]) == {"excel", "lv1", "lv2"}
+
+
+def test_metrics_view(client):
+    m = client.get("/api/metrics", params={"date": DAY}).json()
+    assert m["synthetic"] is True and m["tool"] == "lv1" and len(m["days"]) == 35
+    s = m["summary"]
+    assert 0 < s["clean_days"] < s["days"] and s["km_ratio"] > 1
+    assert all(d["excluded"] for d in m["days"]) is False and any(d["excluded"] for d in m["days"])
+    sv = m["saving"]
+    assert sv["baseline"]["days"] == sv["tool"]["days"] == s["clean_days"]
+    assert sv["baseline"]["km_per_visit"] > sv["tool"]["km_per_visit"] and sv["km_saved"] > 0
+    assert sv["all_in"] > sv["marginal"] > 0
+    assert m["pairs"] and all({"predicted_km", "actual_km", "coverage"} <= set(p) for p in m["pairs"])
+    assert client.get("/api/metrics", params={"date": DAY, "policy": "excel"}).json()["tool"] == "lv1"

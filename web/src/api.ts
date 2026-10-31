@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export type Policy = "excel" | "lv1";
+export type Policy = "excel" | "lv1" | "lv2";
 export type RosterMode = "auto" | "simple";
 export type Category = "sample" | "iv" | "injection";
 export type Outcome = "accepted" | "declined" | "lost" | "cancelled_before_decision";
@@ -29,6 +29,8 @@ export interface Meta {
     capacity_serve_share: number;
     capacity_max_pairs: number;
     capacity_levels: number[];
+    v2_search_window_min: number;
+    v2_min_notice_h: number;
   };
   map: { tile_url: string; attribution: string };
   office: { lat: number; lon: number; name: string };
@@ -82,7 +84,8 @@ export interface LogRow {
   outcome: Outcome;
   reason: string;
   pair_id: string | null;
-  final: "served" | "cancelled" | "late_cancellation" | "not_served";
+  final: "served" | "cancelled" | "late_cancellation" | "not_served" | "bumped";
+  room: string; // v2: how room was made for this order, or what happened to it to make room
 }
 
 export interface Kpis {
@@ -94,6 +97,8 @@ export interface Kpis {
   cancelled_before_decision: number;
   honored_cancellations: number;
   late_cancellations: number;
+  moved: number;
+  bumped: number;
   visits: number;
   capture_rate: number;
   km: number;
@@ -242,6 +247,48 @@ export interface CapacityData {
   levels: { p: number; pairs: number }[];
   rostered: { min: number; max: number };
   days: CapacityDay[];
+}
+
+export interface MetricsDay {
+  date: string;
+  weekday: string;
+  visits: number;
+  predicted_km: number;
+  actual_km: number;
+  predicted_min: number;
+  actual_min: number;
+  excluded: string;
+}
+
+export interface MetricsTotals {
+  days: number;
+  visits: number;
+  km: number;
+  km_per_visit: number;
+  mean_of_daily: number;
+}
+
+export interface MetricsData {
+  synthetic: boolean;
+  date: string;
+  tool: Policy;
+  tool_label: string;
+  rules: { min_coverage: number; max_pair_ratio: number };
+  rates: { marginal: number; all_in: number; currency: string };
+  road_factor: number;
+  summary: {
+    clean_days: number;
+    days: number;
+    km_ratio: number;
+    time_ratio: number;
+    median_error: number | null;
+    suggested_road_factor: number;
+  };
+  days: MetricsDay[];
+  pairs: { id: string; visits: number; predicted_km: number; actual_km: number; predicted_min: number;
+    actual_min: number; coverage: number; fault: "" | "gap" | "spike" }[];
+  day_excluded: string;
+  saving: { baseline: MetricsTotals; tool: MetricsTotals; km_saved: number; marginal: number; all_in: number };
 }
 
 export interface Compare {

@@ -36,4 +36,5 @@ export const FINAL_LABEL: Record<string, string> = {
   cancelled: "Cancelled, plan freed",
   late_cancellation: "Late cancellation, visit made",
   not_served: "Not served",
+  bumped: "Released to make room",
 };
